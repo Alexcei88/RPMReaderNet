@@ -1,2 +1,2 @@
 # RPMReaderNet
-Parser rpm file
+Parser of rpm file
