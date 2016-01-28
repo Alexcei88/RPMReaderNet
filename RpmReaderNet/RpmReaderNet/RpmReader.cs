@@ -164,48 +164,58 @@ namespace RpmReaderNet
 
         private bool ReadLead()
         {
-            return true;
+            int size = Marshal.SizeOf<RpmStruct.rpmlead>();
+            byte[] buffer = new byte[size];
+            _fileStream.Read(buffer, 0, size);
+            return _leadSection.FillSection(buffer);
         }
 
         private bool ReadSignature()
         {
-            FindBytes(RpmStruct.RPMSignature.RPM_MAGIC_HEADER_NUMBER);
-            _signatureSection.StartPosition = _fileStream.Position - RpmStruct.RPMSignature.RPM_MAGIC_HEADER_NUMBER.Length * sizeof(byte);
+            if (FindBytes(RpmStruct.RPM_MAGIC_SIGNATURE_NUMBER))
+            {
 
-            _signatureSection.Signature.headerVersion = (byte)_fileStream.ReadByte();
-            ReadIntFromCurrentPosition(out _signatureSection.Signature.reserved);
-            ReadIntFromCurrentPosition(out _signatureSection.Signature.entryCount);
-            ReadIntFromCurrentPosition(out _signatureSection.Signature.bytesDataCount);
+                int size = Marshal.SizeOf<RpmStruct.RPMSignature>();
+                _signatureSection.StartPosition = _fileStream.Position - RpmStruct.RPM_MAGIC_SIGNATURE_NUMBER.Length * sizeof(byte);
+                _signatureSection.Signature.headerVersion = (byte)_fileStream.ReadByte();
+                ReadIntFromCurrentPosition(out _signatureSection.Signature.reserved);
+                ReadIntFromCurrentPosition(out _signatureSection.Signature.entryCount);
+                ReadIntFromCurrentPosition(out _signatureSection.Signature.bytesDataCount);
 
-            // Сигнатуру пропускаем, данные из нее нам не нужны
-            _fileStream.Ignore(RpmSignatureSection.SIZE_ONE_ENTRY * _signatureSection.Signature.entryCount);
-            _fileStream.Ignore(_signatureSection.Signature.bytesDataCount);
-            return true;
+                // Сигнатуру пропускаем, данные из нее нам не нужны
+                _fileStream.Ignore(RpmSignatureSection.SIZE_ONE_ENTRY * _signatureSection.Signature.entryCount);
+                _fileStream.Ignore(_signatureSection.Signature.bytesDataCount);
+                return true;
+            }
+            return false;
         }
 
         private bool ReadHeader()
         {
-            FindBytes(RpmStruct.RPMHeader.RPM_MAGIC_HEADER_NUMBER);
-            _headerSection.StartPosition = _fileStream.Position - RpmStruct.RPMSignature.RPM_MAGIC_HEADER_NUMBER.Length * sizeof(byte);
-
-            _headerSection.Header.headerVersion = (byte)_fileStream.ReadByte();
-            ReadIntFromCurrentPosition(out _headerSection.Header.reserved);
-            ReadIntFromCurrentPosition(out _headerSection.Header.entryCount);
-            ReadIntFromCurrentPosition(out _headerSection.Header.bytesDataCount);
-
-            RpmStruct.RPMEntry[] entries = new RpmStruct.RPMEntry[_headerSection.Header.entryCount];
-            for (int i = 0; i < _headerSection.Header.entryCount; ++i)
+            if (FindBytes(RpmStruct.RPM_MAGIC_HEADER_NUMBER))
             {
-                RpmStruct.RPMEntry entry;
-                ReadIntFromCurrentPosition(out entry.Tag);
-                ReadIntFromCurrentPosition(out entry.Type);
-                ReadIntFromCurrentPosition(out entry.Offset);
-                ReadIntFromCurrentPosition(out entry.Count);
-                entries[i] = entry;
-            }
+                _headerSection.StartPosition = _fileStream.Position - RpmStruct.RPM_MAGIC_HEADER_NUMBER.Length * sizeof(byte);
 
-            _headerSection.Header.entries = entries;
-            return true;
+                _headerSection.Header.headerVersion = (byte)_fileStream.ReadByte();
+                ReadIntFromCurrentPosition(out _headerSection.Header.reserved);
+                ReadIntFromCurrentPosition(out _headerSection.Header.entryCount);
+                ReadIntFromCurrentPosition(out _headerSection.Header.bytesDataCount);
+
+                RpmStruct.RPMEntry[] entries = new RpmStruct.RPMEntry[_headerSection.Header.entryCount];
+                for (int i = 0; i < _headerSection.Header.entryCount; ++i)
+                {
+                    RpmStruct.RPMEntry entry;
+                    ReadIntFromCurrentPosition(out entry.Tag);
+                    ReadIntFromCurrentPosition(out entry.Type);
+                    ReadIntFromCurrentPosition(out entry.Offset);
+                    ReadIntFromCurrentPosition(out entry.Count);
+                    entries[i] = entry;
+                }
+
+                _headerSection.Header.entries = entries;
+                return true;
+            }
+            return false;
         }
 
         private string GetVersion()
@@ -250,7 +260,7 @@ namespace RpmReaderNet
             {
                 return false;
             }
-            while(!ByteArrayCompare(buffer, bytes))
+            while(!AbstractRpmSection.ByteArrayCompare(buffer, bytes))
             {
                 Buffer.BlockCopy(buffer, 1, buffer, 0, bytes.Length - 1);
                 if (!_fileStream.CanRead)
@@ -274,11 +284,6 @@ namespace RpmReaderNet
             Array.Reverse(buffer);
             value = BitConverter.ToInt32(buffer, 0);
             return true;
-        }
-
-        static bool ByteArrayCompare(byte[] a1, byte[] a2)
-        {
-            return StructuralComparisons.StructuralEqualityComparer.Equals(a1, a2);
         }
 
         /// <summary>
