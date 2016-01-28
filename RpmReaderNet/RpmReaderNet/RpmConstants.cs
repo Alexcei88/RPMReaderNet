@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RpmReaderNet
+﻿namespace RpmReaderNet
 {
     internal static class RpmConstants
     {
-        enum rpmTagType
+        public enum rpmTagType
         {
             RPM_NULL_TYPE = 0,
             RPM_CHAR_TYPE = 1,
@@ -22,18 +16,23 @@ namespace RpmReaderNet
             RPM_I18NSTRING_TYPE = 9
         }
 
-        enum rpmTag
+        public enum rpmTag
         {
             RPMTAG_NAME = 1000, /* s */
-//#define RPMTAG_N        RPMTAG_NAME     /* s */
+
+            //#define RPMTAG_N        RPMTAG_NAME     /* s */
             RPMTAG_VERSION = 1001, /* s */
-//#define RPMTAG_V        RPMTAG_VERSION  /* s */
+
+            //#define RPMTAG_V        RPMTAG_VERSION  /* s */
             RPMTAG_RELEASE = 1002, /* s */
-//#define RPMTAG_R        RPMTAG_RELEASE  /* s */
+
+            //#define RPMTAG_R        RPMTAG_RELEASE  /* s */
             RPMTAG_EPOCH = 1003, /* i */
-//#define RPMTAG_E        RPMTAG_EPOCH    /* i */
-//#define RPMTAG_SERIAL   RPMTAG_EPOCH    /* i backward comaptibility */
+
+            //#define RPMTAG_E        RPMTAG_EPOCH    /* i */
+            //#define RPMTAG_SERIAL   RPMTAG_EPOCH    /* i backward comaptibility */
             RPMTAG_SUMMARY = 1004, /* s{} */
+
             RPMTAG_DESCRIPTION = 1005, /* s{} */
             RPMTAG_BUILDTIME = 1006, /* i */
             RPMTAG_BUILDHOST = 1007, /* s */
@@ -44,8 +43,10 @@ namespace RpmReaderNet
             RPMTAG_GIF = 1012, /* x */
             RPMTAG_XPM = 1013, /* x */
             RPMTAG_LICENSE = 1014, /* s */
-//#define RPMTAG_COPYRIGHT RPMTAG_LICENSE /* s backward comaptibility */
+
+            //#define RPMTAG_COPYRIGHT RPMTAG_LICENSE /* s backward comaptibility */
             RPMTAG_PACKAGER = 1015, /* s */
+
             RPMTAG_GROUP = 1016, /* s{} */
                                  /*@-enummemuse@*/
             RPMTAG_CHANGELOG = 1017,
@@ -84,20 +85,26 @@ namespace RpmReaderNet
             RPMTAG_FILEVERIFYFLAGS = 1045, /* i */
             RPMTAG_ARCHIVESIZE = 1046, /* i */
             RPMTAG_PROVIDENAME = 1047, /* s[] */
-//#define RPMTAG_PROVIDES RPMTAG_PROVIDENAME      /* s[] */
-//#define RPMTAG_P        RPMTAG_PROVIDENAME      /* s[] */
+
+            //#define RPMTAG_PROVIDES RPMTAG_PROVIDENAME      /* s[] */
+            //#define RPMTAG_P        RPMTAG_PROVIDENAME      /* s[] */
             RPMTAG_REQUIREFLAGS = 1048, /* i */
+
             RPMTAG_REQUIRENAME = 1049, /* s[] */
-//#define RPMTAG_REQUIRES RPMTAG_REQUIRENAME      /* s[] */
-//#define RPMTAG_D        RPMTAG_REQUIRENAME      /* s[] */
+
+            //#define RPMTAG_REQUIRES RPMTAG_REQUIRENAME      /* s[] */
+            //#define RPMTAG_D        RPMTAG_REQUIRENAME      /* s[] */
             RPMTAG_REQUIREVERSION = 1050, /* s[] */
+
             RPMTAG_NOSOURCE = 1051,
             RPMTAG_NOPATCH = 1052,
             RPMTAG_CONFLICTFLAGS = 1053, /* i */
             RPMTAG_CONFLICTNAME = 1054, /* s[] */
-//#define RPMTAG_CONFLICTS RPMTAG_CONFLICTNAME    /* s[] */
-//#define RPMTAG_C        RPMTAG_CONFLICTNAME     /* s[] */
+
+            //#define RPMTAG_CONFLICTS RPMTAG_CONFLICTNAME    /* s[] */
+            //#define RPMTAG_C        RPMTAG_CONFLICTNAME     /* s[] */
             RPMTAG_CONFLICTVERSION = 1055, /* s[] */
+
             RPMTAG_DEFAULTPREFIX = 1056,
             RPMTAG_BUILDROOT = 1057,
             RPMTAG_INSTALLPREFIX = 1058,
@@ -126,9 +133,11 @@ namespace RpmReaderNet
             RPMTAG_POSTUNPROG = 1088, /* s */
             RPMTAG_BUILDARCHS = 1089,
             RPMTAG_OBSOLETENAME = 1090, /* s[] */
-//#define RPMTAG_OBSOLETES RPMTAG_OBSOLETENAME    /* s[] */
-//#define RPMTAG_O        RPMTAG_OBSOLETENAME     /* s[] */
+
+            //#define RPMTAG_OBSOLETES RPMTAG_OBSOLETENAME    /* s[] */
+            //#define RPMTAG_O        RPMTAG_OBSOLETENAME     /* s[] */
             RPMTAG_VERIFYSCRIPTPROG = 1091, /* s */
+
             RPMTAG_TRIGGERSCRIPTPROG = 1092, /* s */
             RPMTAG_DOCDIR = 1093,
             RPMTAG_COOKIE = 1094, /* s */
@@ -209,7 +218,7 @@ namespace RpmReaderNet
             RPMTAG_ENHANCESFLAGS = 1161, /* i   extension placeholder */
             RPMTAG_PRIORITY = 1162, /* i   extension placeholder */
             RPMTAG_CVSID = 1163, /* s */
-//#define RPMTAG_SVNID    RPMTAG_CVSID    /* s */
+                                 //#define RPMTAG_SVNID    RPMTAG_CVSID    /* s */
 
             /*@-enummemuse@*/
             RPMTAG_FIRSTFREE_TAG

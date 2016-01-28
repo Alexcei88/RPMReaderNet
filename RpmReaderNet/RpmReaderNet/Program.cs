@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RpmReaderNet
+﻿namespace RpmReaderNet
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             int a = 0x2;
 
-            using (RpmReader reader = new RpmReader("file1"))
+            using (RpmReader reader = new RpmReader("esbadapterhost.rpm"))
             {
-
+                if(reader.Validate())
+                {
+                    System.Console.WriteLine(reader.Version);
+                }
             }
         }
     }

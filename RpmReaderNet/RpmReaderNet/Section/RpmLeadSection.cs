@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RpmReaderNet.Section
+﻿namespace RpmReaderNet.Section
 {
     /// <summary>
     /// Lead секция
     /// </summary>
-    class RpmLeadSection
+    internal class RpmLeadSection
         : AbstractRpmSection
     {
-        public RpmStruct.rpmlead Lead { get; set; }
+        public RpmStruct.rpmlead Lead = new RpmStruct.rpmlead();
 
         public RpmLeadSection()
         {
             StartPosition = 0;
-            Lead = new RpmStruct.rpmlead();
         }
     }
 }

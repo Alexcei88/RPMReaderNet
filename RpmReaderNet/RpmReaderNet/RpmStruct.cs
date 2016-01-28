@@ -1,23 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices;
 
 namespace RpmReaderNet
 {
-    static class RpmStruct
+    internal static class RpmStruct
     {
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public unsafe struct RPMEntry
         {
             // тип тега
             public int Tag;
+
             // тип тега
             public int Type;
+
             // смещение данных, относительно начала данных
             public int Offset;
+
             // количество данных
             public int Count;
         };
@@ -29,6 +27,7 @@ namespace RpmReaderNet
 
             // магическое число rpm файла
             public fixed byte magic[4];
+
             public byte major, minor;
             public short type;
             public short archnum;
@@ -43,12 +42,16 @@ namespace RpmReaderNet
         {
             // магическое число начала заголовка сигнатуры
             public static readonly byte[] RPM_MAGIC_HEADER_NUMBER = { 0x8e, 0xad, 0xe8 };
+
             // 1 бит - версия сигнатуры
             public byte headerVersion;
+
             // 4 бита - зарезервированы
             public int reserved;
+
             // количество разделов сигнатуры
             public int entryCount;
+
             // количество байт с данными сигнатуры
             public int bytesDataCount;
 
@@ -68,22 +71,26 @@ namespace RpmReaderNet
         {
             // магическое число начала заголовка
             public static readonly byte[] RPM_MAGIC_HEADER_NUMBER = { 0x8e, 0xad, 0xe8 };
+
             // 1 бит - версия
             public byte headerVersion;
+
             // 4 бита - зарезервированы
             public int reserved;
+
             // количество разделов
             public int entryCount;
+
             // количество байт с данными
             public int bytesDataCount;
 
             // разделы заголовка
-            public RPMEntry[] entry;
-            
+            public RPMEntry[] entries;
+
             static public RPMHeader Create(int countEntry)
             {
                 RPMHeader header = new RPMHeader();
-                header.entry = new RPMEntry[countEntry];
+                header.entries = new RPMEntry[countEntry];
                 return header;
             }
         };

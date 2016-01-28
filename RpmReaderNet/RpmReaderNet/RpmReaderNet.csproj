@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileStreamEx.cs" />
     <Compile Include="RpmReader.cs" />
     <Compile Include="Section\AbstractRpmSection.cs" />
     <Compile Include="Program.cs" />
@@ -58,6 +59,10 @@
     <Compile Include="Section\RpmSignatureSection.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\..\Dropbox\Axelot\Package\esbadapterhost.rpm">
+      <Link>esbadapterhost.rpm</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
