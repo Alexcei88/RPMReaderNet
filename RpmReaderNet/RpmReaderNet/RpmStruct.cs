@@ -16,13 +16,13 @@ namespace RpmReaderNet
         public unsafe struct RPMEntry
         {
             // тип тега
-            public int Tag;
+            public uint Tag;
             // тип тега
-            public int Type;
+            public uint Type;
             // смещение данных, относительно начала данных
-            public int Offset;
+            public uint Offset;
             // количество данных
-            public int Count;
+            public uint Count;
         };
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]

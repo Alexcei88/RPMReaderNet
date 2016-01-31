@@ -192,24 +192,32 @@ namespace RpmReaderNet
             if (FindBytes(RpmStruct.RPM_MAGIC_HEADER_NUMBER))
             {
                 _headerSection.StartPosition = _fileStream.Position - RpmStruct.RPM_MAGIC_HEADER_NUMBER.Length * sizeof(byte);
-
-                _headerSection.Header.headerVersion = (byte)_fileStream.ReadByte();
-                ReadIntFromCurrentPosition(out _headerSection.Header.reserved);
-                ReadIntFromCurrentPosition(out _headerSection.Header.entryCount);
-                ReadIntFromCurrentPosition(out _headerSection.Header.bytesDataCount);
-
-                RpmStruct.RPMEntry[] entries = new RpmStruct.RPMEntry[_headerSection.Header.entryCount];
-                for (int i = 0; i < _headerSection.Header.entryCount; ++i)
+                /// чтение данных залоговка раздела
+                _fileStream.Seek(_headerSection.StartPosition, SeekOrigin.Begin);
+                int countData = Marshal.SizeOf(typeof(RpmStruct.RPMHeader));
+                byte[] data = new byte[countData];
+                if(_fileStream.Read(data, 0, countData) < countData)
                 {
-                    RpmStruct.RPMEntry entry;
-                    ReadIntFromCurrentPosition(out entry.Tag);
-                    ReadIntFromCurrentPosition(out entry.Type);
-                    ReadIntFromCurrentPosition(out entry.Offset);
-                    ReadIntFromCurrentPosition(out entry.Count);
-                    entries[i] = entry;
+                    return false;
                 }
 
-                _headerSection.entries = entries;
+                if(!_headerSection.FillHeaderData(data))
+                {
+                    return false;
+                }
+
+                /// чтение данных о разделе
+                countData = Marshal.SizeOf(typeof(RpmStruct.RPMEntry)) * _headerSection.Header.entryCount;
+                data = new byte[countData];
+                if (_fileStream.Read(data, 0, countData) < countData)
+                {
+                    return false;
+                }
+
+                if (!_headerSection.FillHeaderEntry(data, _headerSection.Header.entryCount))
+                {
+                    return false;
+                }
                 return true;
             }
             return false;

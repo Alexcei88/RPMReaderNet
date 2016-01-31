@@ -40,7 +40,7 @@ namespace RpmReaderNet.Section
                 (value & 0x00FF0000U) >> 8 | (value & 0xFF000000U) >> 24;
         }
 
-        public static ushort ReverseBytes(ushort value)
+        public static ushort ReverseBytes(ref ushort value)
         {
             return (ushort)((value & 0x00FFU) << 8 | (value & 0xFF00U) >> 8);
         }

@@ -18,7 +18,7 @@ namespace RpmReaderNet.Section
         public RpmStruct.RPMHeader Header = new RpmStruct.RPMHeader();
 
         // разделы заголовка
-        public RpmStruct.RPMEntry[] entries;
+        private RpmStruct.RPMEntry[] entries;
 
         /// <summary>
         /// размер одного раздела в секции
@@ -28,7 +28,6 @@ namespace RpmReaderNet.Section
         public RpmHeaderSection(FileStream file)
             : base(file)
         {
-            
         }
 
         /// <summary>
@@ -38,6 +37,50 @@ namespace RpmReaderNet.Section
         public long GetStartPositionFirstEntry()
         {
             return StartPosition + 16 + Header.entryCount * SIZE_ONE_ENTRY;
+        }
+
+        public bool FillHeaderData(byte[] data)
+        {
+            int len = Marshal.SizeOf(Header.GetType());
+            IntPtr @in = Marshal.AllocHGlobal(len);
+            Marshal.Copy(data, 0, @in, len);
+            Header = (RpmStruct.RPMHeader)Marshal.PtrToStructure(@in, Header.GetType());
+            Marshal.FreeHGlobal(@in);
+            Header.bytesDataCount = (int)ReverseBytes((uint)Header.bytesDataCount);
+            Header.entryCount = (int)ReverseBytes((uint)Header.entryCount);
+            byte[] buffer = new byte[RpmStruct.RPM_MAGIC_HEADER_NUMBER.Length];
+            unsafe
+            {
+                fixed (byte* ptr = Header.magic)
+                {
+                    int i = 0;
+                    for (byte* d = ptr; i < RpmStruct.RPM_MAGIC_HEADER_NUMBER.Length; ++i, ++d)
+                    {
+                        buffer[i] = *d;
+                    }
+                }
+            }
+            return ByteArrayCompare(buffer, RpmStruct.RPM_MAGIC_HEADER_NUMBER);
+        }
+
+        public bool FillHeaderEntry(byte[] data, int countEntry)
+        {
+            int len = Marshal.SizeOf(typeof(RpmStruct.RPMEntry));
+            entries = new RpmStruct.RPMEntry[countEntry];
+            for(int i = 0; i < countEntry; ++i)
+            {
+                RpmStruct.RPMEntry entry = new RpmStruct.RPMEntry();
+                IntPtr @in = Marshal.AllocHGlobal(len);
+                Marshal.Copy(data, len * i, @in, len);
+                entry = (RpmStruct.RPMEntry)Marshal.PtrToStructure(@in, typeof(RpmStruct.RPMEntry));
+                Marshal.FreeHGlobal(@in);
+                entry.Count = ReverseBytes(entry.Count);
+                entry.Offset = ReverseBytes(entry.Offset);
+                entry.Tag = ReverseBytes(entry.Tag);
+                entry.Type = ReverseBytes(entry.Type);
+                entries[i] = entry;
+            }
+            return true;
         }
 
         public string GetVersion()
