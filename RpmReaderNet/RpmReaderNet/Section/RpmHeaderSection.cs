@@ -12,13 +12,30 @@ namespace RpmReaderNet.Section
     internal class RpmHeaderSection
         : AbstractRpmSection
     {
+
+        /// <summary>
+        /// Версия пакета
+        /// </summary>
+        public string Version
+        {
+            get
+            {
+                return _version.Value;
+            }
+        }
+
+        /// <summary>
+        /// Версия
+        /// </summary>
+        private Lazy<string> _version;
+
         /// <summary>
         /// Структура заголовка
         /// </summary>
         public RpmStruct.RPMHeader Header = new RpmStruct.RPMHeader();
 
         // разделы заголовка
-        private RpmStruct.RPMEntry[] entries;
+        private RpmStruct.RPMEntry[] _entries;
 
         /// <summary>
         /// размер одного раздела в секции
@@ -28,6 +45,7 @@ namespace RpmReaderNet.Section
         public RpmHeaderSection(FileStream file)
             : base(file)
         {
+            _version = new Lazy<string>(GetVersion);
         }
 
         /// <summary>
@@ -66,7 +84,7 @@ namespace RpmReaderNet.Section
         public bool FillHeaderEntry(byte[] data, int countEntry)
         {
             int len = Marshal.SizeOf(typeof(RpmStruct.RPMEntry));
-            entries = new RpmStruct.RPMEntry[countEntry];
+            _entries = new RpmStruct.RPMEntry[countEntry];
             for(int i = 0; i < countEntry; ++i)
             {
                 RpmStruct.RPMEntry entry = new RpmStruct.RPMEntry();
@@ -78,14 +96,14 @@ namespace RpmReaderNet.Section
                 entry.Offset = ReverseBytes(entry.Offset);
                 entry.Tag = ReverseBytes(entry.Tag);
                 entry.Type = ReverseBytes(entry.Type);
-                entries[i] = entry;
+                _entries[i] = entry;
             }
             return true;
         }
 
-        public string GetVersion()
+        private string GetVersion()
         {
-            var entry = entries.Where(e => e.Tag == (int)RpmConstants.rpmTag.RPMTAG_VERSION)
+            var entry = _entries.Where(e => e.Tag == (int)RpmConstants.rpmTag.RPMTAG_VERSION)
                 .Cast<RpmStruct.RPMEntry?>()
                 .FirstOrDefault();
             if (entry != null)

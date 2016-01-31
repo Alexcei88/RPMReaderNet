@@ -18,14 +18,7 @@ namespace RpmReaderNet
         {
             get
             {
-                if (IsValidate)
-                {
-                    if (_version == null)
-                    {
-                        _version = _headerSection.GetVersion();
-                    }
-                }
-                return _version;
+                return _headerSection.Version;
             }
         }
 
@@ -76,11 +69,6 @@ namespace RpmReaderNet
         /// Поток данных файла
         /// </summary>
         private FileStream _fileStream;
-
-        /// <summary>
-        /// Версия файла
-        /// </summary>
-        private string _version;
 
         /// <summary>
         /// Состояние чтения файла
@@ -171,17 +159,33 @@ namespace RpmReaderNet
         {
             if (FindBytes(RpmStruct.RPM_MAGIC_SIGNATURE_NUMBER))
             {
-
-                int size = Marshal.SizeOf<RpmStruct.RPMSignature>();
                 _signatureSection.StartPosition = _fileStream.Position - RpmStruct.RPM_MAGIC_SIGNATURE_NUMBER.Length * sizeof(byte);
-                _signatureSection.Signature.headerVersion = (byte)_fileStream.ReadByte();
-                ReadIntFromCurrentPosition(out _signatureSection.Signature.reserved);
-                ReadIntFromCurrentPosition(out _signatureSection.Signature.entryCount);
-                ReadIntFromCurrentPosition(out _signatureSection.Signature.bytesDataCount);
+                /// чтение данных залоговка раздела
+                _fileStream.Seek(_headerSection.StartPosition, SeekOrigin.Begin);
+                int countData = Marshal.SizeOf(typeof(RpmStruct.RPMSignature));
+                byte[] data = new byte[countData];
+                if (_fileStream.Read(data, 0, countData) < countData)
+                {
+                    return false;
+                }
 
-                // Сигнатуру пропускаем, данные из нее нам не нужны
-                _fileStream.Ignore(RpmSignatureSection.SIZE_ONE_ENTRY * _signatureSection.Signature.entryCount);
-                _fileStream.Ignore(_signatureSection.Signature.bytesDataCount);
+                if (!_signatureSection.FillHeaderData(data))
+                {
+                    return false;
+                }
+
+                /// чтение данных о разделе
+                countData = Marshal.SizeOf(typeof(RpmStruct.RPMEntry)) * _signatureSection.Signature.entryCount;
+                data = new byte[countData];
+                if (_fileStream.Read(data, 0, countData) < countData)
+                {
+                    return false;
+                }
+
+                if (!_signatureSection.FillHeaderEntry(data, _signatureSection.Signature.entryCount))
+                {
+                    return false;
+                }
                 return true;
             }
             return false;
@@ -241,22 +245,7 @@ namespace RpmReaderNet
             }
             return true;
         }
-
-        private bool ReadIntFromCurrentPosition(out int value)
-        {
-            const int size = sizeof(int);
-            byte[] buffer = new byte[size];
-            if (_fileStream.Read(buffer, 0, size) < size)
-            {
-                value = -1;
-                return false;
-            }
-            Array.Reverse(buffer);
-            value = BitConverter.ToInt32(buffer, 0);
-            return true;
-        }
-
-  
+ 
         public void Dispose()
         {
             if (isDisposed) return;

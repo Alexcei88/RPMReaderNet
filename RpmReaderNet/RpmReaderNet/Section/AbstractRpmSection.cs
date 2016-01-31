@@ -27,6 +27,7 @@ namespace RpmReaderNet.Section
         {
             _fileStream = fileStream;
             _dataEntryReaders[RpmConstants.rpmTagType.RPM_STRING_TYPE] = ReadStringTagType;
+            _dataEntryReaders[RpmConstants.rpmTagType.RPM_INT32_TYPE] = ReadInt32;
         }
 
         static public bool ByteArrayCompare(byte[] a1, byte[] a2)
@@ -46,7 +47,7 @@ namespace RpmReaderNet.Section
         }
 
         /// <summary>
-        /// Чтение данных типа 6
+        /// Чтение данных тега типа 6(string)
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
@@ -66,5 +67,22 @@ namespace RpmReaderNet.Section
             }
             return data.ToArray();
         }
+
+        /// <summary>
+        /// Чтение данных тега типа 4(int32)
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        private byte[] ReadInt32(long position)
+        {
+            const int size = sizeof(int);
+            byte[] buffer = new byte[size];
+            if (_fileStream.Read(buffer, 0, size) < size)
+            {
+                return null;
+            }
+            return buffer;
+        }
+
     }
 }
