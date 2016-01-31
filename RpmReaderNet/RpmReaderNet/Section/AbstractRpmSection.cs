@@ -27,6 +27,7 @@ namespace RpmReaderNet.Section
         {
             _fileStream = fileStream;
             _dataEntryReaders[RpmConstants.rpmTagType.RPM_STRING_TYPE] = ReadStringTagType;
+            _dataEntryReaders[RpmConstants.rpmTagType.RPM_I18NSTRING_TYPE] = ReadI18StringTagType;
             _dataEntryReaders[RpmConstants.rpmTagType.RPM_INT32_TYPE] = ReadInt32;
         }
 
@@ -69,6 +70,28 @@ namespace RpmReaderNet.Section
         }
 
         /// <summary>
+        /// Чтение данных тега типа 9(i18string)
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        protected byte[] ReadI18StringTagType(long position)
+        {
+            _fileStream.Seek(position, SeekOrigin.Begin);
+            byte sym;
+            List<byte> data = new List<byte>();
+            while (_fileStream.CanRead)
+            {
+                sym = (byte)_fileStream.ReadByte();
+                if (sym == '\0')
+                {
+                    break;
+                }
+                data.Add(sym);
+            }
+            return data.ToArray();
+        }
+
+        /// <summary>
         /// Чтение данных тега типа 4(int32)
         /// </summary>
         /// <param name="position"></param>
@@ -82,6 +105,24 @@ namespace RpmReaderNet.Section
                 return null;
             }
             return buffer;
+        }
+
+        protected byte[][] ReadDataEntry(long startFirstEntryPosition, RpmStruct.RPMEntry entry)
+        {
+            Func<long, byte[]> func;
+            if (_dataEntryReaders.TryGetValue((RpmConstants.rpmTagType)entry.Type, out func))
+            {
+                List<byte[]> data = new List<byte[]>();
+                for (int i = 0; i < entry.Count; ++i)
+                {
+                    data.Add(func(startFirstEntryPosition + entry.Offset));
+                }
+                return data.ToArray();
+            }
+            else
+            {
+                throw new Exception(string.Format("Для тега типа {0} не реализована функция чтения данных", entry.Type));
+            }
         }
 
     }

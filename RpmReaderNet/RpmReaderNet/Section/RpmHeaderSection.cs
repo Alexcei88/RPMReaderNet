@@ -12,7 +12,6 @@ namespace RpmReaderNet.Section
     internal class RpmHeaderSection
         : AbstractRpmSection
     {
-
         /// <summary>
         /// Версия пакета
         /// </summary>
@@ -25,9 +24,54 @@ namespace RpmReaderNet.Section
         }
 
         /// <summary>
-        /// Версия
+        /// Имя пакета
         /// </summary>
+        public string Name
+        {
+            get
+            {
+                return _name.Value;
+            }
+        }
+
+        public string Release
+        {
+            get
+            {
+                return _release.Value;
+            }
+        }
+
+        public string Serial
+        {
+            get
+            {
+                return _serial.Value;
+            }
+        }
+
+        public string Summary
+        {
+            get
+            {
+                return _summary.Value;
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                return _description.Value;
+            }
+        }
+
+        private Lazy<string> _name;
         private Lazy<string> _version;
+        private Lazy<string> _release;
+        private Lazy<string> _serial;
+        private Lazy<string> _summary;
+        private Lazy<string> _description;
 
         /// <summary>
         /// Структура заголовка
@@ -46,6 +90,11 @@ namespace RpmReaderNet.Section
             : base(file)
         {
             _version = new Lazy<string>(GetVersion);
+            _name = new Lazy<string>(GetName);
+            _release = new Lazy<string>(GetRelease);
+            _serial = new Lazy<string>(GetSerial);
+            _summary = new Lazy<string>(GetSummary);
+            _description = new Lazy<string>(GetDescription);
         }
 
         /// <summary>
@@ -103,11 +152,51 @@ namespace RpmReaderNet.Section
 
         private string GetVersion()
         {
-            var entry = _entries.Where(e => e.Tag == (int)RpmConstants.rpmTag.RPMTAG_VERSION)
-                .Cast<RpmStruct.RPMEntry?>()
-                .FirstOrDefault();
+            return GetStringFromTag(RpmConstants.rpmTag.RPMTAG_VERSION);
+        }
+
+        private string GetName()
+        {
+            return GetStringFromTag(RpmConstants.rpmTag.RPMTAG_NAME);
+        }
+
+        private string GetRelease()
+        {
+            return GetStringFromTag(RpmConstants.rpmTag.RPMTAG_RELEASE);
+        }
+
+        private string GetSerial()
+        {
+            return GetStringFromTag(RpmConstants.rpmTag.RPMTAG_EPOCH);
+        }
+
+        private string GetSummary()
+        {
+            return GetI18StringFromTag(RpmConstants.rpmTag.RPMTAG_SUMMARY);
+        }
+
+        private string GetDescription()
+        {
+            return GetI18StringFromTag(RpmConstants.rpmTag.RPMTAG_DESCRIPTION);
+        }
+
+        /// <summary>
+        /// Получение одной строки с данными из тега
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
+        private string GetI18StringFromTag(RpmConstants.rpmTag tag)
+        {
+            var entry = _entries.Where(e => e.Tag == (int)tag)
+                        .Cast<RpmStruct.RPMEntry?>()
+                        .FirstOrDefault();
             if (entry != null)
             {
+                if ((uint)RpmConstants.rpmTagType.RPM_I18NSTRING_TYPE != entry.Value.Type)
+                {
+                    throw new InvalidDataException("Тип тега у раздела не равен типу тега RPM_I18NSTRING_TYPE");
+                }
+
                 long startPosition = GetStartPositionFirstEntry();
                 byte[][] data = ReadDataEntry(startPosition, entry.Value);
                 if (data.Length > 0)
@@ -115,25 +204,36 @@ namespace RpmReaderNet.Section
                     return System.Text.Encoding.UTF8.GetString(data.ElementAt(0));
                 }
             }
-            return string.Empty;
+            return null;
+
         }
 
-        private byte[][] ReadDataEntry(long startFirstEntryPosition, RpmStruct.RPMEntry entry)
+        /// <summary>
+        /// Получение одной строки с данными из тега
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
+        private string GetStringFromTag(RpmConstants.rpmTag tag)
         {
-            Func<long, byte[]> func;
-            if (_dataEntryReaders.TryGetValue((RpmConstants.rpmTagType)entry.Type, out func))
+            var entry = _entries.Where(e => e.Tag == (int)tag)
+                        .Cast<RpmStruct.RPMEntry?>()
+                        .FirstOrDefault();
+            if (entry != null)
             {
-                List<byte[]> data = new List<byte[]>();
-                for (int i = 0; i < entry.Count; ++i)
+                if ((uint)RpmConstants.rpmTagType.RPM_STRING_TYPE != entry.Value.Type)
                 {
-                    data.Add(func(startFirstEntryPosition + entry.Offset));
+                    throw new InvalidDataException("Тип тега у раздела не равен типу тега RpmConstants.rpmTagType.RPM_STRING_TYPE");
                 }
-                return data.ToArray();
+
+                long startPosition = GetStartPositionFirstEntry();
+                byte[][] data = ReadDataEntry(startPosition, entry.Value);
+                if (data.Length > 0)
+                {
+                    return System.Text.Encoding.UTF8.GetString(data.ElementAt(0));
+                }
             }
-            else
-            {
-                throw new Exception(string.Format("Для тега типа {0} не реализована функция чтения данных", entry.Type));
-            }
+            return null;
+
         }
     }
 }

@@ -18,7 +18,50 @@ namespace RpmReaderNet
         {
             get
             {
-                return _headerSection.Version;
+                return IsValidate ? _headerSection.Version : null;
+            }
+        }
+
+        public string Release
+        {
+            get
+            {
+                return IsValidate ? _headerSection.Release : null;
+            }
+        }
+
+        public string Serial
+        {
+            get
+            {
+                return IsValidate ? _headerSection.Serial : null;
+            }
+        }
+
+        /// <summary>
+        /// Имя пакета
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return IsValidate ? _headerSection.Name : null;
+            }
+        }
+
+        public string Summary
+        {
+            get
+            {
+                return IsValidate ? _headerSection.Summary : null;
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                return IsValidate ? _headerSection.Description : null;
             }
         }
 
@@ -26,22 +69,7 @@ namespace RpmReaderNet
         {
             get
             {
-                if (_state == StateRead.RPMFILE_VALIDATE_SUCCESS)
-                {
-                    return true;
-                }
-                else
-                {
-                    if (_state == StateRead.RPMFILE_NOTFOUND || _state == StateRead.RPMFILE_VALIDATE_ERROR)
-                    {
-                        return false;
-                    }
-                    else if (_state == StateRead.RPMFILE_NOT_VALIDATE)
-                    {
-                        return Validate();
-                    }
-                }
-                return false;
+                return CheckValidate();
             }
         }
 
@@ -127,14 +155,14 @@ namespace RpmReaderNet
             if (_state == StateRead.RPMFILE_VALIDATE_SUCCESS)
                 return true;
 
-            List<Func<bool>> BinaryReader = new List<Func<bool>>();
-            BinaryReader.Add(ReadLead);
-            BinaryReader.Add(ReadSignature);
-            BinaryReader.Add(ReadHeader);
+            List<Func<bool>> readers = new List<Func<bool>>();
+            readers.Add(ReadLead);
+            readers.Add(ReadSignature);
+            readers.Add(ReadHeader);
 
             bool validate = true;
 
-            foreach (var reader in BinaryReader)
+            foreach (var reader in readers)
             {
                 if (!reader())
                 {
@@ -145,6 +173,26 @@ namespace RpmReaderNet
 
             _state = validate ? StateRead.RPMFILE_VALIDATE_SUCCESS : StateRead.RPMFILE_VALIDATE_ERROR;
             return validate;
+        }
+
+        private bool CheckValidate()
+        {
+            if (_state == StateRead.RPMFILE_VALIDATE_SUCCESS)
+            {
+                return true;
+            }
+            else
+            {
+                if (_state == StateRead.RPMFILE_NOTFOUND || _state == StateRead.RPMFILE_VALIDATE_ERROR)
+                {
+                    return false;
+                }
+                else if (_state == StateRead.RPMFILE_NOT_VALIDATE)
+                {
+                    return Validate();
+                }
+            }
+            return false;
         }
 
         private bool ReadLead()
@@ -161,7 +209,7 @@ namespace RpmReaderNet
             {
                 _signatureSection.StartPosition = _fileStream.Position - RpmStruct.RPM_MAGIC_SIGNATURE_NUMBER.Length * sizeof(byte);
                 /// чтение данных залоговка раздела
-                _fileStream.Seek(_headerSection.StartPosition, SeekOrigin.Begin);
+                _fileStream.Seek(_signatureSection.StartPosition, SeekOrigin.Begin);
                 int countData = Marshal.SizeOf(typeof(RpmStruct.RPMSignature));
                 byte[] data = new byte[countData];
                 if (_fileStream.Read(data, 0, countData) < countData)
