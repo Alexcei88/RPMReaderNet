@@ -22,7 +22,7 @@ namespace RpmReaderNet
                 {
                     if (_version == null)
                     {
-                        _version = GetVersion();
+                        _version = _headerSection.GetVersion();
                     }
                 }
                 return _version;
@@ -55,17 +55,17 @@ namespace RpmReaderNet
         /// <summary>
         /// Lead секция
         /// </summary>
-        private RpmLeadSection _leadSection = new RpmLeadSection();
+        private RpmLeadSection _leadSection;
 
         /// <summary>
         /// signature секция
         /// </summary>
-        private RpmSignatureSection _signatureSection = new RpmSignatureSection();
+        private RpmSignatureSection _signatureSection;
 
         /// <summary>
         /// header секция
         /// </summary>
-        private RpmHeaderSection _headerSection = new RpmHeaderSection();
+        private RpmHeaderSection _headerSection;
 
         /// <summary>
         /// Был ли разрушен объект
@@ -109,11 +109,6 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// Функции читатели данных в зависимости от типа тега
-        /// </summary>
-        private Dictionary<RpmConstants.rpmTagType, Func<long, byte[]>> _dataEntryReaders = new Dictionary<RpmConstants.rpmTagType, Func<long, byte[]>>();
-
-        /// <summary>
         /// Текущее состояние файла
         /// </summary>
         private StateRead _state;
@@ -126,7 +121,9 @@ namespace RpmReaderNet
                 _fileStream = new FileStream(rpmFile, FileMode.Open, FileAccess.Read);
                 _state = StateRead.RPMFILE_NOT_VALIDATE;
 
-                _dataEntryReaders[RpmConstants.rpmTagType.RPM_STRING_TYPE] = ReadStringTagType;
+                _headerSection = new RpmHeaderSection(_fileStream);
+                _leadSection = new RpmLeadSection(_fileStream);
+                _signatureSection = new RpmSignatureSection(_fileStream);
             }
         }
 
@@ -212,45 +209,10 @@ namespace RpmReaderNet
                     entries[i] = entry;
                 }
 
-                _headerSection.Header.entries = entries;
+                _headerSection.entries = entries;
                 return true;
             }
             return false;
-        }
-
-        private string GetVersion()
-        {
-            var entry = _headerSection.Header.entries.Where(e => e.Tag == (int)RpmConstants.rpmTag.RPMTAG_VERSION)
-                .Cast<RpmStruct.RPMEntry?>()
-                .FirstOrDefault();
-            if(entry != null)
-            {
-                long startPosition = _headerSection.GetStartPositionFirstEntry();
-                byte[][] data = ReadDataEntry(startPosition, entry.Value);
-                if(data.Length > 0)
-                {
-                    return System.Text.Encoding.UTF8.GetString(data.ElementAt(0));
-                }
-            }
-            return string.Empty;
-        }
-
-        private byte[][] ReadDataEntry(long startFirstEntryPosition, RpmStruct.RPMEntry entry)
-        {
-            Func<long, byte[]> func;
-            if(_dataEntryReaders.TryGetValue((RpmConstants.rpmTagType)entry.Type, out func))
-            {
-                List<byte[]> data = new List<byte[]>();
-                for(int i = 0; i < entry.Count; ++i)
-                {
-                    data.Add(func(startFirstEntryPosition + entry.Offset));
-                }
-                return data.ToArray();
-            }
-            else
-            {
-                throw new Exception(string.Format("Для тега типа {0} не реализована функция чтения данных", entry.Type));
-            }
         }
 
         private bool FindBytes(byte[] bytes)
@@ -286,28 +248,7 @@ namespace RpmReaderNet
             return true;
         }
 
-        /// <summary>
-        /// Чтение данных типа 6
-        /// </summary>
-        /// <param name="position"></param>
-        /// <returns></returns>
-        private byte[] ReadStringTagType(long position)
-        {
-            _fileStream.Seek(position, SeekOrigin.Begin);
-            byte sym;
-            List<byte> data = new List<byte>();
-            while(_fileStream.CanRead)
-            {
-                sym = (byte)_fileStream.ReadByte();
-                if(sym == '\0')
-                {
-                    break;
-                }
-                data.Add(sym);
-            }
-            return data.ToArray();
-        }   
-
+  
         public void Dispose()
         {
             if (isDisposed) return;

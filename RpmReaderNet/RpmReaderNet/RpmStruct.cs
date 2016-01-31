@@ -60,16 +60,6 @@ namespace RpmReaderNet
 
             // количество байт с данными сигнатуры
             public int bytesDataCount;
-
-            // разделы заголовка
-            public RPMEntry[] entry;
-
-            static public RPMSignature Create(int countEntry)
-            {
-                RPMSignature signature = new RPMSignature();
-                signature.entry = new RPMEntry[countEntry];
-                return signature;
-            }
         };
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -89,16 +79,6 @@ namespace RpmReaderNet
 
             // количество байт с данными
             public int bytesDataCount;
-
-            // разделы заголовка
-            public RPMEntry[] entries;
-
-            static public RPMHeader Create(int countEntry)
-            {
-                RPMHeader header = new RPMHeader();
-                header.entries = new RPMEntry[countEntry];
-                return header;
-            }
         };
     }
 }

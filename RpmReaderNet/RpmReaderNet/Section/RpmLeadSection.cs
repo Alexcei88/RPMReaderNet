@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace RpmReaderNet.Section
@@ -11,7 +12,8 @@ namespace RpmReaderNet.Section
     {
         public RpmStruct.rpmlead Lead = new RpmStruct.rpmlead();
 
-        public RpmLeadSection()
+        public RpmLeadSection(FileStream file)
+            : base(file)
         {
             StartPosition = 0;
         }
