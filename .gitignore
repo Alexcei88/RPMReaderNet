@@ -7,3 +7,4 @@
 /RpmReaderNet/RpmReaderTest/bin/Debug
 /RpmReaderNet/RpmReaderTest/obj/Debug
 *.suo
+/RpmReaderNet/packages/SharpZipLib.0.86.0

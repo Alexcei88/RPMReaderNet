@@ -1,6 +1,7 @@
 ﻿using RpmReaderNet;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,8 +22,10 @@ namespace RpmReaderTest
                     Console.WriteLine("Serial: {0}", reader.Serial);
                     Console.WriteLine("Summary: {0}", reader.Summary);
                     Console.WriteLine("Description: {0}", reader.Description);
-
                 }
+
+                reader.SaveGZip(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cpiofromrom.cpio"));
+
                 Console.ReadKey();
             }
 

@@ -89,6 +89,11 @@ namespace RpmReaderNet
         private RpmHeaderSection _headerSection;
 
         /// <summary>
+        /// archive секция
+        /// </summary>
+        private RpmArchiveSection _archiveSection;
+
+        /// <summary>
         /// Был ли разрушен объект
         /// </summary>
         private bool isDisposed;
@@ -140,6 +145,7 @@ namespace RpmReaderNet
                 _headerSection = new RpmHeaderSection(_fileStream);
                 _leadSection = new RpmLeadSection(_fileStream);
                 _signatureSection = new RpmSignatureSection(_fileStream);
+                _archiveSection = new RpmArchiveSection(_fileStream);
             }
         }
 
@@ -159,6 +165,7 @@ namespace RpmReaderNet
             readers.Add(ReadLead);
             readers.Add(ReadSignature);
             readers.Add(ReadHeader);
+            readers.Add(ReadArchive);
 
             bool validate = true;
 
@@ -193,6 +200,11 @@ namespace RpmReaderNet
                 }
             }
             return false;
+        }
+
+        public void SaveGZip(string fileName)
+        {
+            _archiveSection.SaveCpioArchive(fileName);
         }
 
         private bool ReadLead()
@@ -270,6 +282,21 @@ namespace RpmReaderNet
                 {
                     return false;
                 }
+                return true;
+            }
+            return false;
+        }
+
+        private bool ReadArchive()
+        {
+            if (FindBytes(RpmArchiveSection.RPM_MAGIC_GZIP_NUMBER))
+            {
+                _archiveSection.StartPosition = _fileStream.Position - RpmArchiveSection.RPM_MAGIC_GZIP_NUMBER.Length * sizeof(byte);
+                long size = _fileStream.Length - _archiveSection.StartPosition;
+                _fileStream.Seek(_archiveSection.StartPosition, SeekOrigin.Begin);
+                byte[] buffer = new byte[size];
+                _fileStream.Read(buffer, 0, (int)size);
+                _archiveSection.Data = buffer;
                 return true;
             }
             return false;
