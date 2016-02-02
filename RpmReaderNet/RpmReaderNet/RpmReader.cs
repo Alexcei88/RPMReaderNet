@@ -209,7 +209,7 @@ namespace RpmReaderNet
 
         private bool ReadLead()
         {
-            int size = Marshal.SizeOf<RpmStruct.rpmlead>();
+            int size = Marshal.SizeOf(typeof(RpmStruct.rpmlead));
             byte[] buffer = new byte[size];
             _fileStream.Read(buffer, 0, size);
             return _leadSection.FillSection(buffer);

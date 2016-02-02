@@ -84,7 +84,7 @@ namespace RpmReaderNet.Section
         /// <summary>
         /// размер одного раздела в секции
         /// </summary>
-        public readonly long SIZE_ONE_ENTRY = Marshal.SizeOf<RpmStruct.RPMEntry>();
+        public readonly long SIZE_ONE_ENTRY = Marshal.SizeOf(typeof(RpmStruct.RPMEntry));
 
         public RpmHeaderSection(FileStream file)
             : base(file)
