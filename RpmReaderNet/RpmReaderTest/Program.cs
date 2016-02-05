@@ -24,7 +24,7 @@ namespace RpmReaderTest
                     Console.WriteLine("Description: {0}", reader.Description);
                 }
 
-                reader.SaveGZip(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cpiofromrom.cpio"));
+                reader.SaveArchive(AppDomain.CurrentDomain.BaseDirectory);
 
                 Console.ReadKey();
             }

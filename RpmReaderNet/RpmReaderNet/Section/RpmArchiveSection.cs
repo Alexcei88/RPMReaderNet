@@ -28,7 +28,24 @@ namespace RpmReaderNet.Section
 
         }
 
-        public void SaveCpioArchive(string fileName)
+        public void SaveArchive(string destFolder)
+        {
+            string tempDirectory = GetTemporaryDirectory();
+            string tempCpioFile = Path.Combine(tempDirectory, Path.GetRandomFileName());
+            SaveGZipArchive(tempCpioFile);
+
+            if (!ArchiveUtils.ExtractArArchive(tempCpioFile, destFolder))
+            {
+                // удаляем временную папку
+                Directory.Delete(tempDirectory, true);
+                throw new Exception("Не удалось распаковать cpioArchive");
+            }
+
+            // удаляем временную папку
+            Directory.Delete(tempDirectory, true);
+        }
+
+        private void SaveGZipArchive(string fileName)
         {
             byte[] dataBuffer = new byte[4096];
             using (MemoryStream sr = new MemoryStream(Data, 0, Data.Length))
@@ -45,6 +62,19 @@ namespace RpmReaderNet.Section
             }
         }
 
-        
+        private void ExtractCpioArchive(string fileName, string destFolder)
+        {
+                    }
+
+        /// <summary>
+        /// Возвращает временную папку
+        /// </summary>
+        /// <returns></returns>
+        private static string GetTemporaryDirectory()
+        {
+            string tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+            Directory.CreateDirectory(tempDirectory);
+            return tempDirectory;
+        }
     }
 }

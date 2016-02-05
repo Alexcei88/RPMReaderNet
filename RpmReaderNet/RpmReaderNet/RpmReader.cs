@@ -202,9 +202,9 @@ namespace RpmReaderNet
             return false;
         }
 
-        public void SaveGZip(string fileName)
+        public void SaveArchive(string destFolder)
         {
-            _archiveSection.SaveCpioArchive(fileName);
+            _archiveSection.SaveArchive(destFolder);
         }
 
         private bool ReadLead()
