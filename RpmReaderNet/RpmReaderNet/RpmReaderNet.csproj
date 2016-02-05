@@ -78,7 +78,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArchiveUtils.cs" />
-    <Compile Include="FileStreamEx.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="RpmReaderProperty.cs" />
     <Compile Include="RpmReader.cs" />
     <Compile Include="Section\AbstractRpmSection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -92,20 +93,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="x64\archive.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="x64\extractarchive.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="x86\archive.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="x86\extractarchive.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

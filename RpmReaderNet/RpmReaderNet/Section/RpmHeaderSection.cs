@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -17,10 +18,7 @@ namespace RpmReaderNet.Section
         /// </summary>
         public string Version
         {
-            get
-            {
-                return _version.Value;
-            }
+            get { return _version.Value; }
         }
 
         /// <summary>
@@ -28,42 +26,42 @@ namespace RpmReaderNet.Section
         /// </summary>
         public string Name
         {
-            get
-            {
-                return _name.Value;
-            }
+            get { return _name.Value; }
         }
 
         public string Release
         {
-            get
-            {
-                return _release.Value;
-            }
+            get { return _release.Value; }
         }
 
         public string Serial
         {
-            get
-            {
-                return _serial.Value;
-            }
+            get { return _serial.Value; }
         }
 
         public string Summary
         {
-            get
-            {
-                return _summary.Value;
-            }
+            get { return _summary.Value; }
         }
 
         public string Description
         {
-            get
-            {
-                return _description.Value;
-            }
+            get { return _description.Value; }
+        }
+
+        public DateTime? BuildDateTime
+        {
+            get { return _buildTime.Value; }
+        }
+
+        public string BuildHost
+        {
+            get { return _buildHost.Value; }
+        }
+
+        public string Distribution
+        {
+            get { return _distribution.Value; }
         }
 
         private Lazy<string> _name;
@@ -72,6 +70,9 @@ namespace RpmReaderNet.Section
         private Lazy<string> _serial;
         private Lazy<string> _summary;
         private Lazy<string> _description;
+        private Lazy<DateTime?> _buildTime;
+        private Lazy<string> _buildHost;
+        private Lazy<string> _distribution;
 
         /// <summary>
         /// Структура заголовка
@@ -95,6 +96,9 @@ namespace RpmReaderNet.Section
             _serial = new Lazy<string>(GetSerial);
             _summary = new Lazy<string>(GetSummary);
             _description = new Lazy<string>(GetDescription);
+            _buildTime = new Lazy<DateTime?>(GetBuildDateTime);
+            _buildHost = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_BUILDHOST));
+            _distribution = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_DISTRIBUTION));
         }
 
         /// <summary>
@@ -180,6 +184,18 @@ namespace RpmReaderNet.Section
             return GetI18StringFromTag(RpmConstants.rpmTag.RPMTAG_DESCRIPTION);
         }
 
+        private DateTime? GetBuildDateTime()
+        {
+            int[] dateTimeStr = GetInt32FromTag(RpmConstants.rpmTag.RPMTAG_BUILDTIME);
+            if(dateTimeStr != null)
+            {
+                long second = dateTimeStr.First();
+                return second.FromUnixTime();
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Получение одной строки с данными из тега
         /// </summary>
@@ -233,7 +249,26 @@ namespace RpmReaderNet.Section
                 }
             }
             return null;
-
         }
+
+        private int[] GetInt32FromTag(RpmConstants.rpmTag tag)
+        {
+            var entry = _entries.Where(e => e.Tag == (int)tag)
+                        .Cast<RpmStruct.RPMEntry?>()
+                        .FirstOrDefault();
+            if (entry != null)
+            {
+                if ((uint)RpmConstants.rpmTagType.RPM_INT32_TYPE != entry.Value.Type)
+                {
+                    throw new InvalidDataException("Тип тега у раздела не равен типу тега RpmConstants.rpmTagType.RPM_INT32_TYPE");
+                }
+
+                long startPosition = GetStartPositionFirstEntry();
+                byte[][] data = ReadDataEntry(startPosition, entry.Value);
+                return data.Select(g => (int)BitConverter.ToUInt32(g, 0)).ToArray();
+            }
+            return null;
+        }
+
     }
 }

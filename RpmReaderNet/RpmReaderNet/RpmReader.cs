@@ -8,63 +8,9 @@ using System.Runtime.InteropServices;
 
 namespace RpmReaderNet
 {
-    public class RpmReader
+    public partial class RpmReader
         : IDisposable
     {
-        /// <summary>
-        /// Версия пакета
-        /// </summary>
-        public string Version
-        {
-            get
-            {
-                return IsValidate ? _headerSection.Version : null;
-            }
-        }
-
-        public string Release
-        {
-            get
-            {
-                return IsValidate ? _headerSection.Release : null;
-            }
-        }
-
-        public string Serial
-        {
-            get
-            {
-                return IsValidate ? _headerSection.Serial : null;
-            }
-        }
-
-        /// <summary>
-        /// Имя пакета
-        /// </summary>
-        public string Name
-        {
-            get
-            {
-                return IsValidate ? _headerSection.Name : null;
-            }
-        }
-
-        public string Summary
-        {
-            get
-            {
-                return IsValidate ? _headerSection.Summary : null;
-            }
-        }
-
-        public string Description
-        {
-            get
-            {
-                return IsValidate ? _headerSection.Description : null;
-            }
-        }
-
         public bool IsValidate
         {
             get

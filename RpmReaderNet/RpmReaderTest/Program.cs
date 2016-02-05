@@ -22,9 +22,12 @@ namespace RpmReaderTest
                     Console.WriteLine("Serial: {0}", reader.Serial);
                     Console.WriteLine("Summary: {0}", reader.Summary);
                     Console.WriteLine("Description: {0}", reader.Description);
+                    Console.WriteLine("BuildTime: {0}", reader.BuildTime);
+                    Console.WriteLine("BuildHost: {0}", reader.BuildHost);
+                    Console.WriteLine("Distribution: {0}", reader.Distribution);
                 }
 
-                reader.SaveArchive(AppDomain.CurrentDomain.BaseDirectory);
+                //reader.SaveArchive(AppDomain.CurrentDomain.BaseDirectory);
 
                 Console.ReadKey();
             }
