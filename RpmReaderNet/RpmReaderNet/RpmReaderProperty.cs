@@ -83,5 +83,35 @@ namespace RpmReaderNet
         {
             get { return IsValidate ? _headerSection.Source : null; }
         }
+
+        public string Arch
+        {
+            get { return IsValidate ? _headerSection.Arch : null; }
+        }
+
+        public string PreinScript
+        {
+            get { return IsValidate ? _headerSection.PreinScript : null; }
+        }
+
+        public string PostinScript
+        {
+            get { return IsValidate ? _headerSection.PostinScript : null; }
+        }
+
+        public string PreunScript
+        {
+            get { return IsValidate ? _headerSection.PreunScript : null; }
+        }
+        public string PostunScript
+        {
+            get { return IsValidate ? _headerSection.PostunScript : null; }
+        }
+
+        [Obsolete]
+        public string[] OldFileNames
+        {
+            get { return IsValidate ? _headerSection.OldFilenames : null; }
+        }
     }
 }

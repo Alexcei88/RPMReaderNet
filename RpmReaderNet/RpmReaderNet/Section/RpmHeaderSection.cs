@@ -11,7 +11,7 @@ namespace RpmReaderNet.Section
     /// header-секция
     /// </summary>
     internal class RpmHeaderSection
-        : AbstractRpmSection
+        : AbstractHeaderSection
     {
         /// <summary>
         /// Версия пакета
@@ -89,6 +89,38 @@ namespace RpmReaderNet.Section
             get { return _source.Value; }
         }
 
+        public string Arch
+        {
+            get { return _arch.Value; }
+        }
+
+        public string PreinScript
+        {
+            get { return _preinScript.Value; }
+        }
+
+        public string PostinScript
+        {
+            get { return _postinScript.Value; }
+        }
+
+        public string PreunScript
+        {
+            get { return _preunScript.Value; }
+        }
+        public string PostunScript
+        {
+            get { return _postunScript.Value; }
+        }
+
+        [Obsolete]
+        public string[] OldFilenames
+        {
+            get { return _oldFileNames.Value; }
+        }
+
+
+
         private Lazy<string> _name;
         private Lazy<string> _version;
         private Lazy<string> _release;
@@ -103,44 +135,49 @@ namespace RpmReaderNet.Section
         private Lazy<string> _packager;
         private Lazy<string> _changeLog;
         private Lazy<string[]> _source;
+        private Lazy<string> _arch;
+        private Lazy<string> _preinScript;
+        private Lazy<string> _postinScript;
+        private Lazy<string> _preunScript;
+        private Lazy<string> _postunScript;
+        private Lazy<string[]> _oldFileNames;
 
         /// <summary>
         /// Структура заголовка
         /// </summary>
         public RpmStruct.RPMHeader Header = new RpmStruct.RPMHeader();
 
-        // разделы заголовка
-        private RpmStruct.RPMEntry[] _entries;
-
-        /// <summary>
-        /// размер одного раздела в секции
-        /// </summary>
-        public readonly long SIZE_ONE_ENTRY = Marshal.SizeOf(typeof(RpmStruct.RPMEntry));
-
         public RpmHeaderSection(FileStream file)
             : base(file)
         {
-            _version = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_VERSION));
-            _name = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_NAME));
-            _release = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_RELEASE));
-            _serial = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_EPOCH));
+            _version = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_VERSION));
+            _name = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_NAME));
+            _release = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_RELEASE));
+            _serial = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_EPOCH));
             _summary = new Lazy<string>(() => GetI18StringFromTag(RpmConstants.rpmTag.RPMTAG_SUMMARY));
             _description = new Lazy<string>(() => GetI18StringFromTag(RpmConstants.rpmTag.RPMTAG_DESCRIPTION));
             _buildTime = new Lazy<DateTime?>(GetBuildDateTime);
-            _buildHost = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_BUILDHOST));
-            _distribution = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_DISTRIBUTION));
-            _vendor = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_VENDOR));
-            _license = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_LICENSE));
-            _packager = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_PACKAGER));
-            _changeLog = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_CHANGELOG));
-            _source = new Lazy<string[]>(() => GetStringArrayFromTag(RpmConstants.rpmTag.RPMTAG_SOURCE));
+            _buildHost = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_BUILDHOST));
+            _distribution = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_DISTRIBUTION));
+            _vendor = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_VENDOR));
+            _license = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_LICENSE));
+            _packager = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_PACKAGER));
+            _changeLog = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_CHANGELOG));
+            _source = new Lazy<string[]>(() => GetStringArrayFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_SOURCE));
+            _arch = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_ARCH));
+            _preinScript = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_PREIN));
+            _postinScript = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_POSTIN));
+            _preunScript = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_PREUN));
+            _postunScript = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_POSTUN));
+            _oldFileNames = new Lazy<string[]>(() => GetStringArrayFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_OLDFILENAMES));
+
         }
 
         /// <summary>
         /// Получение позиции первого раздела
         /// </summary>
         /// <returns></returns>
-        public long GetStartPositionFirstEntry()
+        public override long GetStartPositionFirstEntry()
         {
             return StartPosition + 16 + Header.entryCount * SIZE_ONE_ENTRY;
         }
@@ -189,6 +226,11 @@ namespace RpmReaderNet.Section
             return true;
         }
 
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+
         private DateTime? GetBuildDateTime()
         {
             int[] dateTimeStr = GetInt32FromTag(RpmConstants.rpmTag.RPMTAG_BUILDTIME);
@@ -201,89 +243,6 @@ namespace RpmReaderNet.Section
             return null;
         }
 
-        /// <summary>
-        /// Получение одной строки с данными из тега
-        /// </summary>
-        /// <param name="tag"></param>
-        /// <returns></returns>
-        private string GetI18StringFromTag(RpmConstants.rpmTag tag)
-        {
-            var entry = _entries.Where(e => e.Tag == (int)tag)
-                        .Cast<RpmStruct.RPMEntry?>()
-                        .FirstOrDefault();
-            if (entry != null)
-            {
-                if ((uint)RpmConstants.rpmTagType.RPM_I18NSTRING_TYPE != entry.Value.Type)
-                {
-                    throw new InvalidDataException("Тип тега у раздела не равен типу тега RPM_I18NSTRING_TYPE");
-                }
-
-                long startPosition = GetStartPositionFirstEntry();
-                byte[][] data = ReadDataEntry(startPosition, entry.Value);
-                if (data.Length > 0)
-                {
-                    return System.Text.Encoding.UTF8.GetString(data.ElementAt(0));
-                }
-            }
-            return null;
-
-        }
-
-        /// <summary>
-        /// Получение одной строки с данными из тега
-        /// </summary>
-        /// <param name="tag"></param>
-        /// <returns></returns>
-        private string GetStringFromTag(RpmConstants.rpmTag tag)
-        {
-            var array = GetStringArrayFromTag(tag);
-            if(array != null)
-            {
-                return array.First();
-            }
-            return null;
-        }
-
-        private string[] GetStringArrayFromTag(RpmConstants.rpmTag tag)
-        {
-            var entry = _entries.Where(e => e.Tag == (int)tag)
-                        .Cast<RpmStruct.RPMEntry?>()
-                        .FirstOrDefault();
-            if (entry != null)
-            {
-                if ((uint)RpmConstants.rpmTagType.RPM_STRING_TYPE != entry.Value.Type)
-                {
-                    throw new InvalidDataException("Тип тега у раздела не равен типу тега RpmConstants.rpmTagType.RPM_STRING_TYPE");
-                }
-
-                long startPosition = GetStartPositionFirstEntry();
-                byte[][] data = ReadDataEntry(startPosition, entry.Value);
-                if (data.Length > 0)
-                {
-                    return data.Select(g => System.Text.Encoding.UTF8.GetString(g)).ToArray();
-                }
-            }
-            return null;
-        }
-
-        private int[] GetInt32FromTag(RpmConstants.rpmTag tag)
-        {
-            var entry = _entries.Where(e => e.Tag == (int)tag)
-                        .Cast<RpmStruct.RPMEntry?>()
-                        .FirstOrDefault();
-            if (entry != null)
-            {
-                if ((uint)RpmConstants.rpmTagType.RPM_INT32_TYPE != entry.Value.Type)
-                {
-                    throw new InvalidDataException("Тип тега у раздела не равен типу тега RpmConstants.rpmTagType.RPM_INT32_TYPE");
-                }
-
-                long startPosition = GetStartPositionFirstEntry();
-                byte[][] data = ReadDataEntry(startPosition, entry.Value);
-                return data.Select(g => (int)BitConverter.ToUInt32(g, 0)).ToArray();
-            }
-            return null;
-        }
 
     }
 }

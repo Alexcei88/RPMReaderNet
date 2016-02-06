@@ -8,17 +8,9 @@ namespace RpmReaderNet.Section
     /// Signature cекция
     /// </summary>
     internal class RpmSignatureSection
-        : AbstractRpmSection
+        : AbstractHeaderSection
     {
         public RpmStruct.RPMSignature Signature = new RpmStruct.RPMSignature();
-
-        // разделы сигнатуры
-        public RpmStruct.RPMEntry[] _entries;
-
-        /// <summary>
-        /// размер одного раздела в секции
-        /// </summary>
-        public static readonly long SIZE_ONE_ENTRY = Marshal.SizeOf(typeof(RpmStruct.RPMEntry));
 
         public RpmSignatureSection(FileStream file)
             : base(file)
@@ -70,5 +62,9 @@ namespace RpmReaderNet.Section
             return true;
         }
 
+        public override long GetStartPositionFirstEntry()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

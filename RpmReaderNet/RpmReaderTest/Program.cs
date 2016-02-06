@@ -37,6 +37,21 @@ namespace RpmReaderTest
                             Console.WriteLine(s);
                         }
                     }
+                    Console.WriteLine("Arch: {0}", reader.Arch);
+                    Console.WriteLine("PreinScript: {0}", reader.PreinScript);
+                    Console.WriteLine("PostinScript: {0}", reader.PostinScript);
+                    Console.WriteLine("PreunScript: {0}", reader.PreunScript);
+                    Console.WriteLine("PostunScript: {0}", reader.PostunScript);
+                    Console.WriteLine("FileNames: ");
+                    if (reader.OldFileNames != null)
+                    {
+                        foreach (var s in reader.OldFileNames)
+                        {
+                            Console.WriteLine(s);
+                        }
+                    }
+
+
                 }
 
                 //reader.SaveArchive(AppDomain.CurrentDomain.BaseDirectory);

@@ -18,17 +18,9 @@ namespace RpmReaderNet.Section
         /// </summary>
         public long StartPosition { get; set; }
 
-        /// <summary>
-        /// Функции читатели данных в зависимости от типа тега
-        /// </summary>
-        protected Dictionary<RpmConstants.rpmTagType, Func<long, byte[]>> _dataEntryReaders = new Dictionary<RpmConstants.rpmTagType, Func<long, byte[]>>();
-
         public AbstractRpmSection(FileStream fileStream)
         {
             _fileStream = fileStream;
-            _dataEntryReaders[RpmConstants.rpmTagType.RPM_STRING_TYPE] = ReadStringTagType;
-            _dataEntryReaders[RpmConstants.rpmTagType.RPM_I18NSTRING_TYPE] = ReadI18StringTagType;
-            _dataEntryReaders[RpmConstants.rpmTagType.RPM_INT32_TYPE] = ReadInt32;
         }
 
         static public bool ByteArrayCompare(byte[] a1, byte[] a2)
@@ -96,7 +88,7 @@ namespace RpmReaderNet.Section
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        private byte[] ReadInt32(long position)
+        protected byte[] ReadInt32(long position)
         {
             const int size = sizeof(int);
             byte[] buffer = new byte[size];
@@ -106,24 +98,5 @@ namespace RpmReaderNet.Section
             }
             return buffer;
         }
-
-        protected byte[][] ReadDataEntry(long startFirstEntryPosition, RpmStruct.RPMEntry entry)
-        {
-            Func<long, byte[]> func;
-            if (_dataEntryReaders.TryGetValue((RpmConstants.rpmTagType)entry.Type, out func))
-            {
-                List<byte[]> data = new List<byte[]>();
-                for (int i = 0; i < entry.Count; ++i)
-                {
-                    data.Add(func(startFirstEntryPosition + entry.Offset));
-                }
-                return data.ToArray();
-            }
-            else
-            {
-                throw new Exception(string.Format("Для тега типа {0} не реализована функция чтения данных", entry.Type));
-            }
-        }
-
     }
 }

@@ -81,6 +81,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="RpmReaderProperty.cs" />
     <Compile Include="RpmReader.cs" />
+    <Compile Include="Section\AbstractHeaderSection.cs" />
     <Compile Include="Section\AbstractRpmSection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RpmConstants.cs" />
