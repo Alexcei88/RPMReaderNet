@@ -58,5 +58,30 @@ namespace RpmReaderNet
         {
             get { return IsValidate ? _headerSection.Distribution : null; }
         }
+
+        public string Vendor
+        {
+            get { return IsValidate ? _headerSection.Vendor : null; }
+        }
+
+        public string License
+        {
+            get { return IsValidate ? _headerSection.License : null; }
+        }
+
+        public string Packager
+        {
+            get { return IsValidate ? _headerSection.Packager : null; }
+        }
+
+        public string Changelog
+        {
+            get { return IsValidate ? _headerSection.Changelog : null; }
+        }
+
+        public string[] Source
+        {
+            get { return IsValidate ? _headerSection.Source : null; }
+        }
     }
 }

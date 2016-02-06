@@ -64,6 +64,31 @@ namespace RpmReaderNet.Section
             get { return _distribution.Value; }
         }
 
+        public string Vendor
+        {
+            get { return _vendor.Value; }
+        }
+
+        public string License
+        {
+            get { return _license.Value; }
+        }
+
+        public string Packager
+        {
+            get { return _packager.Value; }
+        }
+
+        public string Changelog
+        {
+            get { return _changeLog.Value; }
+        }
+
+        public string[] Source
+        {
+            get { return _source.Value; }
+        }
+
         private Lazy<string> _name;
         private Lazy<string> _version;
         private Lazy<string> _release;
@@ -73,6 +98,11 @@ namespace RpmReaderNet.Section
         private Lazy<DateTime?> _buildTime;
         private Lazy<string> _buildHost;
         private Lazy<string> _distribution;
+        private Lazy<string> _vendor;
+        private Lazy<string> _license;
+        private Lazy<string> _packager;
+        private Lazy<string> _changeLog;
+        private Lazy<string[]> _source;
 
         /// <summary>
         /// Структура заголовка
@@ -90,15 +120,20 @@ namespace RpmReaderNet.Section
         public RpmHeaderSection(FileStream file)
             : base(file)
         {
-            _version = new Lazy<string>(GetVersion);
-            _name = new Lazy<string>(GetName);
-            _release = new Lazy<string>(GetRelease);
-            _serial = new Lazy<string>(GetSerial);
-            _summary = new Lazy<string>(GetSummary);
-            _description = new Lazy<string>(GetDescription);
+            _version = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_VERSION));
+            _name = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_NAME));
+            _release = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_RELEASE));
+            _serial = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_EPOCH));
+            _summary = new Lazy<string>(() => GetI18StringFromTag(RpmConstants.rpmTag.RPMTAG_SUMMARY));
+            _description = new Lazy<string>(() => GetI18StringFromTag(RpmConstants.rpmTag.RPMTAG_DESCRIPTION));
             _buildTime = new Lazy<DateTime?>(GetBuildDateTime);
             _buildHost = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_BUILDHOST));
             _distribution = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_DISTRIBUTION));
+            _vendor = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_VENDOR));
+            _license = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_LICENSE));
+            _packager = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_PACKAGER));
+            _changeLog = new Lazy<string>(() => GetStringFromTag(RpmConstants.rpmTag.RPMTAG_CHANGELOG));
+            _source = new Lazy<string[]>(() => GetStringArrayFromTag(RpmConstants.rpmTag.RPMTAG_SOURCE));
         }
 
         /// <summary>
@@ -154,36 +189,6 @@ namespace RpmReaderNet.Section
             return true;
         }
 
-        private string GetVersion()
-        {
-            return GetStringFromTag(RpmConstants.rpmTag.RPMTAG_VERSION);
-        }
-
-        private string GetName()
-        {
-            return GetStringFromTag(RpmConstants.rpmTag.RPMTAG_NAME);
-        }
-
-        private string GetRelease()
-        {
-            return GetStringFromTag(RpmConstants.rpmTag.RPMTAG_RELEASE);
-        }
-
-        private string GetSerial()
-        {
-            return GetStringFromTag(RpmConstants.rpmTag.RPMTAG_EPOCH);
-        }
-
-        private string GetSummary()
-        {
-            return GetI18StringFromTag(RpmConstants.rpmTag.RPMTAG_SUMMARY);
-        }
-
-        private string GetDescription()
-        {
-            return GetI18StringFromTag(RpmConstants.rpmTag.RPMTAG_DESCRIPTION);
-        }
-
         private DateTime? GetBuildDateTime()
         {
             int[] dateTimeStr = GetInt32FromTag(RpmConstants.rpmTag.RPMTAG_BUILDTIME);
@@ -231,6 +236,16 @@ namespace RpmReaderNet.Section
         /// <returns></returns>
         private string GetStringFromTag(RpmConstants.rpmTag tag)
         {
+            var array = GetStringArrayFromTag(tag);
+            if(array != null)
+            {
+                return array.First();
+            }
+            return null;
+        }
+
+        private string[] GetStringArrayFromTag(RpmConstants.rpmTag tag)
+        {
             var entry = _entries.Where(e => e.Tag == (int)tag)
                         .Cast<RpmStruct.RPMEntry?>()
                         .FirstOrDefault();
@@ -245,7 +260,7 @@ namespace RpmReaderNet.Section
                 byte[][] data = ReadDataEntry(startPosition, entry.Value);
                 if (data.Length > 0)
                 {
-                    return System.Text.Encoding.UTF8.GetString(data.ElementAt(0));
+                    return data.Select(g => System.Text.Encoding.UTF8.GetString(g)).ToArray();
                 }
             }
             return null;

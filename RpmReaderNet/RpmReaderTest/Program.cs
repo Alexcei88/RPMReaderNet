@@ -25,6 +25,18 @@ namespace RpmReaderTest
                     Console.WriteLine("BuildTime: {0}", reader.BuildTime);
                     Console.WriteLine("BuildHost: {0}", reader.BuildHost);
                     Console.WriteLine("Distribution: {0}", reader.Distribution);
+                    Console.WriteLine("Vendor: {0}", reader.Vendor);
+                    Console.WriteLine("License: {0}", reader.License);
+                    Console.WriteLine("Packager: {0}", reader.Packager);
+                    Console.WriteLine("Changelog: {0}", reader.Changelog);
+                    Console.WriteLine("Source: ");
+                    if (reader.Source != null)
+                    {
+                        foreach (var s in reader.Source)
+                        {
+                            Console.WriteLine(s);
+                        }
+                    }
                 }
 
                 //reader.SaveArchive(AppDomain.CurrentDomain.BaseDirectory);
