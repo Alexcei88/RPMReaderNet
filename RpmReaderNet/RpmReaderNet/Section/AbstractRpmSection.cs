@@ -98,5 +98,16 @@ namespace RpmReaderNet.Section
             }
             return buffer;
         }
+
+        protected byte[] ReadBin(long position)
+        {
+            const int size = 16;
+            byte[] buffer = new byte[size];
+            if (_fileStream.Read(buffer, 0, size) < size)
+            {
+                return null;
+            }
+            return buffer;
+        }
     }
 }

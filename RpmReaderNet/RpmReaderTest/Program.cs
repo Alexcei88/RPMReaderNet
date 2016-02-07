@@ -43,17 +43,27 @@ namespace RpmReaderTest
                     Console.WriteLine("PreunScript: {0}", reader.PreunScript);
                     Console.WriteLine("PostunScript: {0}", reader.PostunScript);
                     Console.WriteLine("FileNames: ");
-                    if (reader.OldFileNames != null)
+                    if (reader.FileUserNames != null)
                     {
-                        foreach (var s in reader.OldFileNames)
+                        foreach (var s in reader.FileUserNames)
                         {
                             Console.WriteLine(s);
                         }
                     }
 
+                    Console.WriteLine("FileSize: {0}", reader.FileSizes);
+                    Console.WriteLine("MD5 Files: ");
+                    if (reader.MD5Files != null)
+                    {
+                        foreach (var s in reader.MD5Files)
+                        {
+                            Console.WriteLine(s);
+                        }
+                    }
 
                 }
 
+                Console.WriteLine(reader.ToString());
                 //reader.SaveArchive(AppDomain.CurrentDomain.BaseDirectory);
 
                 Console.ReadKey();

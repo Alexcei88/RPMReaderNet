@@ -32,6 +32,8 @@ namespace RpmReaderNet.Section
             _dataEntryReaders[RpmConstants.rpmTagType.RPM_STRING_TYPE] = ReadStringTagType;
             _dataEntryReaders[RpmConstants.rpmTagType.RPM_I18NSTRING_TYPE] = ReadI18StringTagType;
             _dataEntryReaders[RpmConstants.rpmTagType.RPM_INT32_TYPE] = ReadInt32;
+            _dataEntryReaders[RpmConstants.rpmTagType.RPM_STRING_ARRAY_TYPE] = ReadStringTagType;
+            _dataEntryReaders[RpmConstants.rpmTagType.RPM_BIN_TYPE] = ReadBin;
 
         }
 
@@ -58,7 +60,7 @@ namespace RpmReaderNet.Section
         /// </summary>
         /// <param name="tag"></param>
         /// <returns></returns>
-        protected string GetI18StringFromTag(RpmConstants.rpmTag tag)
+        protected string GetI18StringFromTag(int tag)
         {
             var entry = _entries.Where(e => e.Tag == (int)tag)
                         .Cast<RpmStruct.RPMEntry?>()
@@ -86,17 +88,7 @@ namespace RpmReaderNet.Section
         /// </summary>
         /// <param name="tag"></param>
         /// <returns></returns>
-        protected string GetStringFromStringTypeTag(RpmConstants.rpmTag tag)
-        {
-            var array = GetStringArrayFromStringTypeTag(tag);
-            if (array != null)
-            {
-                return array.First();
-            }
-            return null;
-        }
-
-        protected string[] GetStringArrayFromStringTypeTag(RpmConstants.rpmTag tag)
+        protected string GetStringFromStringTypeTag(int tag)
         {
             var entry = _entries.Where(e => e.Tag == (int)tag)
                         .Cast<RpmStruct.RPMEntry?>()
@@ -112,13 +104,79 @@ namespace RpmReaderNet.Section
                 byte[][] data = ReadDataEntry(startPosition, entry.Value);
                 if (data.Length > 0)
                 {
-                    return data.Select(g => System.Text.Encoding.UTF8.GetString(g)).ToArray();
+                    return Encoding.UTF8.GetString(data.First());
                 }
             }
             return null;
         }
 
-        protected int[] GetInt32FromTag(RpmConstants.rpmTag tag)
+        protected uint GetInt32FromTag(int tag)
+        {
+            var entry = _entries.Where(e => e.Tag == (int)tag)
+                        .Cast<RpmStruct.RPMEntry?>()
+                        .FirstOrDefault();
+            if (entry != null)
+            {
+                if ((uint)RpmConstants.rpmTagType.RPM_INT32_TYPE != entry.Value.Type)
+                {
+                    throw new InvalidDataException("Тип тега у раздела не равен типу тега RpmConstants.rpmTagType.RPM_INT32_TYPE");
+                }
+
+                long startPosition = GetStartPositionFirstEntry();
+                byte[][] data = ReadDataEntry(startPosition, entry.Value);
+                if (data.Length > 0)
+                {
+                    return BitConverter.ToUInt32(data.First(), 0);
+                }
+            }
+            return default(int);
+        }
+
+        protected byte[] GetBinDataFromTag(int tag)
+        {
+            var entry = _entries.Where(e => e.Tag == (int)tag)
+                        .Cast<RpmStruct.RPMEntry?>()
+                        .FirstOrDefault();
+            if (entry != null)
+            {
+                if ((uint)RpmConstants.rpmTagType.RPM_BIN_TYPE != entry.Value.Type)
+                {
+                    throw new InvalidDataException("Тип тега у раздела не равен типу тега RpmConstants.rpmTagType.RPM_BIN_TYPE");
+                }
+
+                long startPosition = GetStartPositionFirstEntry();
+                byte[][] data = ReadDataEntry(startPosition, entry.Value);
+                if (data.Length > 0)
+                {
+                    return data.First();
+                }
+            }
+            return null;
+        }
+
+        protected string[] GetStringArrayFromTag(int tag)
+        {
+            var entry = _entries.Where(e => e.Tag == (int)tag)
+                        .Cast<RpmStruct.RPMEntry?>()
+                        .FirstOrDefault();
+            if (entry != null)
+            {
+                if ((uint)RpmConstants.rpmTagType.RPM_STRING_ARRAY_TYPE != entry.Value.Type)
+                {
+                    throw new InvalidDataException("Тип тега у раздела не равен типу тега RpmConstants.rpmTagType.RPM_STRING_ARRAY_TYPE");
+                }
+
+                long startPosition = GetStartPositionFirstEntry();
+                byte[][] data = ReadDataEntry(startPosition, entry.Value);
+                if (data.Length > 0)
+                {
+                    return data.Select(g => Encoding.UTF8.GetString(g)).ToArray();
+                }
+            }
+            return null;
+        }
+
+        protected int[] GetInt32ArrayFromTag(RpmConstants.rpmTag tag)
         {
             var entry = _entries.Where(e => e.Tag == (int)tag)
                         .Cast<RpmStruct.RPMEntry?>()

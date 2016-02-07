@@ -119,6 +119,22 @@ namespace RpmReaderNet.Section
             get { return _oldFileNames.Value; }
         }
 
+        public string[] FileUserNames
+        {
+            get { return _fileUserNames.Value; }
+        } 
+
+
+
+        public string[] MD5Files
+        {
+            get { return _md5Files.Value; }
+        }
+
+        public uint FileSizes
+        {
+            get { return _fileSizes.Value; }
+        }
 
 
         private Lazy<string> _name;
@@ -141,6 +157,9 @@ namespace RpmReaderNet.Section
         private Lazy<string> _preunScript;
         private Lazy<string> _postunScript;
         private Lazy<string[]> _oldFileNames;
+        private Lazy<string[]> _fileUserNames;
+        private Lazy<string[]> _md5Files;
+        private Lazy<uint> _fileSizes;
 
         /// <summary>
         /// Структура заголовка
@@ -150,27 +169,29 @@ namespace RpmReaderNet.Section
         public RpmHeaderSection(FileStream file)
             : base(file)
         {
-            _version = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_VERSION));
-            _name = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_NAME));
-            _release = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_RELEASE));
-            _serial = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_EPOCH));
-            _summary = new Lazy<string>(() => GetI18StringFromTag(RpmConstants.rpmTag.RPMTAG_SUMMARY));
-            _description = new Lazy<string>(() => GetI18StringFromTag(RpmConstants.rpmTag.RPMTAG_DESCRIPTION));
+            _version = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_VERSION));
+            _name = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_NAME));
+            _release = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_RELEASE));
+            _serial = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_EPOCH));
+            _summary = new Lazy<string>(() => GetI18StringFromTag((int)RpmConstants.rpmTag.RPMTAG_SUMMARY));
+            _description = new Lazy<string>(() => GetI18StringFromTag((int)RpmConstants.rpmTag.RPMTAG_DESCRIPTION));
             _buildTime = new Lazy<DateTime?>(GetBuildDateTime);
-            _buildHost = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_BUILDHOST));
-            _distribution = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_DISTRIBUTION));
-            _vendor = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_VENDOR));
-            _license = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_LICENSE));
-            _packager = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_PACKAGER));
-            _changeLog = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_CHANGELOG));
-            _source = new Lazy<string[]>(() => GetStringArrayFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_SOURCE));
-            _arch = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_ARCH));
-            _preinScript = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_PREIN));
-            _postinScript = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_POSTIN));
-            _preunScript = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_PREUN));
-            _postunScript = new Lazy<string>(() => GetStringFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_POSTUN));
-            _oldFileNames = new Lazy<string[]>(() => GetStringArrayFromStringTypeTag(RpmConstants.rpmTag.RPMTAG_OLDFILENAMES));
-
+            _buildHost = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_BUILDHOST));
+            _distribution = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_DISTRIBUTION));
+            _vendor = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_VENDOR));
+            _license = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_LICENSE));
+            _packager = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_PACKAGER));
+            _changeLog = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_CHANGELOG));
+            _source = new Lazy<string[]>(() => GetStringArrayFromTag((int)RpmConstants.rpmTag.RPMTAG_SOURCE));
+            _arch = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_ARCH));
+            _preinScript = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_PREIN));
+            _postinScript = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_POSTIN));
+            _preunScript = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_PREUN));
+            _postunScript = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_POSTUN));
+            _oldFileNames = new Lazy<string[]>(() => GetStringArrayFromTag((int)RpmConstants.rpmTag.RPMTAG_OLDFILENAMES));
+            _fileUserNames = new Lazy<string[]>(() => GetStringArrayFromTag((int)RpmConstants.rpmTag.RPMTAG_FILEUSERNAME));
+            _fileSizes = new Lazy<uint>(() => GetInt32FromTag((int)RpmConstants.rpmTag.RPMTAG_FILESIZES));
+            _md5Files = new Lazy<string[]>(() => GetStringArrayFromTag((int)RpmConstants.rpmTag.RPMTAG_FILEMD5S));
         }
 
         /// <summary>
@@ -233,14 +254,8 @@ namespace RpmReaderNet.Section
 
         private DateTime? GetBuildDateTime()
         {
-            int[] dateTimeStr = GetInt32FromTag(RpmConstants.rpmTag.RPMTAG_BUILDTIME);
-            if(dateTimeStr != null)
-            {
-                long second = dateTimeStr.First();
-                return second.FromUnixTime();
-            }
-
-            return null;
+            long dateTimeStr = GetInt32FromTag((int)RpmConstants.rpmTag.RPMTAG_BUILDTIME);
+            return dateTimeStr.FromUnixTime();
         }
 
 

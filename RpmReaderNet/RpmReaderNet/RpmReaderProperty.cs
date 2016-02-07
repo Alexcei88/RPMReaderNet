@@ -113,5 +113,59 @@ namespace RpmReaderNet
         {
             get { return IsValidate ? _headerSection.OldFilenames : null; }
         }
+
+        public string[] FileUserNames
+        {
+            get { return IsValidate ? _headerSection.FileUserNames : null; }
+        }
+        public uint FileSizes
+        {
+            get { return IsValidate ? _headerSection.FileSizes : default(uint); }
+        }
+
+        public string[] MD5Files
+        {
+            get { return IsValidate ? _headerSection.MD5Files : null; }
+        }
+
+        public byte[] MD5Signature
+        {
+            get { return IsValidate ? _signatureSection.MD5 : null; }
+        }
+
+        public byte[] GPGSignature
+        {
+            get { return IsValidate ? _signatureSection.GPG : null; }
+        }
+
+        public byte[] PGPSignature
+        {
+            get { return IsValidate ? _signatureSection.PGP : null; }
+        }
+
+        public string SHA1Signature
+        {
+            get { return IsValidate ? _signatureSection.SHA1 : null; }
+        }
+
+        public byte[] DSASignature
+        {
+            get { return IsValidate ? _signatureSection.DSA : null; }
+        }
+
+        public byte[] RSASignature
+        {
+            get { return IsValidate ? _signatureSection.RSA : null; }
+        }
+
+        public uint Size
+        {
+            get { return IsValidate ? _signatureSection.Size : default(uint); }
+        }
+
+        public uint PayloadSize
+        {
+            get { return IsValidate ? _signatureSection.PayloadSize : default(uint); }
+        }
     }
 }

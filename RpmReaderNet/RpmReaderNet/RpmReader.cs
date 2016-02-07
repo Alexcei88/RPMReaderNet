@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace RpmReaderNet
 {
@@ -151,6 +152,14 @@ namespace RpmReaderNet
         public void SaveArchive(string destFolder)
         {
             _archiveSection.SaveArchive(destFolder);
+        }
+
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("------Signature section------\n");
+            builder.Append(_signatureSection.ToString());
+            return builder.ToString();
         }
 
         private bool ReadLead()

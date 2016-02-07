@@ -2,6 +2,7 @@
 {
     internal static class RpmConstants
     {
+        public const int HEADER_SIGBASE = 256;
         public enum rpmTagType
         {
             RPM_NULL_TYPE = 0,
@@ -18,6 +19,29 @@
 
         public enum rpmTag
         {
+            RPMTAG_NOT_FOUND = -1,                   
+   
+            /* Retrofit (and uniqify) signature tags for use by rpmTagGetName() and rpmQuery. */
+            /* the md5 sum was broken *twice* on big endian machines */
+            /* XXX 2nd underscore prevents tagTable generation */
+            RPMTAG_SIG_BASE = HEADER_SIGBASE,
+            RPMTAG_SIGSIZE = RPMTAG_SIG_BASE + 1,    /* i */
+            RPMTAG_SIGLEMD5_1 = RPMTAG_SIG_BASE + 2,    /* internal - obsolete */
+            RPMTAG_SIGPGP = RPMTAG_SIG_BASE + 3,    /* x */
+            RPMTAG_SIGLEMD5_2 = RPMTAG_SIG_BASE + 4,    /* x internal - obsolete */
+            RPMTAG_SIGMD5 = RPMTAG_SIG_BASE + 5,    /* x */
+            RPMTAG_SIGGPG = RPMTAG_SIG_BASE + 6,    /* x */
+            RPMTAG_SIGPGP5 = RPMTAG_SIG_BASE + 7,    /* internal - obsolete */
+    
+            RPMTAG_BADSHA1_1 = RPMTAG_SIG_BASE + 8,    /* internal - obsolete */
+            RPMTAG_BADSHA1_2 = RPMTAG_SIG_BASE + 9,    /* internal - obsolete */
+            RPMTAG_PUBKEYS = RPMTAG_SIG_BASE + 10,   /* s[] */
+            RPMTAG_DSAHEADER = RPMTAG_SIG_BASE + 11,   /* x */
+            RPMTAG_RSAHEADER = RPMTAG_SIG_BASE + 12,   /* x */
+            RPMTAG_SHA1HEADER = RPMTAG_SIG_BASE + 13,   /* s */
+            RPMTAG_LONGSIGSIZE = RPMTAG_SIG_BASE + 14,   /* l */
+            RPMTAG_LONGARCHIVESIZE = RPMTAG_SIG_BASE + 15,   /* l */
+
             RPMTAG_NAME = 1000, /* s */
 
             //#define RPMTAG_N        RPMTAG_NAME     /* s */
@@ -224,5 +248,25 @@
             RPMTAG_FIRSTFREE_TAG
             /*@=enummemuse@*/
         };
+
+        public enum rpmSigTag
+        {
+            RPMSIGTAG_SIZE = 1000,
+            RPMSIGTAG_LEMD5_1 = 1001,
+            RPMSIGTAG_PGP = 1002,
+            RPMSIGTAG_LEMD5_2 = 1003,
+            RPMSIGTAG_MD5 = 1004,
+            RPMSIGTAG_GPG = 1005,
+            RPMSIGTAG_PGP5 = 1006,
+            RPMSIGTAG_PAYLOADSIZE = 1007,
+            RPMSIGTAG_RESERVEDSPACE = 1008,
+            RPMSIGTAG_BADSHA1_1 = rpmTag.RPMTAG_BADSHA1_1,
+            RPMSIGTAG_BADSHA1_2 = rpmTag.RPMTAG_BADSHA1_2,
+            RPMSIGTAG_SHA1 = rpmTag.RPMTAG_SHA1HEADER,
+            RPMSIGTAG_DSA = rpmTag.RPMTAG_DSAHEADER,
+            RPMSIGTAG_RSA = rpmTag.RPMTAG_RSAHEADER,
+            RPMSIGTAG_LONGSIZE = rpmTag.RPMTAG_LONGSIGSIZE,
+            RPMSIGTAG_LONGARCHIVESIZE = rpmTag.RPMTAG_LONGARCHIVESIZE
+        }
     }
 }
