@@ -254,8 +254,8 @@ namespace RpmReaderNet.Section
 
         private DateTime? GetBuildDateTime()
         {
-            long dateTimeStr = GetInt32FromTag((int)RpmConstants.rpmTag.RPMTAG_BUILDTIME);
-            return dateTimeStr.FromUnixTime();
+            uint dateTimeStr = GetInt32FromTag((int)RpmConstants.rpmTag.RPMTAG_BUILDTIME);
+            return ((long)dateTimeStr).FromUnixTime();
         }
 
 
