@@ -64,7 +64,7 @@ namespace RpmReaderTest
                 }
 
                 Console.WriteLine(reader.ToString());
-                //reader.SaveArchive(AppDomain.CurrentDomain.BaseDirectory);
+                reader.ExtractPackage(@"e:\Axelot\");
 
                 Console.ReadKey();
             }

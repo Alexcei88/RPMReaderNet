@@ -149,9 +149,9 @@ namespace RpmReaderNet
             return false;
         }
 
-        public void SaveArchive(string destFolder)
+        public void ExtractPackage(string destFolder)
         {
-            _archiveSection.SaveArchive(destFolder);
+            _archiveSection.Extract(destFolder);
         }
 
         public override string ToString()

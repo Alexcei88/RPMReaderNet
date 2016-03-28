@@ -93,5 +93,13 @@ namespace RpmReaderNet
                 }
             }
         }
+
+        public static void ExtractCPIO(string fileName, string targetDir)
+        {
+            using (CPIOLibSharp.CPIOFileStream fs = new CPIOLibSharp.CPIOFileStream(fileName))
+            {
+                fs.Extract(targetDir);
+            }
+        }
     }
 }
