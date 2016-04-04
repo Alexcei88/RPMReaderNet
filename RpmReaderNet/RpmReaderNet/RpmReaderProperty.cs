@@ -118,6 +118,12 @@ namespace RpmReaderNet
         {
             get { return IsValidate ? _headerSection.FileUserNames : null; }
         }
+
+        public string[] FileGroupNames
+        {
+            get { return IsValidate ? _headerSection.FileGroupNames : null; }
+        }
+
         public uint FileSizes
         {
             get { return IsValidate ? _headerSection.FileSizes : default(uint); }

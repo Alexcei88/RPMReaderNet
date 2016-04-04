@@ -126,7 +126,7 @@ namespace RpmReaderNet.Section
                 byte[][] data = ReadDataEntry(startPosition, entry.Value);
                 if (data.Length > 0)
                 {
-                    return BitConverter.ToUInt32(data.First(), 0);
+                    return BitConverter.ToUInt32(data.First().Reverse().ToArray(), 0);
                 }
             }
             return default(int);
@@ -190,7 +190,7 @@ namespace RpmReaderNet.Section
 
                 long startPosition = GetStartPositionFirstEntry();
                 byte[][] data = ReadDataEntry(startPosition, entry.Value);
-                return data.Select(g => (int)BitConverter.ToUInt32(g, 0)).ToArray();
+                return data.Select(g => (int)BitConverter.ToUInt32(g.Reverse().ToArray(), 0)).ToArray();
             }
             return null;
         }
