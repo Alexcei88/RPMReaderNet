@@ -46,7 +46,6 @@ namespace RpmReaderNet.Section
         /// <returns></returns>
         protected byte[] ReadStringTagType(long position)
         {
-            _fileStream.Seek(position, SeekOrigin.Begin);
             byte sym;
             List<byte> data = new List<byte>();
             while (_fileStream.CanRead)
@@ -68,7 +67,6 @@ namespace RpmReaderNet.Section
         /// <returns></returns>
         protected byte[] ReadI18StringTagType(long position)
         {
-            _fileStream.Seek(position, SeekOrigin.Begin);
             byte sym;
             List<byte> data = new List<byte>();
             while (_fileStream.CanRead)
@@ -90,7 +88,6 @@ namespace RpmReaderNet.Section
         /// <returns></returns>
         protected byte[] ReadInt32(long position)
         {
-            _fileStream.Seek(position, SeekOrigin.Begin);
             const int size = sizeof(int);
             byte[] buffer = new byte[size];
             if (_fileStream.Read(buffer, 0, size) < size)
@@ -102,7 +99,6 @@ namespace RpmReaderNet.Section
 
         protected byte[] ReadBin(long position)
         {
-            _fileStream.Seek(position, SeekOrigin.Begin);
             const int size = 16;
             byte[] buffer = new byte[size];
             if (_fileStream.Read(buffer, 0, size) < size)

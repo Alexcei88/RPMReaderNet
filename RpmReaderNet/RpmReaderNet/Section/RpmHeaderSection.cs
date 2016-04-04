@@ -89,6 +89,11 @@ namespace RpmReaderNet.Section
             get { return _source.Value; }
         }
 
+        public string SourceRpm
+        {
+            get { return _sourceRpm.Value; }
+        }
+
         public string Arch
         {
             get { return _arch.Value; }
@@ -113,10 +118,14 @@ namespace RpmReaderNet.Section
             get { return _postunScript.Value; }
         }
 
-        [Obsolete]
-        public string[] OldFilenames
+        public string[] BaseFilenames
         {
-            get { return _oldFileNames.Value; }
+            get { return _baseFileNames.Value; }
+        }
+
+        public string[] DirNames
+        {
+            get { return _dirNames.Value; }
         }
 
         public string[] FileUserNames
@@ -156,12 +165,14 @@ namespace RpmReaderNet.Section
         private Lazy<string> _packager;
         private Lazy<string> _changeLog;
         private Lazy<string[]> _source;
+        private Lazy<string> _sourceRpm;
         private Lazy<string> _arch;
         private Lazy<string> _preinScript;
         private Lazy<string> _postinScript;
         private Lazy<string> _preunScript;
         private Lazy<string> _postunScript;
-        private Lazy<string[]> _oldFileNames;
+        private Lazy<string[]> _baseFileNames;
+        private Lazy<string[]> _dirNames;
         private Lazy<string[]> _fileUserNames;
         private Lazy<string[]> _fileGroupNames;
         private Lazy<string[]> _md5Files;
@@ -189,12 +200,14 @@ namespace RpmReaderNet.Section
             _packager = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_PACKAGER));
             _changeLog = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_CHANGELOG));
             _source = new Lazy<string[]>(() => GetStringArrayFromTag((int)RpmConstants.rpmTag.RPMTAG_SOURCE));
+            _sourceRpm = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_SOURCERPM));
             _arch = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_ARCH));
             _preinScript = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_PREIN));
             _postinScript = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_POSTIN));
             _preunScript = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_PREUN));
             _postunScript = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_POSTUN));
-            _oldFileNames = new Lazy<string[]>(() => GetStringArrayFromTag((int)RpmConstants.rpmTag.RPMTAG_OLDFILENAMES));
+            _baseFileNames = new Lazy<string[]>(() => GetStringArrayFromTag((int)RpmConstants.rpmTag.RPMTAG_BASENAMES));
+            _dirNames = new Lazy<string[]>(() => GetStringArrayFromTag((int)RpmConstants.rpmTag.RPMTAG_DIRNAMES));
             _fileUserNames = new Lazy<string[]>(() => GetStringArrayFromTag((int)RpmConstants.rpmTag.RPMTAG_FILEUSERNAME));
             _fileGroupNames = new Lazy<string[]>(() => GetStringArrayFromTag((int)RpmConstants.rpmTag.RPMTAG_FILEGROUPNAME));
             _fileSizes = new Lazy<uint>(() => GetInt32FromTag((int)RpmConstants.rpmTag.RPMTAG_FILESIZES));

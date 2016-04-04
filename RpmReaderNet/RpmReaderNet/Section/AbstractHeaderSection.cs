@@ -42,6 +42,7 @@ namespace RpmReaderNet.Section
             Func<long, byte[]> func;
             if (_dataEntryReaders.TryGetValue((RpmConstants.rpmTagType)entry.Type, out func))
             {
+                _fileStream.Seek(startFirstEntryPosition + entry.Offset, SeekOrigin.Begin);
                 List<byte[]> data = new List<byte[]>();
                 for (int i = 0; i < entry.Count; ++i)
                 {

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace RpmReaderNet
 {
+    /// <summary>
+    /// Reader(содержит все свойства класса-читателя
+    /// </summary>
     public partial class RpmReader
     {
         /// <summary>
@@ -84,6 +87,11 @@ namespace RpmReaderNet
             get { return IsValidate ? _headerSection.Source : null; }
         }
 
+        public string SourceRpm
+        {
+            get { return IsValidate ? _headerSection.SourceRpm : null; }
+        }
+
         public string Arch
         {
             get { return IsValidate ? _headerSection.Arch : null; }
@@ -108,10 +116,14 @@ namespace RpmReaderNet
             get { return IsValidate ? _headerSection.PostunScript : null; }
         }
 
-        [Obsolete]
-        public string[] OldFileNames
+        public string[] BaseFileNames
         {
-            get { return IsValidate ? _headerSection.OldFilenames : null; }
+            get { return IsValidate ? _headerSection.BaseFilenames : null; }
+        }
+
+        public string[] DirNames
+        {
+            get { return IsValidate ? _headerSection.DirNames : null; }
         }
 
         public string[] FileUserNames

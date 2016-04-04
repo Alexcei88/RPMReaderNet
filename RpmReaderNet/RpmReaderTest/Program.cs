@@ -25,6 +25,16 @@ namespace RpmReaderTest
                             Console.WriteLine(s);
                         }
                     }*/
+
+                    Console.WriteLine("File Names: ");
+                    if (reader.BaseFileNames != null)
+                    {
+                        foreach (var s in reader.BaseFileNames)
+                        {
+                            Console.WriteLine(s);
+                        }
+                    }
+
                     /*
                     Console.WriteLine("PreinScript: {0}", reader.PreinScript);
                     Console.WriteLine("PostinScript: {0}", reader.PostinScript);

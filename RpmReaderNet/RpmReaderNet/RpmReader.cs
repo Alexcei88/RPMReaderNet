@@ -162,6 +162,7 @@ namespace RpmReaderNet
             builder.Append($"Version: {Version}\n");
             builder.Append($"Release: {Release}\n");
             builder.Append($"Serial: {Serial}\n");
+            builder.Append($"Source RPM: {SourceRpm}\n");
             builder.Append($"Summary: {Summary}\n");
             builder.Append($"Description: {Description}\n");
             builder.Append($"BuildTime: {BuildTime}\n");
