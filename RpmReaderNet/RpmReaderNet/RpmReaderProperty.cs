@@ -19,6 +19,9 @@ namespace RpmReaderNet
             get { return IsValidate ? _headerSection.Version : null; }
         }
 
+        /// <summary>
+        /// Версия релиза
+        /// </summary>
         public string Release
         {
             get { return IsValidate ? _headerSection.Release : null; }
@@ -37,21 +40,33 @@ namespace RpmReaderNet
             get { return IsValidate ? _headerSection.Name : null; }
         }
 
+        /// <summary>
+        /// Общая информация о пакете
+        /// </summary>
         public string Summary
         {
             get { return IsValidate ? _headerSection.Summary : null; }
         }
 
+        /// <summary>
+        /// Описание пакета
+        /// </summary>
         public string Description
         {
             get { return IsValidate ? _headerSection.Description : null; }
         }
 
+        /// <summary>
+        /// Время сборки пакета
+        /// </summary>
         public DateTime? BuildTime
         {
             get { return IsValidate ? _headerSection.BuildDateTime : null; }
         }
 
+        /// <summary>
+        /// Имя хоста машины, на котором собран пакет
+        /// </summary>
         public string BuildHost
         {
             get { return IsValidate ? _headerSection.BuildHost : null; }
@@ -87,16 +102,25 @@ namespace RpmReaderNet
             get { return IsValidate ? _headerSection.Source : null; }
         }
 
+        /// <summary>
+        /// Имя исходника rpm, откуда было собрано
+        /// </summary>
         public string SourceRpm
         {
             get { return IsValidate ? _headerSection.SourceRpm : null; }
         }
 
+        /// <summary>
+        /// Архитектура
+        /// </summary>
         public string Arch
         {
             get { return IsValidate ? _headerSection.Arch : null; }
         }
 
+        /// <summary>
+        /// Содержимое скрипта Prein
+        /// </summary>
         public string PreinScript
         {
             get { return IsValidate ? _headerSection.PreinScript : null; }
@@ -116,21 +140,33 @@ namespace RpmReaderNet
             get { return IsValidate ? _headerSection.PostunScript : null; }
         }
 
+        /// <summary>
+        /// Список имен файлов в пакете
+        /// </summary>
         public string[] BaseFileNames
         {
             get { return IsValidate ? _headerSection.BaseFilenames : null; }
         }
 
+        /// <summary>
+        /// Список директорий в пакете
+        /// </summary>
         public string[] DirNames
         {
             get { return IsValidate ? _headerSection.DirNames : null; }
         }
 
+        /// <summary>
+        /// Имя пользователя владельца файла
+        /// </summary>
         public string[] FileUserNames
         {
             get { return IsValidate ? _headerSection.FileUserNames : null; }
         }
 
+        /// <summary>
+        /// Имя группы владельца файла
+        /// </summary>
         public string[] FileGroupNames
         {
             get { return IsValidate ? _headerSection.FileGroupNames : null; }
@@ -146,6 +182,9 @@ namespace RpmReaderNet
             get { return IsValidate ? _headerSection.MD5Files : null; }
         }
 
+        /// <summary>
+        /// Подпись md5 пакета
+        /// </summary>
         public byte[] MD5Signature
         {
             get { return IsValidate ? _signatureSection.MD5 : null; }
@@ -176,6 +215,9 @@ namespace RpmReaderNet
             get { return IsValidate ? _signatureSection.RSA : null; }
         }
 
+        /// <summary>
+        /// Размер секции сигнатуры
+        /// </summary>
         public uint Size
         {
             get { return IsValidate ? _signatureSection.Size : default(uint); }
@@ -185,5 +227,17 @@ namespace RpmReaderNet
         {
             get { return IsValidate ? _signatureSection.PayloadSize : default(uint); }
         }
+
+        /// <summary>
+        /// Список зависимостей в пакете
+        /// </summary>
+        public string[] RequiresNames
+        {
+            get
+            {
+                return IsValidate ? _headerSection.RequiresNames : null;
+            }
+        }
+
     }
 }
