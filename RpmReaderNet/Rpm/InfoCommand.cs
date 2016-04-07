@@ -21,8 +21,8 @@ namespace Rpm
 
         public InfoCommand()
         {
-            IsCommand("info", "Output info package");            
-            HasAdditionalArguments(1, "input rpm package");
+            IsCommand("info", "Outputs info package");            
+            HasAdditionalArguments(1, " <input rpm package>");
         }
 
         public override int Run(string[] remainingArguments)

@@ -14,13 +14,41 @@ namespace Rpm
     class OutputScriptCommand
         : ConsoleCommand
     {
+        /// <summary>
+        /// Mark to prints all script
+        /// </summary>
         private bool _printAllScripts;
+
+        /// <summary>
+        /// Mark to prints preinscript
+        /// </summary>
+        private bool _printPreinScript;
+
+        /// <summary>
+        /// Mark to prints postinscript
+        /// </summary>
+        private bool _printPostinScript;
+
+        /// <summary>
+        /// Mark to prints preunscript
+        /// </summary>
+        private bool _printPreunScript;
+
+        /// <summary>
+        /// Mark to prints postunscript
+        /// </summary>
+        private bool _printPostunScript;
+
 
         public OutputScriptCommand()
         {
             IsCommand("script", "prints the contents of scripts");
 
-            HasOption("all", "print all scripts", b => _printAllScripts = true);
+            HasOption("all", "prints all scripts", b => _printAllScripts = true);
+            HasOption("prein", "prints the preinstall script", b => _printPreinScript = true);
+            HasOption("postin", "prints the postinstall script", b => _printPostinScript = true);
+            HasOption("preun", "prints the preuninstall script", b => _printPreunScript = true);
+            HasOption("postun", "prints the postuninstall script", b => _printPostunScript = true);
 
             HasAdditionalArguments(1, "input rpm package");
         }
@@ -32,20 +60,34 @@ namespace Rpm
                 using (RpmReader reader = new RpmReader(remainingArguments.Last()))
                 {
                     StringBuilder builder = new StringBuilder();
-                    builder.Append($"Name: {reader.Name}\n");
-                    builder.Append($"Version: {reader.Version}\n");
-                    builder.Append($"Release: {reader.Release}\n");
-                    builder.Append($"Architecture: {reader.Arch}\n");
-                    builder.Append($"Size: {reader.Size}\n");
-                    builder.Append($"License: {reader.License}\n");
-                    builder.Append($"Source RPM: {reader.SourceRpm}\n");
-                    builder.Append($"BuildTime: {reader.BuildTime}\n");
-                    builder.Append($"BuildHost: {reader.BuildHost}\n");
-                    builder.Append($"Summary: {reader.Summary}\n");
-                    builder.Append($"Description: {reader.Description}\n");
+                    if (_printAllScripts || (!_printPreinScript && !_printPostinScript && !_printPreunScript && !_printPostunScript))
+                    {
+                        PrintPreinScript(builder, reader);
+                        PrintPostinScript(builder, reader);
+                        PrintPreunScript(builder, reader);
+                        PrintPostunScript(builder, reader);
+                        Console.WriteLine(builder.ToString());
+                        return 0;
+                    }
+                    if(_printPreinScript)
+                    {
+                        PrintPreinScript(builder, reader);
+                    }
+                    if(_printPostinScript)
+                    {
+                        PrintPostinScript(builder, reader);
+                    }
+                    if(_printPreunScript)
+                    {
+                        PrintPreunScript(builder, reader);
+                    }
+                    if(_printPostunScript)
+                    {
+                        PrintPostunScript(builder, reader);
+                    }
                     Console.WriteLine(builder.ToString());
+                    return 0;
                 }
-                return 0;
             }
             catch (System.IO.FileNotFoundException ex)
             {
@@ -61,28 +103,28 @@ namespace Rpm
 
         private void PrintPreinScript(StringBuilder builder, RpmReader reader)
         {
-            builder.Append("The Prein scipts content:\n");
+            builder.Append("The Preinstall scripts content:\n");
             builder.Append(reader.PreinScript + "\n");
             PrintSeparator(builder);
         }
 
         private void PrintPostinScript(StringBuilder builder, RpmReader reader)
         {
-            builder.Append("The Postin scipts content:\n");
+            builder.Append("The Postinstall scripts content:\n");
             builder.Append(reader.PostinScript + "\n");
             PrintSeparator(builder);
         }
 
         private void PrintPreunScript(StringBuilder builder, RpmReader reader)
         {
-            builder.Append("The Preun scipts content:\n");
+            builder.Append("The Preuninstall scripts content:\n");
             builder.Append(reader.PreunScript + "\n");
             PrintSeparator(builder);
         }
 
         private void PrintPostunScript(StringBuilder builder, RpmReader reader)
         {
-            builder.Append("The Postun scipts content:\n");
+            builder.Append("The Postuninstall scripts content:\n");
             builder.Append(reader.PostunScript + "\n");
             PrintSeparator(builder);
         }

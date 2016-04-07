@@ -15,7 +15,7 @@ namespace Rpm
     {
         public FileListCommand()
         {
-
+            IsCommand("filelist", "print all files in package");
         }
 
         public override int Run(string[] remainingArguments)
