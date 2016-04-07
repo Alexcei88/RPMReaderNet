@@ -16,14 +16,20 @@ namespace RpmReaderNet.Section
         /// </summary>
         protected Dictionary<RpmConstants.rpmTagType, Func<long, byte[]>> _dataEntryReaders = new Dictionary<RpmConstants.rpmTagType, Func<long, byte[]>>();
 
-        // разделы заголовка
+        /// <summary>
+        /// array of entry
+        /// </summary>
         protected RpmStruct.RPMEntry[] _entries;
 
         /// <summary>
-        /// размер одного раздела в секции
+        /// size of one entry
         /// </summary>
         public readonly long SIZE_ONE_ENTRY = Marshal.SizeOf(typeof(RpmStruct.RPMEntry));
 
+        /// <summary>
+        /// get position first entry on section
+        /// </summary>
+        /// <returns></returns>
         public abstract long GetStartPositionFirstEntry();
 
         public AbstractHeaderSection(FileStream stream)

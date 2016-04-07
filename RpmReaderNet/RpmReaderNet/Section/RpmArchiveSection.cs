@@ -35,15 +35,7 @@ namespace RpmReaderNet.Section
             try
             {
                 SaveGZipArchive(tempCpioFile);
-
                 ExtractCpioArchive(tempCpioFile, destFolder);
-                /*
-                if (!ArchiveUtils.ExtractArArchive(tempCpioFile, destFolder))
-                {
-                    // удаляем временную папку
-                    Directory.Delete(tempDirectory, true);
-                    throw new Exception("Не удалось распаковать cpioArchive");
-                }*/
             }
             finally
             {
@@ -52,6 +44,10 @@ namespace RpmReaderNet.Section
             }
         }
 
+        /// <summary>
+        /// Saves binary data of gzip to file
+        /// </summary>
+        /// <param name="fileName"></param>
         private void SaveGZipArchive(string fileName)
         {
             byte[] dataBuffer = new byte[4096];
@@ -59,8 +55,6 @@ namespace RpmReaderNet.Section
             {
                 using (GZipInputStream gzipStream = new GZipInputStream(sr))
                 {
-                    //string fnOut = Path.Combine(targetDir, Path.GetFileNameWithoutExtension(gzipFileName));
-
                     using (FileStream fsOut = File.Create(fileName))
                     {
                         StreamUtils.Copy(gzipStream, fsOut, dataBuffer);
@@ -69,6 +63,11 @@ namespace RpmReaderNet.Section
             }
         }
 
+        /// <summary>
+        /// Extracts cpio file to destinition folder
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="destFolder"></param>
         private void ExtractCpioArchive(string fileName, string destFolder)
         {
             using (CPIOLibSharp.CPIOFileStream fs = new CPIOLibSharp.CPIOFileStream(fileName))
@@ -78,7 +77,7 @@ namespace RpmReaderNet.Section
         }
 
         /// <summary>
-        /// Возвращает временную папку
+        /// Returns random temporary folder
         /// </summary>
         /// <returns></returns>
         private static string GetTemporaryDirectory()

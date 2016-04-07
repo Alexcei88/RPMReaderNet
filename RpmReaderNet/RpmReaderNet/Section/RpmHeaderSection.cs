@@ -155,6 +155,14 @@ namespace RpmReaderNet.Section
             get { return _requiresNames.Value; }
         }
 
+        /// <summary>
+        /// Размер пакета
+        /// </summary>
+        public uint Size
+        {
+            get { return _size.Value; }
+        }
+
         private Lazy<string> _name;
         private Lazy<string> _version;
         private Lazy<string> _release;
@@ -182,6 +190,7 @@ namespace RpmReaderNet.Section
         private Lazy<string[]> _md5Files;
         private Lazy<uint> _fileSizes;
         private Lazy<string[]> _requiresNames;
+        private Lazy<uint> _size;
 
         /// <summary>
         /// Структура заголовка
@@ -218,6 +227,7 @@ namespace RpmReaderNet.Section
             _fileSizes = new Lazy<uint>(() => GetInt32FromTag((int)RpmConstants.rpmTag.RPMTAG_FILESIZES));
             _md5Files = new Lazy<string[]>(() => GetStringArrayFromTag((int)RpmConstants.rpmTag.RPMTAG_FILEMD5S));
             _requiresNames = new Lazy<string[]>(() => GetStringArrayFromTag((int)RpmConstants.rpmTag.RPMTAG_REQUIRENAME));
+            _size = new Lazy<uint>(() => GetInt32FromTag((int)RpmConstants.rpmTag.RPMTAG_SIZE));
         }
 
         /// <summary>

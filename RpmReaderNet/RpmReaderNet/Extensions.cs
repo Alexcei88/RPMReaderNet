@@ -14,6 +14,11 @@ namespace RpmReaderNet
             fileStream.Seek(fileStream.Position + count, SeekOrigin.Begin);
         }
 
+        /// <summary>
+        /// DateTime from Time Epoch
+        /// </summary>
+        /// <param name="unixTime"></param>
+        /// <returns></returns>
         public static DateTime FromUnixTime(this long unixTime)
         {
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);

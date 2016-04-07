@@ -141,6 +141,14 @@ namespace RpmReaderNet
         }
 
         /// <summary>
+        /// Размер данных пакета(после распаковки)
+        /// </summary>
+        public uint Size
+        {
+            get { return IsValidate ? _headerSection.Size : default(uint); }
+        }
+
+        /// <summary>
         /// Список имен файлов в пакете
         /// </summary>
         public string[] BaseFileNames
@@ -176,30 +184,42 @@ namespace RpmReaderNet
         {
             get { return IsValidate ? _headerSection.FileSizes : default(uint); }
         }
-
+ 
+        /// <summary>
+        /// MD5 Files
+        /// </summary>
         public string[] MD5Files
         {
             get { return IsValidate ? _headerSection.MD5Files : null; }
         }
 
         /// <summary>
-        /// Подпись md5 пакета
+        /// MD5 Signature of package
         /// </summary>
         public byte[] MD5Signature
         {
             get { return IsValidate ? _signatureSection.MD5 : null; }
         }
 
+        /// <summary>
+        /// GPG Signature of package
+        /// </summary>
         public byte[] GPGSignature
         {
             get { return IsValidate ? _signatureSection.GPG : null; }
         }
 
+        /// <summary>
+        /// PGP Signature of package
+        /// </summary>
         public byte[] PGPSignature
         {
             get { return IsValidate ? _signatureSection.PGP : null; }
         }
 
+        /// <summary>
+        /// SHA Signature of package
+        /// </summary>
         public string SHA1Signature
         {
             get { return IsValidate ? _signatureSection.SHA1 : null; }
@@ -218,7 +238,12 @@ namespace RpmReaderNet
         /// <summary>
         /// Размер секции сигнатуры
         /// </summary>
-        public uint Size
+        public uint SignatureSize
+        {
+            get { return IsValidate ? _signatureSection.Size : default(uint); }
+        }
+
+        public uint FullSize
         {
             get { return IsValidate ? _signatureSection.Size : default(uint); }
         }

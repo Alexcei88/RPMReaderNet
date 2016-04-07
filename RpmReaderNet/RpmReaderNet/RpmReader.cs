@@ -94,6 +94,11 @@ namespace RpmReaderNet
                 _signatureSection = new RpmSignatureSection(_fileStream);
                 _archiveSection = new RpmArchiveSection(_fileStream);
             }
+            else
+            {
+                _state = StateRead.RPMFILE_NOTFOUND;
+                throw new FileNotFoundException($"File {rpmFile} not found");
+            }
         }
 
         /// <summary>
@@ -143,7 +148,12 @@ namespace RpmReaderNet
                 }
                 else if (_state == StateRead.RPMFILE_NOT_VALIDATE)
                 {
-                    return Validate();
+                    bool result = Validate();
+                    if (!result)
+                    {
+                        throw new Exception("File is not rpm format");
+                    }
+                    return result;
                 }
             }
             return false;
@@ -167,12 +177,9 @@ namespace RpmReaderNet
             builder.Append($"Description: {Description}\n");
             builder.Append($"BuildTime: {BuildTime}\n");
             builder.Append($"BuildHost: {BuildHost}\n");
-            builder.Append($"Distribution: {Distribution}\n");
-            builder.Append($"Vendor: {Vendor}\n");
             builder.Append($"License: {License}\n");
-            builder.Append($"Packager: {Packager}\n");
-            builder.Append($"Changelog: {Changelog}\n");
             builder.Append($"Arch: {Arch}\n");
+            builder.Append($"Size: {Size}\n");
 
             builder.Append("------Signature section------\n");
             builder.Append(_signatureSection.ToString());
@@ -274,6 +281,11 @@ namespace RpmReaderNet
             return false;
         }
 
+        /// <summary>
+        /// Find array bytes in file
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         private bool FindBytes(byte[] bytes)
         {
             byte[] buffer = new byte[bytes.Length];

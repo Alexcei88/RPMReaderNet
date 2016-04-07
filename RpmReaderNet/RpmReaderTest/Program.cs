@@ -16,16 +16,6 @@ namespace RpmReaderTest
             {
                 if (reader.Validate())
                 {
-                    /*
-                    Console.WriteLine("Source: ");
-                    if (reader.Source != null)
-                    {
-                        foreach (var s in reader.Source)
-                        {
-                            Console.WriteLine(s);
-                        }
-                    }*/
-
                     Console.WriteLine("File Names: ");
                     if (reader.BaseFileNames != null)
                     {
@@ -35,31 +25,6 @@ namespace RpmReaderTest
                         }
                     }
 
-                    /*
-                    Console.WriteLine("PreinScript: {0}", reader.PreinScript);
-                    Console.WriteLine("PostinScript: {0}", reader.PostinScript);
-                    Console.WriteLine("PreunScript: {0}", reader.PreunScript);
-                    Console.WriteLine("PostunScript: {0}", reader.PostunScript);
-                    */
-                    /*
-                    Console.WriteLine("FileUserNames: ");
-                    if (reader.FileUserNames != null)
-                    {
-                        foreach (var s in reader.FileUserNames)
-                        {
-                            Console.WriteLine(s);
-                        }
-                    }*/
-
-                    Console.WriteLine("FileSize: {0}", reader.FileSizes);
-                    /*Console.WriteLine("MD5 Files: ");
-                    if (reader.MD5Files != null)
-                    {
-                        foreach (var s in reader.MD5Files)
-                        {
-                            Console.WriteLine(s);
-                        }
-                    }*/
 
                 }
 

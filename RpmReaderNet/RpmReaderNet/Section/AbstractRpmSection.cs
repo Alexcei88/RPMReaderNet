@@ -14,7 +14,7 @@ namespace RpmReaderNet.Section
         protected FileStream _fileStream;
 
         /// <summary>
-        /// Начало секций относительно начала файла
+        /// Позиция начала секций относительно начала файла
         /// </summary>
         public long StartPosition { get; set; }
 

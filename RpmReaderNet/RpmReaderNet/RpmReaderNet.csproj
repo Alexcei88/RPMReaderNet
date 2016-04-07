@@ -81,7 +81,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArchiveUtils.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="RpmReaderProperty.cs" />
     <Compile Include="RpmReader.cs" />
