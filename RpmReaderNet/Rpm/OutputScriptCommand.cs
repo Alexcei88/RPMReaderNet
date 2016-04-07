@@ -50,7 +50,7 @@ namespace Rpm
             HasOption("preun", "prints the preuninstall script", b => _printPreunScript = true);
             HasOption("postun", "prints the postuninstall script", b => _printPostunScript = true);
 
-            HasAdditionalArguments(1, "input rpm package");
+            HasAdditionalArguments(1, " <input rpm package>");
         }
 
         public override int Run(string[] remainingArguments)

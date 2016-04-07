@@ -16,6 +16,8 @@ namespace Rpm
         public FileListCommand()
         {
             IsCommand("filelist", "print all files in package");
+
+            HasAdditionalArguments(1, " <input rpm package>");
         }
 
         public override int Run(string[] remainingArguments)
