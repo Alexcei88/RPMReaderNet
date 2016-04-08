@@ -9,3 +9,5 @@
 *.suo
 /RpmReaderNet/packages/SharpZipLib.0.86.0
 *.nupkg
+/RpmReaderNet/Rpm/bin/Debug
+/RpmReaderNet/Rpm/obj/Debug
