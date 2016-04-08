@@ -149,7 +149,7 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// Список имен файлов в пакете
+        /// The list of all base names files    
         /// </summary>
         public string[] BaseFileNames
         {
@@ -157,13 +157,21 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// Список директорий в пакете
+        /// The list of all dirs
         /// </summary>
         public string[] DirNames
         {
             get { return IsValidate ? _headerSection.DirNames : null; }
         }
 
+        /// <summary>
+        /// Indexes of dir
+        /// </summary>
+        public uint[] DirIndexes
+        {
+            get { return IsValidate ? _headerSection.DirIndexes : null; }
+        }
+    
         /// <summary>
         /// Имя пользователя владельца файла
         /// </summary>

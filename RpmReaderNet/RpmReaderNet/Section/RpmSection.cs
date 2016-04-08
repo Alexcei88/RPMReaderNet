@@ -6,10 +6,10 @@ using System.Runtime.InteropServices;
 
 namespace RpmReaderNet.Section
 {
-    internal abstract class AbstractRpmSection
+    internal abstract class RpmSection
     {
         /// <summary>
-        /// Файловый поток
+        /// File stream
         /// </summary>
         protected FileStream _fileStream;
 
@@ -18,11 +18,30 @@ namespace RpmReaderNet.Section
         /// </summary>
         public long StartPosition { get; set; }
 
-        public AbstractRpmSection(FileStream fileStream)
+        /// <summary>
+        /// Функции читатели данных в зависимости от типа тега
+        /// </summary>
+        protected Dictionary<RpmConstants.rpmTagType, Func<long, byte[]>> _dataEntryReaders = new Dictionary<RpmConstants.rpmTagType, Func<long, byte[]>>();
+
+        public RpmSection(FileStream fileStream)
         {
             _fileStream = fileStream;
+
+            /// fill readers
+            _dataEntryReaders[RpmConstants.rpmTagType.RPM_STRING_TYPE] = ReadStringTagType;
+            _dataEntryReaders[RpmConstants.rpmTagType.RPM_I18NSTRING_TYPE] = ReadI18StringTagType;
+            _dataEntryReaders[RpmConstants.rpmTagType.RPM_INT32_TYPE] = ReadInt32;
+            _dataEntryReaders[RpmConstants.rpmTagType.RPM_STRING_ARRAY_TYPE] = ReadStringTagType;
+            _dataEntryReaders[RpmConstants.rpmTagType.RPM_BIN_TYPE] = ReadBin;
+
         }
 
+        /// <summary>
+        /// Compare arrays
+        /// </summary>
+        /// <param name="a1"></param>
+        /// <param name="a2"></param>
+        /// <returns></returns>
         static public bool ByteArrayCompare(byte[] a1, byte[] a2)
         {
             return StructuralComparisons.StructuralEqualityComparer.Equals(a1, a2);
@@ -40,7 +59,7 @@ namespace RpmReaderNet.Section
         }
 
         /// <summary>
-        /// Чтение данных тега типа 6(string)
+        /// Read data for a type of tag equal 6(string)
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
@@ -61,7 +80,7 @@ namespace RpmReaderNet.Section
         }
 
         /// <summary>
-        /// Чтение данных тега типа 9(i18string)
+        /// Read data for a type of tag equal 9(i18string)
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
@@ -82,7 +101,7 @@ namespace RpmReaderNet.Section
         }
 
         /// <summary>
-        /// Чтение данных тега типа 4(int32)
+        /// Read data for a type of tag equal 4(int32)
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
@@ -97,6 +116,11 @@ namespace RpmReaderNet.Section
             return buffer;
         }
 
+        /// <summary>
+        /// Read data for a type of tag equal 7(Bin)
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
         protected byte[] ReadBin(long position)
         {
             const int size = 16;

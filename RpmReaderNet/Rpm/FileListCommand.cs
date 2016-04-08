@@ -1,4 +1,5 @@
 ﻿using ManyConsole;
+using RpmReaderNet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,14 +16,36 @@ namespace Rpm
     {
         public FileListCommand()
         {
-            IsCommand("filelist", "print all files in package");
+            IsCommand("filelist", "prints a list of all files in package");
 
             HasAdditionalArguments(1, " <input rpm package>");
         }
 
         public override int Run(string[] remainingArguments)
         {
-            throw new NotImplementedException();
+            try
+            {
+
+                using (RpmReader reader = new RpmReader(remainingArguments.Last()))
+                {
+                    string[] baseNames = reader.BaseFileNames;
+                    string[] dirs = reader.DirNames;
+                    uint[] dirIndexes = reader.DirIndexes;
+
+
+                }
+                return 0;
+            }
+            catch (System.IO.FileNotFoundException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return 1;
+            }
         }
     }
 }

@@ -128,6 +128,11 @@ namespace RpmReaderNet.Section
             get { return _dirNames.Value; }
         }
 
+        public uint[] DirIndexes
+        {
+            get { return _dirIndexes.Value; }
+        }
+
         public string[] FileUserNames
         {
             get { return _fileUserNames.Value; }
@@ -137,8 +142,6 @@ namespace RpmReaderNet.Section
         {
             get { return _fileGroupNames.Value; }
         }
-
-
 
         public string[] MD5Files
         {
@@ -191,6 +194,7 @@ namespace RpmReaderNet.Section
         private Lazy<uint> _fileSizes;
         private Lazy<string[]> _requiresNames;
         private Lazy<uint> _size;
+        private Lazy<uint[]> _dirIndexes;
 
         /// <summary>
         /// Структура заголовка
@@ -228,6 +232,7 @@ namespace RpmReaderNet.Section
             _md5Files = new Lazy<string[]>(() => GetStringArrayFromTag((int)RpmConstants.rpmTag.RPMTAG_FILEMD5S));
             _requiresNames = new Lazy<string[]>(() => GetStringArrayFromTag((int)RpmConstants.rpmTag.RPMTAG_REQUIRENAME));
             _size = new Lazy<uint>(() => GetInt32FromTag((int)RpmConstants.rpmTag.RPMTAG_SIZE));
+            _dirIndexes = new Lazy<uint[]>(() => GetInt32ArrayFromTag((int)RpmConstants.rpmTag.RPMTAG_DIRINDEXES));
         }
 
         /// <summary>

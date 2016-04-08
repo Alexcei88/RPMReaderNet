@@ -293,7 +293,7 @@ namespace RpmReaderNet
             {
                 return false;
             }
-            while(!AbstractRpmSection.ByteArrayCompare(buffer, bytes))
+            while(!RpmSection.ByteArrayCompare(buffer, bytes))
             {
                 Buffer.BlockCopy(buffer, 1, buffer, 0, bytes.Length - 1);
                 if (!_fileStream.CanRead)

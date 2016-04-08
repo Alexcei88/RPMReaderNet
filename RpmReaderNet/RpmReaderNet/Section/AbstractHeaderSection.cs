@@ -9,13 +9,8 @@ using System.Threading.Tasks;
 namespace RpmReaderNet.Section
 {
     abstract class AbstractHeaderSection
-        : AbstractRpmSection
+        : RpmSection
     {
-        /// <summary>
-        /// Функции читатели данных в зависимости от типа тега
-        /// </summary>
-        protected Dictionary<RpmConstants.rpmTagType, Func<long, byte[]>> _dataEntryReaders = new Dictionary<RpmConstants.rpmTagType, Func<long, byte[]>>();
-
         /// <summary>
         /// array of entry
         /// </summary>
@@ -34,14 +29,7 @@ namespace RpmReaderNet.Section
 
         public AbstractHeaderSection(FileStream stream)
             : base(stream)
-        {
-            _dataEntryReaders[RpmConstants.rpmTagType.RPM_STRING_TYPE] = ReadStringTagType;
-            _dataEntryReaders[RpmConstants.rpmTagType.RPM_I18NSTRING_TYPE] = ReadI18StringTagType;
-            _dataEntryReaders[RpmConstants.rpmTagType.RPM_INT32_TYPE] = ReadInt32;
-            _dataEntryReaders[RpmConstants.rpmTagType.RPM_STRING_ARRAY_TYPE] = ReadStringTagType;
-            _dataEntryReaders[RpmConstants.rpmTagType.RPM_BIN_TYPE] = ReadBin;
-
-        }
+        {}
 
         protected byte[][] ReadDataEntry(long startFirstEntryPosition, RpmStruct.RPMEntry entry)
         {
@@ -69,9 +57,7 @@ namespace RpmReaderNet.Section
         /// <returns></returns>
         protected string GetI18StringFromTag(int tag)
         {
-            var entry = _entries.Where(e => e.Tag == (int)tag)
-                        .Cast<RpmStruct.RPMEntry?>()
-                        .FirstOrDefault();
+            var entry = GetEntry(tag);
             if (entry != null)
             {
                 if ((uint)RpmConstants.rpmTagType.RPM_I18NSTRING_TYPE != entry.Value.Type)
@@ -97,9 +83,7 @@ namespace RpmReaderNet.Section
         /// <returns></returns>
         protected string GetStringFromStringTypeTag(int tag)
         {
-            var entry = _entries.Where(e => e.Tag == (int)tag)
-                        .Cast<RpmStruct.RPMEntry?>()
-                        .FirstOrDefault();
+            var entry = GetEntry(tag);
             if (entry != null)
             {
                 if ((uint)RpmConstants.rpmTagType.RPM_STRING_TYPE != entry.Value.Type)
@@ -119,14 +103,16 @@ namespace RpmReaderNet.Section
 
         protected uint GetInt32FromTag(int tag)
         {
-            var entry = _entries.Where(e => e.Tag == (int)tag)
-                        .Cast<RpmStruct.RPMEntry?>()
-                        .FirstOrDefault();
+            var entry = GetEntry(tag);
             if (entry != null)
             {
                 if ((uint)RpmConstants.rpmTagType.RPM_INT32_TYPE != entry.Value.Type)
                 {
                     throw new InvalidDataException("Тип тега у раздела не равен типу тега RpmConstants.rpmTagType.RPM_INT32_TYPE");
+                }
+                if(entry.Value.Count > 1)
+                {
+                    throw new InvalidDataException("В разделе содержиться количество, больше одного значения. Нужен массив");
                 }
 
                 long startPosition = GetStartPositionFirstEntry();
@@ -141,9 +127,7 @@ namespace RpmReaderNet.Section
 
         protected byte[] GetBinDataFromTag(int tag)
         {
-            var entry = _entries.Where(e => e.Tag == (int)tag)
-                        .Cast<RpmStruct.RPMEntry?>()
-                        .FirstOrDefault();
+            var entry = GetEntry(tag);
             if (entry != null)
             {
                 if ((uint)RpmConstants.rpmTagType.RPM_BIN_TYPE != entry.Value.Type)
@@ -151,6 +135,10 @@ namespace RpmReaderNet.Section
                     throw new InvalidDataException("Тип тега у раздела не равен типу тега RpmConstants.rpmTagType.RPM_BIN_TYPE");
                 }
 
+                if (entry.Value.Count > 1)
+                {
+                    throw new InvalidDataException("В разделе содержиться количество, больше одного значения. Нужен массив");
+                }
                 long startPosition = GetStartPositionFirstEntry();
                 byte[][] data = ReadDataEntry(startPosition, entry.Value);
                 if (data.Length > 0)
@@ -163,9 +151,7 @@ namespace RpmReaderNet.Section
 
         protected string[] GetStringArrayFromTag(int tag)
         {
-            var entry = _entries.Where(e => e.Tag == (int)tag)
-                        .Cast<RpmStruct.RPMEntry?>()
-                        .FirstOrDefault();
+            var entry = GetEntry(tag);
             if (entry != null)
             {
                 if ((uint)RpmConstants.rpmTagType.RPM_STRING_ARRAY_TYPE != entry.Value.Type)
@@ -183,11 +169,9 @@ namespace RpmReaderNet.Section
             return null;
         }
 
-        protected int[] GetInt32ArrayFromTag(RpmConstants.rpmTag tag)
+        protected uint[] GetInt32ArrayFromTag(int tag)
         {
-            var entry = _entries.Where(e => e.Tag == (int)tag)
-                        .Cast<RpmStruct.RPMEntry?>()
-                        .FirstOrDefault();
+            var entry = GetEntry(tag);
             if (entry != null)
             {
                 if ((uint)RpmConstants.rpmTagType.RPM_INT32_TYPE != entry.Value.Type)
@@ -195,12 +179,19 @@ namespace RpmReaderNet.Section
                     throw new InvalidDataException("Тип тега у раздела не равен типу тега RpmConstants.rpmTagType.RPM_INT32_TYPE");
                 }
 
+
                 long startPosition = GetStartPositionFirstEntry();
                 byte[][] data = ReadDataEntry(startPosition, entry.Value);
-                return data.Select(g => (int)BitConverter.ToUInt32(g.Reverse().ToArray(), 0)).ToArray();
+                return data.Select(g => BitConverter.ToUInt32(g.Reverse().ToArray(), 0)).ToArray();
             }
             return null;
         }
 
+        private RpmStruct.RPMEntry? GetEntry(int tag)
+        {
+            return _entries.Where(e => e.Tag == tag)
+                        .Cast<RpmStruct.RPMEntry?>()
+                        .FirstOrDefault();
+        }
     }
 }

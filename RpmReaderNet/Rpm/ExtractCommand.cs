@@ -1,4 +1,5 @@
 ﻿using ManyConsole;
+using NDesk.Options;
 using RpmReaderNet;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,6 @@ namespace Rpm
     class ExtractCommand
         : ConsoleCommand
     {
-
         /// <summary>
         /// Destinition folder
         /// </summary>
@@ -23,18 +23,22 @@ namespace Rpm
         public ExtractCommand()
         {
             IsCommand("extract", "extract all files from package");
-            HasRequiredOption("d|destinition", "Destinition folder", d => _destFolder = d);
-
-            HasAdditionalArguments(1, " <input rpm package>");
+            Options = new OptionSet()
+            {
+                { "d|destinition", "Destinition folder", d => _destFolder = d }
+            };
+            
+            HasAdditionalArguments(2, "<input rpm package>");
         }
 
         public override int Run(string[] remainingArguments)
         {
             try
             {
-                using (RpmReader reader = new RpmReader(remainingArguments[0]))
+
+                using (RpmReader reader = new RpmReader(remainingArguments.Last()))
                 {
-                    reader.ExtractPackage(_destFolder);
+                    reader.ExtractPackage(remainingArguments[0]);
                 }
                 return 0;
             }

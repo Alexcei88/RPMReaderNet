@@ -131,7 +131,7 @@ namespace Rpm
 
         private void PrintSeparator(StringBuilder builder)
         {
-            builder.Append("*************************\n");
+            builder.Append("************************************\n");
         }
     }
 }

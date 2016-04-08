@@ -10,7 +10,7 @@ using ICSharpCode.SharpZipLib.Core;
 namespace RpmReaderNet.Section
 {
     class RpmArchiveSection
-        : AbstractRpmSection
+        : RpmSection
     {
         /// <summary>
         /// Магическое число начала секции архива(gzip архив)
@@ -72,7 +72,10 @@ namespace RpmReaderNet.Section
         {
             using (CPIOLibSharp.CPIOFileStream fs = new CPIOLibSharp.CPIOFileStream(fileName))
             {
-                fs.Extract(destFolder, null);
+                fs.Extract(destFolder, new CPIOLibSharp.ExtractFlags[] 
+                {
+                    CPIOLibSharp.ExtractFlags.ARCHIVE_EXTRACT_TIME
+                });
             }
         }
 

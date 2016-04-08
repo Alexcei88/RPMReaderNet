@@ -8,7 +8,7 @@ namespace RpmReaderNet.Section
     /// Lead секция
     /// </summary>
     internal class RpmLeadSection
-        : AbstractRpmSection
+        : RpmSection
     {
         public RpmStruct.rpmlead Lead = new RpmStruct.rpmlead();
 
