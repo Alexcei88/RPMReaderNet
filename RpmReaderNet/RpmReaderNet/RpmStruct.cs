@@ -17,10 +17,13 @@ namespace RpmReaderNet
         {
             // тип тега
             public uint Tag;
+
             // тип тега
             public uint Type;
+
             // смещение данных, относительно начала данных
             public uint Offset;
+
             // количество данных
             public uint Count;
         };
@@ -33,10 +36,10 @@ namespace RpmReaderNet
 
             public byte major;
             public byte minor;
-            
+
             public short type;
             public short archnum;
-            
+
             public fixed byte name[66];
             public short osnum;
             public short signature_type;

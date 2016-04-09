@@ -1,9 +1,7 @@
 ﻿using RpmReaderNet.Section;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -239,12 +237,12 @@ namespace RpmReaderNet
                 _fileStream.Seek(_headerSection.StartPosition, SeekOrigin.Begin);
                 int countData = Marshal.SizeOf(typeof(RpmStruct.RPMHeader));
                 byte[] data = new byte[countData];
-                if(_fileStream.Read(data, 0, countData) < countData)
+                if (_fileStream.Read(data, 0, countData) < countData)
                 {
                     return false;
                 }
 
-                if(!_headerSection.FillHeaderData(data))
+                if (!_headerSection.FillHeaderData(data))
                 {
                     return false;
                 }
@@ -289,11 +287,11 @@ namespace RpmReaderNet
         private bool FindBytes(byte[] bytes)
         {
             byte[] buffer = new byte[bytes.Length];
-            if(_fileStream.Read(buffer, 0, bytes.Length) < bytes.Length)
+            if (_fileStream.Read(buffer, 0, bytes.Length) < bytes.Length)
             {
                 return false;
             }
-            while(!RpmSection.ByteArrayCompare(buffer, bytes))
+            while (!RpmSection.ByteArrayCompare(buffer, bytes))
             {
                 Buffer.BlockCopy(buffer, 1, buffer, 0, bytes.Length - 1);
                 if (!_fileStream.CanRead)
@@ -304,7 +302,7 @@ namespace RpmReaderNet
             }
             return true;
         }
- 
+
         public void Dispose()
         {
             if (isDisposed) return;

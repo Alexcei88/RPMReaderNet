@@ -73,7 +73,6 @@ namespace RpmReaderNet.Section
             _sha1 = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmSigTag.RPMSIGTAG_SHA1));
             _dsa = new Lazy<byte[]>(() => GetBinDataFromTag((int)RpmConstants.rpmSigTag.RPMSIGTAG_DSA));
             _rsa = new Lazy<byte[]>(() => GetBinDataFromTag((int)RpmConstants.rpmSigTag.RPMSIGTAG_RSA));
-
         }
 
         public bool FillHeaderData(byte[] data)
@@ -130,11 +129,11 @@ namespace RpmReaderNet.Section
             StringBuilder builder = new StringBuilder();
             builder.Append(string.Format("Size: {0}\n", Size));
             builder.Append(string.Format("PayloadSize: {0}\n", PayloadSize));
-            if(MD5 != null)
+            if (MD5 != null)
                 builder.Append(string.Format("MD5 Signature: {0}\n", Encoding.UTF8.GetString(MD5)));
-            if(GPG != null)
+            if (GPG != null)
                 builder.Append(string.Format("GPG Signature: {0}\n", Encoding.UTF8.GetString(GPG)));
-            if(PGP != null)
+            if (PGP != null)
                 builder.Append(string.Format("PGP Signature: {0}\n", Encoding.UTF8.GetString(PGP)));
             if (SHA1 != null)
                 builder.Append(string.Format("SHA1 Signature: {0}\n", SHA1));

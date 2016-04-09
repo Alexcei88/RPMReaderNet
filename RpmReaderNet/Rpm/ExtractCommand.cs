@@ -2,17 +2,14 @@
 using NDesk.Options;
 using RpmReaderNet;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rpm
 {
     /// <summary>
     /// extract files from package command
     /// </summary>
-    class ExtractCommand
+    internal class ExtractCommand
         : ConsoleCommand
     {
         /// <summary>
@@ -27,7 +24,7 @@ namespace Rpm
             {
                 { "d|destinition", "Destinition folder", d => _destFolder = d }
             };
-            
+
             HasAdditionalArguments(2, "<input rpm package>");
         }
 
@@ -35,7 +32,6 @@ namespace Rpm
         {
             try
             {
-
                 using (RpmReader reader = new RpmReader(remainingArguments.Last()))
                 {
                     reader.ExtractPackage(remainingArguments[0]);

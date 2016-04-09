@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace RpmReaderNet.Section
@@ -113,6 +110,7 @@ namespace RpmReaderNet.Section
         {
             get { return _preunScript.Value; }
         }
+
         public string PostunScript
         {
             get { return _postunScript.Value; }
@@ -136,7 +134,7 @@ namespace RpmReaderNet.Section
         public string[] FileUserNames
         {
             get { return _fileUserNames.Value; }
-        } 
+        }
 
         public string[] FileGroupNames
         {
@@ -272,7 +270,7 @@ namespace RpmReaderNet.Section
         {
             int len = Marshal.SizeOf(typeof(RpmStruct.RPMEntry));
             _entries = new RpmStruct.RPMEntry[countEntry];
-            for(int i = 0; i < countEntry; ++i)
+            for (int i = 0; i < countEntry; ++i)
             {
                 RpmStruct.RPMEntry entry = new RpmStruct.RPMEntry();
                 IntPtr @in = Marshal.AllocHGlobal(len);
@@ -298,7 +296,5 @@ namespace RpmReaderNet.Section
             uint dateTimeStr = GetInt32FromTag((int)RpmConstants.rpmTag.RPMTAG_BUILDTIME);
             return ((long)dateTimeStr).FromUnixTime();
         }
-
-
     }
 }

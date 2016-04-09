@@ -4,11 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace RpmReaderNet.Section
 {
-    abstract class AbstractHeaderSection
+    internal abstract class AbstractHeaderSection
         : RpmSection
     {
         /// <summary>
@@ -29,7 +28,7 @@ namespace RpmReaderNet.Section
 
         public AbstractHeaderSection(FileStream stream)
             : base(stream)
-        {}
+        { }
 
         protected byte[][] ReadDataEntry(long startFirstEntryPosition, RpmStruct.RPMEntry entry)
         {
@@ -73,7 +72,6 @@ namespace RpmReaderNet.Section
                 }
             }
             return null;
-
         }
 
         /// <summary>
@@ -110,7 +108,7 @@ namespace RpmReaderNet.Section
                 {
                     throw new InvalidDataException("Тип тега у раздела не равен типу тега RpmConstants.rpmTagType.RPM_INT32_TYPE");
                 }
-                if(entry.Value.Count > 1)
+                if (entry.Value.Count > 1)
                 {
                     throw new InvalidDataException("В разделе содержиться количество, больше одного значения. Нужен массив");
                 }
@@ -178,7 +176,6 @@ namespace RpmReaderNet.Section
                 {
                     throw new InvalidDataException("Тип тега у раздела не равен типу тега RpmConstants.rpmTagType.RPM_INT32_TYPE");
                 }
-
 
                 long startPosition = GetStartPositionFirstEntry();
                 byte[][] data = ReadDataEntry(startPosition, entry.Value);

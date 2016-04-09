@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
 
 namespace RpmReaderNet.Section
 {
@@ -33,7 +32,6 @@ namespace RpmReaderNet.Section
             _dataEntryReaders[RpmConstants.rpmTagType.RPM_INT32_TYPE] = ReadInt32;
             _dataEntryReaders[RpmConstants.rpmTagType.RPM_STRING_ARRAY_TYPE] = ReadStringTagType;
             _dataEntryReaders[RpmConstants.rpmTagType.RPM_BIN_TYPE] = ReadBin;
-
         }
 
         /// <summary>

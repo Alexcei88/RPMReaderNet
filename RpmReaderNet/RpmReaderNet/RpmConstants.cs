@@ -3,6 +3,7 @@
     internal static class RpmConstants
     {
         public const int HEADER_SIGBASE = 256;
+
         public enum rpmTagType
         {
             RPM_NULL_TYPE = 0,
@@ -19,8 +20,8 @@
 
         public enum rpmTag
         {
-            RPMTAG_NOT_FOUND = -1,                   
-   
+            RPMTAG_NOT_FOUND = -1,
+
             /* Retrofit (and uniqify) signature tags for use by rpmTagGetName() and rpmQuery. */
             /* the md5 sum was broken *twice* on big endian machines */
             /* XXX 2nd underscore prevents tagTable generation */
@@ -32,7 +33,7 @@
             RPMTAG_SIGMD5 = RPMTAG_SIG_BASE + 5,    /* x */
             RPMTAG_SIGGPG = RPMTAG_SIG_BASE + 6,    /* x */
             RPMTAG_SIGPGP5 = RPMTAG_SIG_BASE + 7,    /* internal - obsolete */
-    
+
             RPMTAG_BADSHA1_1 = RPMTAG_SIG_BASE + 8,    /* internal - obsolete */
             RPMTAG_BADSHA1_2 = RPMTAG_SIG_BASE + 9,    /* internal - obsolete */
             RPMTAG_PUBKEYS = RPMTAG_SIG_BASE + 10,   /* s[] */

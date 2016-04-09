@@ -1,17 +1,15 @@
 ﻿using ManyConsole;
 using RpmReaderNet;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Rpm
 {
     /// <summary>
     /// Command to output list of files
     /// </summary>
-    class FileListCommand
+    internal class FileListCommand
         : ConsoleCommand
     {
         public FileListCommand()
@@ -25,7 +23,6 @@ namespace Rpm
         {
             try
             {
-
                 using (RpmReader reader = new RpmReader(remainingArguments.Last()))
                 {
                     string[] baseNames = reader.BaseFileNames;

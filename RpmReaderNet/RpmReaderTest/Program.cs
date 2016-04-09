@@ -1,16 +1,11 @@
 ﻿using RpmReaderNet;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RpmReaderTest
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             using (RpmReader reader = new RpmReader("esbadapterhost.rpm"))
             {
@@ -24,8 +19,6 @@ namespace RpmReaderTest
                             Console.WriteLine(s);
                         }
                     }
-
-
                 }
 
                 Console.WriteLine(reader.ToString());
@@ -34,7 +27,6 @@ namespace RpmReaderTest
 
                 Console.ReadKey();
             }
-
         }
     }
 }

@@ -1,17 +1,15 @@
 ﻿using ManyConsole;
 using RpmReaderNet;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Rpm
 {
     /// <summary>
     /// Command for output scripts
     /// </summary>
-    class OutputScriptCommand
+    internal class OutputScriptCommand
         : ConsoleCommand
     {
         /// <summary>
@@ -38,7 +36,6 @@ namespace Rpm
         /// Mark to prints postunscript
         /// </summary>
         private bool _printPostunScript;
-
 
         public OutputScriptCommand()
         {
@@ -69,19 +66,19 @@ namespace Rpm
                         Console.WriteLine(builder.ToString());
                         return 0;
                     }
-                    if(_printPreinScript)
+                    if (_printPreinScript)
                     {
                         PrintPreinScript(builder, reader);
                     }
-                    if(_printPostinScript)
+                    if (_printPostinScript)
                     {
                         PrintPostinScript(builder, reader);
                     }
-                    if(_printPreunScript)
+                    if (_printPreunScript)
                     {
                         PrintPreunScript(builder, reader);
                     }
-                    if(_printPostunScript)
+                    if (_printPostunScript)
                     {
                         PrintPostunScript(builder, reader);
                     }

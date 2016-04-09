@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.GZip;
-using ICSharpCode.SharpZipLib.Core;
+using System.IO;
 
 namespace RpmReaderNet.Section
 {
-    class RpmArchiveSection
+    internal class RpmArchiveSection
         : RpmSection
     {
         /// <summary>
@@ -25,7 +20,6 @@ namespace RpmReaderNet.Section
         public RpmArchiveSection(FileStream stream)
             : base(stream)
         {
-
         }
 
         public void Extract(string destFolder)
@@ -72,7 +66,7 @@ namespace RpmReaderNet.Section
         {
             using (CPIOLibSharp.CPIOFileStream fs = new CPIOLibSharp.CPIOFileStream(fileName))
             {
-                fs.Extract(destFolder, new CPIOLibSharp.ExtractFlags[] 
+                fs.Extract(destFolder, new CPIOLibSharp.ExtractFlags[]
                 {
                     CPIOLibSharp.ExtractFlags.ARCHIVE_EXTRACT_TIME
                 });

@@ -1,17 +1,14 @@
 ﻿using ManyConsole;
 using RpmReaderNet;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Rpm
 {
     /// <summary>
     /// Command for getting info package
     /// </summary>
-    class InfoCommand
+    internal class InfoCommand
         : ConsoleCommand
     {
         /// <summary>
@@ -21,7 +18,7 @@ namespace Rpm
 
         public InfoCommand()
         {
-            IsCommand("info", "Outputs info package");            
+            IsCommand("info", "Outputs info package");
             HasAdditionalArguments(1, " <input rpm package>");
         }
 

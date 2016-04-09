@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RpmReaderNet
 {
@@ -135,6 +131,7 @@ namespace RpmReaderNet
         {
             get { return IsValidate ? _headerSection.PreunScript : null; }
         }
+
         public string PostunScript
         {
             get { return IsValidate ? _headerSection.PostunScript : null; }
@@ -149,7 +146,7 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// The list of all base names files    
+        /// The list of all base names files
         /// </summary>
         public string[] BaseFileNames
         {
@@ -171,7 +168,7 @@ namespace RpmReaderNet
         {
             get { return IsValidate ? _headerSection.DirIndexes : null; }
         }
-    
+
         /// <summary>
         /// Имя пользователя владельца файла
         /// </summary>
@@ -192,7 +189,7 @@ namespace RpmReaderNet
         {
             get { return IsValidate ? _headerSection.FileSizes : default(uint); }
         }
- 
+
         /// <summary>
         /// MD5 Files
         /// </summary>
@@ -271,6 +268,5 @@ namespace RpmReaderNet
                 return IsValidate ? _headerSection.RequiresNames : null;
             }
         }
-
     }
 }
