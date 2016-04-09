@@ -32,7 +32,13 @@ namespace Rpm
                     string[] dirs = reader.DirNames;
                     uint[] dirIndexes = reader.DirIndexes;
 
-
+                    StringBuilder builder = new StringBuilder("Filelist: \n");
+                    int i = 0;
+                    foreach (string baseName in baseNames)
+                    {
+                        builder.Append($"{dirs[dirIndexes[i++]]}{baseName}\n");
+                    }
+                    Console.WriteLine(builder.ToString());
                 }
                 return 0;
             }
