@@ -4,7 +4,7 @@
 
 ## License
 
-CpioLibSharp are released under the GNU GPLv3 license. See LICENSE for details.
+RPMReaderNet are released under the GNU GPLv3 license. See LICENSE for details.
 
 ## Support
 
