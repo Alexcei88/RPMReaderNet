@@ -18,7 +18,7 @@ namespace Rpm
 
         public InfoCommand()
         {
-            IsCommand("info", "Outputs info package");
+            IsCommand("info", "print a common information about package");
             HasAdditionalArguments(1, " <input rpm package>");
         }
 

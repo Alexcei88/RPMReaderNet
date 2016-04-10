@@ -39,13 +39,13 @@ namespace Rpm
 
         public OutputScriptCommand()
         {
-            IsCommand("script", "prints the contents of scripts");
+            IsCommand("script", "print the content of scripts");
 
-            HasOption("all", "prints all scripts", b => _printAllScripts = true);
-            HasOption("prein", "prints the preinstall script", b => _printPreinScript = true);
-            HasOption("postin", "prints the postinstall script", b => _printPostinScript = true);
-            HasOption("preun", "prints the preuninstall script", b => _printPreunScript = true);
-            HasOption("postun", "prints the postuninstall script", b => _printPostunScript = true);
+            HasOption("all", "print the content all scripts", b => _printAllScripts = true);
+            HasOption("prein", "print the content of a preinstall script", b => _printPreinScript = true);
+            HasOption("postin", "print the content of a postinstall script", b => _printPostinScript = true);
+            HasOption("preun", "print the content of a preuninstall script", b => _printPreunScript = true);
+            HasOption("postun", "print the content of a postuninstall script", b => _printPostunScript = true);
 
             HasAdditionalArguments(1, " <input rpm package>");
         }
