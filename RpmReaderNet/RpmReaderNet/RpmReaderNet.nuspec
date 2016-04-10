@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>Alexcei Shmakov</authors>
+    <owners>Alexcei Shmakov</owners>
+    <licenseUrl>https://github.com/Alexcei88/RPMReaderNet</licenseUrl>
+    <projectUrl>https://github.com/Alexcei88/RPMReaderNet</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Reader of a rpm file</description>
+    <dependencies>
+      <dependency id="CPIOLibSharp" version="1.0.2" />
+      <dependency id="SharpZibLib" version="0.86.0" />
+    </dependencies>
+    <releaseNotes>
+    </releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>cpio, rpm</tags>
+  </metadata>
+</package>
