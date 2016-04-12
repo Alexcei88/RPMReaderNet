@@ -8,7 +8,7 @@ namespace RpmReaderNet
     public partial class RpmReader
     {
         /// <summary>
-        /// Версия пакета
+        /// The version of the package
         /// </summary>
         public string Version
         {
@@ -16,20 +16,23 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// Версия релиза
+        /// The relese number of the package
         /// </summary>
         public string Release
         {
             get { return IsValidate ? _headerSection.Release : null; }
         }
 
+        /// <summary>
+        /// Serial number of the package
+        /// </summary>
         public string Serial
         {
             get { return IsValidate ? _headerSection.Serial : null; }
         }
 
         /// <summary>
-        /// Имя пакета
+        /// The name of the package
         /// </summary>
         public string Name
         {
@@ -37,7 +40,7 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// Общая информация о пакете
+        /// The summary information about the package
         /// </summary>
         public string Summary
         {
@@ -45,7 +48,7 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// Описание пакета
+        /// Description of the package
         /// </summary>
         public string Description
         {
@@ -53,7 +56,7 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// Время сборки пакета
+        /// A build time of the package
         /// </summary>
         public DateTime? BuildTime
         {
@@ -61,45 +64,64 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// Имя хоста машины, на котором собран пакет
+        /// a host hame where was build package
         /// </summary>
         public string BuildHost
         {
             get { return IsValidate ? _headerSection.BuildHost : null; }
         }
 
+        /// <summary>
+        /// A group name of packages, of which this package is a part
+        /// </summary>
         public string Distribution
         {
             get { return IsValidate ? _headerSection.Distribution : null; }
         }
 
+        /// <summary>
+        /// a name of the entity that is responsible for a package
+        /// </summary>
         public string Vendor
         {
             get { return IsValidate ? _headerSection.Vendor : null; }
         }
 
+        /// <summary>
+        /// A license of the package
+        /// </summary>
         public string License
         {
             get { return IsValidate ? _headerSection.License : null; }
         }
 
+        /// <summary>
+        /// a name and contact information for the person or persons who built the package
+        /// </summary>
         public string Packager
         {
             get { return IsValidate ? _headerSection.Packager : null; }
         }
 
+        /// <summary>
+        /// a log or record of all or all notable changes made to a package
+        /// </summary>
         public string Changelog
         {
             get { return IsValidate ? _headerSection.Changelog : null; }
         }
 
+
+        /// <summary>
+        /// A original source files name
+        /// </summary>
         public string[] Source
         {
             get { return IsValidate ? _headerSection.Source : null; }
         }
 
         /// <summary>
-        /// Имя исходника rpm, откуда было собрано
+        /// a name of the source package from which this binary package was built
         /// </summary>
         public string SourceRpm
         {
@@ -107,7 +129,7 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// Архитектура
+        /// the architecture for which the package was built
         /// </summary>
         public string Arch
         {
@@ -115,30 +137,39 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// Содержимое скрипта Prein
+        /// get content of the package's pre-install script
         /// </summary>
         public string PreinScript
         {
             get { return IsValidate ? _headerSection.PreinScript : null; }
         }
 
+        /// <summary>
+        /// get content of the package's post-install script
+        /// </summary>
         public string PostinScript
         {
             get { return IsValidate ? _headerSection.PostinScript : null; }
         }
 
+        /// <summary>
+        /// get content of the package's pre-uninstall script
+        /// </summary>
         public string PreunScript
         {
             get { return IsValidate ? _headerSection.PreunScript : null; }
         }
 
+        /// <summary>
+        /// get content of the package's post-uninstall script
+        /// </summary>
         public string PostunScript
         {
             get { return IsValidate ? _headerSection.PostunScript : null; }
         }
 
         /// <summary>
-        /// Размер данных пакета(после распаковки)
+        /// a total size, in bytes, of every file installed by a package
         /// </summary>
         public uint Size
         {
@@ -146,7 +177,7 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// The list of all base names files
+        /// a list of all base names files in package
         /// </summary>
         public string[] BaseFileNames
         {
@@ -154,7 +185,7 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// The list of all dirs
+        /// a list of all dirs in package
         /// </summary>
         public string[] DirNames
         {
@@ -162,7 +193,7 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// Indexes of dir
+        /// Indexes of dir for link between the file name and directory
         /// </summary>
         public uint[] DirIndexes
         {
@@ -170,7 +201,7 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// Имя пользователя владельца файла
+        /// a owner, in alphanumeric form, of each of the files that comprise the package
         /// </summary>
         public string[] FileUserNames
         {
@@ -178,20 +209,23 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// Имя группы владельца файла
+        /// a group, in alphanumeric form, of each of the files that comprise the package
         /// </summary>
         public string[] FileGroupNames
         {
             get { return IsValidate ? _headerSection.FileGroupNames : null; }
         }
 
-        public uint FileSizes
+        /// <summary>
+        /// a size, in bytes, of each of the files that comprise the package
+        /// </summary>
+        public uint FileSize
         {
-            get { return IsValidate ? _headerSection.FileSizes : default(uint); }
+            get { return IsValidate ? _headerSection.FileSize : default(uint); }
         }
 
         /// <summary>
-        /// MD5 Files
+        ///  a MD5 checksum for each of the files that comprise the package
         /// </summary>
         public string[] MD5Files
         {
@@ -199,7 +233,7 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// MD5 Signature of package
+        /// a MD5 signature of package
         /// </summary>
         public byte[] MD5Signature
         {
@@ -207,7 +241,7 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// GPG Signature of package
+        /// a GPG signature of package
         /// </summary>
         public byte[] GPGSignature
         {
@@ -215,7 +249,7 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// PGP Signature of package
+        /// a PGP signature of package
         /// </summary>
         public byte[] PGPSignature
         {
@@ -223,18 +257,24 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// SHA Signature of package
+        /// a SHA hash of package
         /// </summary>
-        public string SHA1Signature
+        public string SHA1Hash
         {
             get { return IsValidate ? _signatureSection.SHA1 : null; }
         }
 
+        /// <summary>
+        /// a DSA signature of package
+        /// </summary>
         public byte[] DSASignature
         {
             get { return IsValidate ? _signatureSection.DSA : null; }
         }
 
+        /// <summary>
+        /// a RSA signature of package
+        /// </summary>
         public byte[] RSASignature
         {
             get { return IsValidate ? _signatureSection.RSA : null; }
@@ -243,23 +283,24 @@ namespace RpmReaderNet
         /// <summary>
         /// Размер секции сигнатуры
         /// </summary>
-        public uint SignatureSize
+        /*public uint SignatureSize
         {
             get { return IsValidate ? _signatureSection.Size : default(uint); }
-        }
+        }*/
 
-        public uint FullSize
+        /*public uint FullSize
         {
             get { return IsValidate ? _signatureSection.Size : default(uint); }
-        }
+        }*/
 
+        /*
         public uint PayloadSize
         {
             get { return IsValidate ? _signatureSection.PayloadSize : default(uint); }
-        }
+        }*/
 
         /// <summary>
-        /// Список зависимостей в пакете
+        /// a list of capabilities the package requires.
         /// </summary>
         public string[] RequiresNames
         {

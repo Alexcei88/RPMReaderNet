@@ -110,7 +110,7 @@ namespace RpmReaderNet
 
             if (_state == StateRead.RPMFILE_VALIDATE_SUCCESS)
                 return true;
-
+            
             List<Func<bool>> readers = new List<Func<bool>>();
             readers.Add(ReadLead);
             readers.Add(ReadSignature);
@@ -164,24 +164,31 @@ namespace RpmReaderNet
 
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder();
-            builder.Append("------Common section------\n");
-            builder.Append($"Name: {Name}\n");
-            builder.Append($"Version: {Version}\n");
-            builder.Append($"Release: {Release}\n");
-            builder.Append($"Serial: {Serial}\n");
-            builder.Append($"Source RPM: {SourceRpm}\n");
-            builder.Append($"Summary: {Summary}\n");
-            builder.Append($"Description: {Description}\n");
-            builder.Append($"BuildTime: {BuildTime}\n");
-            builder.Append($"BuildHost: {BuildHost}\n");
-            builder.Append($"License: {License}\n");
-            builder.Append($"Arch: {Arch}\n");
-            builder.Append($"Size: {Size}\n");
+            if (IsValidate)
+            {
+                StringBuilder builder = new StringBuilder();
+                builder.Append("------Common section------\n");
+                builder.Append($"Name: {Name}\n");
+                builder.Append($"Version: {Version}\n");
+                builder.Append($"Release: {Release}\n");
+                builder.Append($"Serial: {Serial}\n");
+                builder.Append($"Source RPM: {SourceRpm}\n");
+                builder.Append($"Summary: {Summary}\n");
+                builder.Append($"Description: {Description}\n");
+                builder.Append($"BuildTime: {BuildTime}\n");
+                builder.Append($"BuildHost: {BuildHost}\n");
+                builder.Append($"License: {License}\n");
+                builder.Append($"Arch: {Arch}\n");
+                builder.Append($"Size: {Size}\n");
 
-            builder.Append("------Signature section------\n");
-            builder.Append(_signatureSection.ToString());
-            return builder.ToString();
+                builder.Append("------Signature section------\n");
+                builder.Append(_signatureSection.ToString());
+                return builder.ToString();
+            }
+            else
+            {
+                return "File has invalid format";
+            }
         }
 
         private bool ReadLead()

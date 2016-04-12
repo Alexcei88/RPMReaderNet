@@ -146,7 +146,7 @@ namespace RpmReaderNet.Section
             get { return _md5Files.Value; }
         }
 
-        public uint FileSizes
+        public uint FileSize
         {
             get { return _fileSizes.Value; }
         }
@@ -157,7 +157,7 @@ namespace RpmReaderNet.Section
         }
 
         /// <summary>
-        /// Размер пакета
+        /// a total size, in bytes, of every file installed by a package
         /// </summary>
         public uint Size
         {

@@ -1,5 +1,7 @@
 ﻿using RpmReaderNet;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RpmReaderTest
 {
@@ -7,7 +9,19 @@ namespace RpmReaderTest
     {
         private static void Main(string[] args)
         {
-            using (RpmReader reader = new RpmReader("esbadapterhost.rpm"))
+            var list1 = new List<string>()
+            {
+                "1", "2", "3", "4", "5", "6", "7"
+            };
+
+            var list2 = new List<string>()
+            {
+                "1", "2", "3", "4", "5", "6", "7"
+            };
+
+            var list3 = list1.Take(5).Concat(list2.Take(3));
+
+            using (RpmReader reader = new RpmReader("esbautoupdater.rpm"))
             {
                 if (reader.Validate())
                 {
