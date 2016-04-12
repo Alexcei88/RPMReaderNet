@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChangelogCommand.cs" />
     <Compile Include="ExtractCommand.cs" />
     <Compile Include="FileListCommand.cs" />
     <Compile Include="InfoCommand.cs" />

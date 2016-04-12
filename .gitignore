@@ -11,3 +11,8 @@
 *.nupkg
 /RpmReaderNet/Rpm/bin/Debug
 /RpmReaderNet/Rpm/obj/Debug
+/RpmReaderNet/Rpm/bin/Release
+/RpmReaderNet/RpmReaderNet/obj/Release
+/RpmReaderNet/RpmReaderTest/obj/Release
+/RpmReaderNet/Rpm/obj/Release
+/RpmReaderNet/RpmReaderNet/bin/Release
