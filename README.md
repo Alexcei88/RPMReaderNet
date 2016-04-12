@@ -5,6 +5,13 @@
 
 [Examples of the use of the library](https://github.com/Alexcei88/RPMReaderNet/wiki/Usage-RpmReaderNet)
 
+**A List all commands that support the RpmNet program**
+
+- *info* - print a common information about package
+- *filelist* - print a list all files in package
+- *script* - print the contents of scripts
+- *extract* - extract all files from package
+
 ## License
 
 RPMReaderNet are released under the GNU GPLv3 license. See LICENSE for details.
