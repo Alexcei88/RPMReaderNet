@@ -110,7 +110,9 @@ namespace RpmReaderNet
 
             if (_state == StateRead.RPMFILE_VALIDATE_SUCCESS)
                 return true;
-            
+
+            _fileStream.Position = 0;
+
             List<Func<bool>> readers = new List<Func<bool>>();
             readers.Add(ReadLead);
             readers.Add(ReadSignature);
