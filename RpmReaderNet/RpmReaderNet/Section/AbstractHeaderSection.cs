@@ -123,6 +123,21 @@ namespace RpmReaderNet.Section
             return default(int);
         }
 
+        protected byte[][] GetArrayBinDataFromTag(int tag)
+        {
+            var entry = GetEntry(tag);
+            if (entry != null)
+            {
+                if ((uint)RpmConstants.rpmTagType.RPM_BIN_TYPE != entry.Value.Type)
+                {
+                    throw new InvalidDataException("Тип тега у раздела не равен типу тега RpmConstants.rpmTagType.RPM_BIN_TYPE");
+                }
+                long startPosition = GetStartPositionFirstEntry();
+                return ReadDataEntry(startPosition, entry.Value);
+            }
+            return null;
+        }
+
         protected byte[] GetBinDataFromTag(int tag)
         {
             var entry = GetEntry(tag);

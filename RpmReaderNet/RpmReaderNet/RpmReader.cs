@@ -118,13 +118,15 @@ namespace RpmReaderNet
             readers.Add(ReadArchive);
 
             bool validate = true;
-
-            foreach (var reader in readers)
+            unchecked
             {
-                if (!reader())
+                foreach (var reader in readers)
                 {
-                    validate = false;
-                    break;
+                    if (!reader())
+                    {
+                        validate = false;
+                        break;
+                    }
                 }
             }
 

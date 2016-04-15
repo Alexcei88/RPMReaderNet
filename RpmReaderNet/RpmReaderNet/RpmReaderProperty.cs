@@ -235,7 +235,7 @@ namespace RpmReaderNet
         /// <summary>
         /// a MD5 signature of package
         /// </summary>
-        public byte[] MD5Signature
+        public byte[][] MD5Signature
         {
             get { return IsValidate ? _signatureSection.MD5 : null; }
         }

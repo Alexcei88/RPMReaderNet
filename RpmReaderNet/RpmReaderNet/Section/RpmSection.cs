@@ -44,7 +44,7 @@ namespace RpmReaderNet.Section
         {
             return StructuralComparisons.StructuralEqualityComparer.Equals(a1, a2);
         }
-
+      
         public static uint ReverseBytes(uint value)
         {
             return (value & 0x000000FFU) << 24 | (value & 0x0000FF00U) << 8 |
