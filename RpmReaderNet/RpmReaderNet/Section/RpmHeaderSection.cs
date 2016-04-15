@@ -249,8 +249,11 @@ namespace RpmReaderNet.Section
             Marshal.Copy(data, 0, @in, len);
             Header = (RpmStruct.RPMHeader)Marshal.PtrToStructure(@in, Header.GetType());
             Marshal.FreeHGlobal(@in);
-            Header.bytesDataCount = (int)ReverseBytes((uint)Header.bytesDataCount);
-            Header.entryCount = (int)ReverseBytes((uint)Header.entryCount);
+            unchecked
+            { 
+                Header.bytesDataCount = (int)ReverseBytes((uint)Header.bytesDataCount);
+                Header.entryCount = (int)ReverseBytes((uint)Header.entryCount);
+            }
             byte[] buffer = new byte[RpmStruct.RPM_MAGIC_HEADER_NUMBER.Length];
             unsafe
             {
@@ -277,10 +280,13 @@ namespace RpmReaderNet.Section
                 Marshal.Copy(data, len * i, @in, len);
                 entry = (RpmStruct.RPMEntry)Marshal.PtrToStructure(@in, typeof(RpmStruct.RPMEntry));
                 Marshal.FreeHGlobal(@in);
-                entry.Count = ReverseBytes(entry.Count);
-                entry.Offset = ReverseBytes(entry.Offset);
-                entry.Tag = ReverseBytes(entry.Tag);
-                entry.Type = ReverseBytes(entry.Type);
+                unchecked
+                {
+                    entry.Count = ReverseBytes(entry.Count);
+                    entry.Offset = ReverseBytes(entry.Offset);
+                    entry.Tag = ReverseBytes(entry.Tag);
+                    entry.Type = ReverseBytes(entry.Type);
+                }
                 _entries[i] = entry;
             }
             return true;

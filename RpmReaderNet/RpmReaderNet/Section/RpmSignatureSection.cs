@@ -23,7 +23,7 @@ namespace RpmReaderNet.Section
             get { return _payloadSize.Value; }
         }
 
-        public byte[] MD5
+        public byte[][] MD5
         {
             get { return _md5.Value; }
         }
@@ -55,7 +55,7 @@ namespace RpmReaderNet.Section
 
         private Lazy<uint> _size;
         private Lazy<uint> _payloadSize;
-        private Lazy<byte[]> _md5;
+        private Lazy<byte[][]> _md5;
         private Lazy<byte[]> _gpg;
         private Lazy<byte[]> _pgp;
         private Lazy<string> _sha1;
@@ -67,7 +67,7 @@ namespace RpmReaderNet.Section
         {
             _size = new Lazy<uint>(() => ReverseBytes(GetInt32FromTag((int)(RpmConstants.rpmSigTag.RPMSIGTAG_SIZE))));
             _payloadSize = new Lazy<uint>(() => ReverseBytes(GetInt32FromTag((int)(RpmConstants.rpmSigTag.RPMSIGTAG_PAYLOADSIZE))));
-            _md5 = new Lazy<byte[]>(() => GetBinDataFromTag((int)RpmConstants.rpmSigTag.RPMSIGTAG_MD5));
+            _md5 = new Lazy<byte[][]>(() => GetArrayBinDataFromTag((int)RpmConstants.rpmSigTag.RPMSIGTAG_MD5));
             _gpg = new Lazy<byte[]>(() => GetBinDataFromTag((int)RpmConstants.rpmSigTag.RPMSIGTAG_GPG));
             _pgp = new Lazy<byte[]>(() => GetBinDataFromTag((int)RpmConstants.rpmSigTag.RPMSIGTAG_PGP));
             _sha1 = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmSigTag.RPMSIGTAG_SHA1));
@@ -129,8 +129,11 @@ namespace RpmReaderNet.Section
             StringBuilder builder = new StringBuilder();
             builder.Append(string.Format("Size: {0}\n", Size));
             builder.Append(string.Format("PayloadSize: {0}\n", PayloadSize));
-            if (MD5 != null)
-                builder.Append(string.Format("MD5 Signature: {0}\n", Encoding.UTF8.GetString(MD5)));
+
+            /*if (MD5 != null)
+            {
+                //builder.Append(string.Format("MD5 Signature: {0}\n", Encoding.UTF8.GetString(MD5)));
+            }*/
             if (GPG != null)
                 builder.Append(string.Format("GPG Signature: {0}\n", Encoding.UTF8.GetString(GPG)));
             if (PGP != null)
