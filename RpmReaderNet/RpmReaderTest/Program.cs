@@ -9,7 +9,7 @@ namespace RpmReaderTest
     {
         private static void Main(string[] args)
         {
-            using (RpmReader reader = new RpmReader("esbadapterhost.rpm"))
+            using (RpmReader reader = new RpmReader("esbautoupdater.rpm"))
             {
                 
                 if (reader.Validate())

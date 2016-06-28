@@ -3,7 +3,7 @@
 namespace RpmReaderNet
 {
     /// <summary>
-    /// Reader(содержит все свойства класса-читателя
+    /// Additional property for access to metadata from a rpm file
     /// </summary>
     public partial class RpmReader
     {

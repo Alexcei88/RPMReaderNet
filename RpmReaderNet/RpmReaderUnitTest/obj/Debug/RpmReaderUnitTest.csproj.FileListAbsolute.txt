@@ -1,0 +1,13 @@
+E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Debug\RpmReaderUnitTest.dll
+E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Debug\RpmReaderUnitTest.pdb
+E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Debug\RpmReaderNet.dll
+E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Debug\ICSharpCode.SharpZipLib.dll
+E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Debug\CPIOLibSharp.dll
+E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Debug\RpmReaderNet.pdb
+E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.xml
+E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\obj\Debug\RpmReaderUnitTest.csprojResolveAssemblyReference.cache
+E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\obj\Debug\RpmReaderUnitTest.dll
+E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\obj\Debug\RpmReaderUnitTest.pdb
+E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Debug\esbautoupdater.rpm
+E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Debug\LoadTest1.loadtest
