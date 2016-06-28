@@ -7,14 +7,17 @@ namespace RpmReaderUnitTest
     [TestClass]
     public class ValidateTest
     {
+        /// <summary>
+        /// Execute a validation of input file and check metadata from package
+        /// </summary>
         [TestMethod]
         public void ValidateFile()
         {
-            //using (RpmReader reader = new RpmReader("esbautoupdater.rpm"))
-            //{
-            //    Assert.IsTrue(reader.IsValidate);
-            //    Console.WriteLine("Тестовая запись в тесте");
-            //}
+            using (RpmReader reader = new RpmReader("esbautoupdater.rpm"))
+            {
+                Assert.IsTrue(reader.IsValidate);
+         
+            }
         }
     }
 }

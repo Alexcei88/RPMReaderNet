@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 namespace RpmReaderNet.Section
 {
     /// <summary>
-    /// header-секция
+    /// a header section
     /// </summary>
     internal class RpmHeaderSection
         : AbstractHeaderSection
     {
         /// <summary>
-        /// Версия пакета
+        /// version rpm package
         /// </summary>
         public string Version
         {

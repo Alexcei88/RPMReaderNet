@@ -5,6 +5,9 @@ using System.IO;
 
 namespace RpmReaderNet.Section
 {
+    /// <summary>
+    /// Abstract base class 
+    /// </summary>
     internal abstract class RpmSection
     {
         /// <summary>
@@ -20,7 +23,7 @@ namespace RpmReaderNet.Section
         /// <summary>
         /// Функции читатели данных в зависимости от типа тега
         /// </summary>
-        protected Dictionary<RpmConstants.rpmTagType, Func<long, byte[]>> _dataEntryReaders = new Dictionary<RpmConstants.rpmTagType, Func<long, byte[]>>();
+        protected Dictionary<RpmConstants.rpmTagType, Func<byte[]>> _dataEntryReaders = new Dictionary<RpmConstants.rpmTagType, Func<byte[]>>();
 
         public RpmSection(FileStream fileStream)
         {
@@ -57,11 +60,11 @@ namespace RpmReaderNet.Section
         }
 
         /// <summary>
-        /// Read data for a type of tag equal 6(string)
+        /// Read data for tag with type equal 6(string)
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        protected byte[] ReadStringTagType(long position)
+        protected byte[] ReadStringTagType()
         {
             byte sym;
             List<byte> data = new List<byte>();
@@ -78,11 +81,11 @@ namespace RpmReaderNet.Section
         }
 
         /// <summary>
-        /// Read data for a type of tag equal 9(i18string)
+        /// Read data for tag with type equal 9(i18string)
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        protected byte[] ReadI18StringTagType(long position)
+        protected byte[] ReadI18StringTagType()
         {
             byte sym;
             List<byte> data = new List<byte>();
@@ -99,11 +102,11 @@ namespace RpmReaderNet.Section
         }
 
         /// <summary>
-        /// Read data for a type of tag equal 4(int32)
+        /// Read data for tag with type equal 4(int32)
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        protected byte[] ReadInt32(long position)
+        protected byte[] ReadInt32()
         {
             const int size = sizeof(int);
             byte[] buffer = new byte[size];
@@ -115,11 +118,11 @@ namespace RpmReaderNet.Section
         }
 
         /// <summary>
-        /// Read data for a type of tag equal 7(Bin)
+        /// Read data for tag with type equal 7(Bin)
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        protected byte[] ReadBin(long position)
+        protected byte[] ReadBin()
         {
             const int size = 16;
             byte[] buffer = new byte[size];

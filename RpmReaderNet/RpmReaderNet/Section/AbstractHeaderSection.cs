@@ -32,14 +32,14 @@ namespace RpmReaderNet.Section
 
         protected byte[][] ReadDataEntry(long startFirstEntryPosition, RpmStruct.RPMEntry entry)
         {
-            Func<long, byte[]> func;
+            Func<byte[]> func;
             if (_dataEntryReaders.TryGetValue((RpmConstants.rpmTagType)entry.Type, out func))
             {
                 _fileStream.Seek(startFirstEntryPosition + entry.Offset, SeekOrigin.Begin);
                 List<byte[]> data = new List<byte[]>();
                 for (int i = 0; i < entry.Count; ++i)
                 {
-                    data.Add(func(startFirstEntryPosition + entry.Offset));
+                    data.Add(func());
                 }
                 return data.ToArray();
             }
