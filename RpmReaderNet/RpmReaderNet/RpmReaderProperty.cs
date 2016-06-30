@@ -3,7 +3,7 @@
 namespace RpmReaderNet
 {
     /// <summary>
-    /// Additional property for access to metadata from a rpm file
+    /// List of properties for access to metadata from a rpm file
     /// </summary>
     public partial class RpmReader
     {
@@ -16,7 +16,7 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// The relese number of the package
+        /// The release number of the package
         /// </summary>
         public string Release
         {

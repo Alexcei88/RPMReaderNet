@@ -8,12 +8,12 @@ namespace RpmReaderNet.Section
         : RpmSection
     {
         /// <summary>
-        /// Магическое число начала секции архива(gzip архив)
+        /// the magic number то which start gzip archive
         /// </summary>
         public static readonly byte[] RPM_MAGIC_GZIP_NUMBER = { 0x1f, 0x8b };
 
         /// <summary>
-        /// Архив с данными
+        /// the buffer for data from archive
         /// </summary>
         public byte[] Data { get; set; }
 
@@ -22,6 +22,10 @@ namespace RpmReaderNet.Section
         {
         }
 
+        /// <summary>
+        /// Extract data from archive section in package
+        /// </summary>
+        /// <param name="destFolder"></param>
         public void Extract(string destFolder)
         {
             string tempDirectory = GetTemporaryDirectory();
@@ -33,13 +37,13 @@ namespace RpmReaderNet.Section
             }
             finally
             {
-                // удаляем временную папку
+                // remove temp directory
                 Directory.Delete(tempDirectory, true);
             }
         }
 
         /// <summary>
-        /// Saves binary data of gzip to file
+        /// decompressing gzip archive to destition file
         /// </summary>
         /// <param name="fileName"></param>
         private void SaveGZipArchive(string fileName)

@@ -100,9 +100,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RpmReaderNet\RpmReaderNet.csproj">
+    <ProjectReference Include="..\RpmReaderNet\RpmReaderNetLib.csproj">
       <Project>{1272fe0c-8e63-484b-8f69-8a05c1e51feb}</Project>
-      <Name>RpmReaderNet</Name>
+      <Name>RpmReaderNetLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

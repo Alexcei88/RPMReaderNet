@@ -7,8 +7,8 @@
     <ProjectGuid>{1272FE0C-8E63-484B-8F69-8A05C1E51FEB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RpmReaderNet</RootNamespace>
-    <AssemblyName>RpmReaderNet</AssemblyName>
+    <RootNamespace>RpmReaderNetLib</RootNamespace>
+    <AssemblyName>RpmReaderNetLib</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -81,7 +81,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions.cs" />
     <Compile Include="RpmReaderProperty.cs" />
     <Compile Include="RpmReader.cs" />
     <Compile Include="Section\AbstractHeaderSection.cs" />
@@ -100,6 +99,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild" Condition=" '$(Configuration)' == 'Release'">
-    <Exec Command="nuget pack RpmReaderNet.csproj -Prop Configuration=Release"></Exec>
-</Target>
+    <Exec Command="nuget pack RpmReaderNet.csproj -Prop Configuration=Release">
+    </Exec>
+  </Target>
 </Project>

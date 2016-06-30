@@ -7,6 +7,9 @@ using System.Text;
 
 namespace RpmReaderNet
 {
+    /// <summary>
+    /// Main class. It readers rpm file. 
+    /// </summary>
     public partial class RpmReader
         : IDisposable
     {
@@ -19,63 +22,63 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// Lead секция
+        /// lead section
         /// </summary>
         private RpmLeadSection _leadSection;
 
         /// <summary>
-        /// signature секция
+        /// signature section
         /// </summary>
         private RpmSignatureSection _signatureSection;
 
         /// <summary>
-        /// header секция
+        /// header section
         /// </summary>
         private RpmHeaderSection _headerSection;
 
         /// <summary>
-        /// archive секция
+        /// archive section
         /// </summary>
         private RpmArchiveSection _archiveSection;
 
         /// <summary>
-        /// Был ли разрушен объект
+        /// Is the object deleted?
         /// </summary>
         private bool isDisposed;
 
         /// <summary>
-        /// Поток данных файла
+        /// a stream for readable file
         /// </summary>
         private FileStream _fileStream;
 
         /// <summary>
-        /// Состояние чтения файла
+        /// state of reading
         /// </summary>
         private enum StateRead
         {
             /// <summary>
-            /// Файл не найден
+            /// file not found
             /// </summary>
             RPMFILE_NOTFOUND = 0,
 
             /// <summary>
-            /// Файл не валидирован
+            /// validate operation is not performed
             /// </summary>
             RPMFILE_NOT_VALIDATE = 1,
 
             /// <summary>
-            /// Файл успешно валидирован
+            /// success format 
             /// </summary>
             RPMFILE_VALIDATE_SUCCESS = 2,
 
             /// <summary>
-            /// Файл не прошел валидацию
+            /// error format
             /// </summary>
             RPMFILE_VALIDATE_ERROR = 3,
         }
 
         /// <summary>
-        /// Текущее состояние файла
+        /// a current state reading
         /// </summary>
         private StateRead _state;
 
@@ -100,7 +103,7 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// Функция валидации пакета
+        /// validate a input file
         /// </summary>
         /// <returns></returns>
         public bool Validate()
@@ -136,6 +139,10 @@ namespace RpmReaderNet
             return validate;
         }
 
+        /// <summary>
+        /// check
+        /// </summary>
+        /// <returns></returns>
         private bool CheckValidate()
         {
             if (_state == StateRead.RPMFILE_VALIDATE_SUCCESS)
@@ -161,6 +168,10 @@ namespace RpmReaderNet
             return false;
         }
 
+        /// <summary>
+        /// extract content from package to a target folder
+        /// </summary>
+        /// <param name="destFolder">target output folder</param>
         public void ExtractPackage(string destFolder)
         {
             _archiveSection.Extract(destFolder);
@@ -239,6 +250,10 @@ namespace RpmReaderNet
             return false;
         }
 
+        /// <summary>
+        /// read header section
+        /// </summary>
+        /// <returns></returns>
         private bool ReadHeader()
         {
             if (FindBytes(RpmStruct.RPM_MAGIC_HEADER_NUMBER))
@@ -275,6 +290,10 @@ namespace RpmReaderNet
             return false;
         }
 
+        /// <summary>
+        /// read the archive data
+        /// </summary>
+        /// <returns></returns>
         private bool ReadArchive()
         {
             if (FindBytes(RpmArchiveSection.RPM_MAGIC_GZIP_NUMBER))
@@ -291,7 +310,7 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// Find array bytes in file
+        /// Find the array bytes in file
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
@@ -320,6 +339,14 @@ namespace RpmReaderNet
 
             _fileStream.Dispose();
             isDisposed = true;
+        }
+
+        /// <summary>
+        /// Finalizer
+        /// </summary>
+        ~RpmReader()
+        {
+            Dispose();
         }
     }
 }

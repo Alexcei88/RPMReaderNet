@@ -1,5 +1,9 @@
 ﻿namespace RpmReaderNet
 {
+    /// <summary>
+    /// RPM Constants from format 
+    /// https://refspecs.linuxbase.org/LSB_3.1.0/LSB-Core-generic/LSB-Core-generic/pkgformat.html
+    /// </summary>
     internal static class RpmConstants
     {
         public const int HEADER_SIGBASE = 256;

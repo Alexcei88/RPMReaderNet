@@ -6,7 +6,7 @@ using System.Text;
 namespace RpmReaderNet.Section
 {
     /// <summary>
-    /// Signature cекция
+    /// Signature section
     /// </summary>
     internal class RpmSignatureSection
         : AbstractHeaderSection

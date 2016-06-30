@@ -2,14 +2,25 @@
 
 namespace RpmReaderNet
 {
+    /// <summary>
+    /// Rpm structures from rpm format
+    /// https://refspecs.linuxbase.org/LSB_3.1.0/LSB-Core-generic/LSB-Core-generic/pkgformat.html
+    /// </summary>
     internal static class RpmStruct
     {
+        /// <summary>
+        /// the magic number то which start lead section
+        /// </summary>
         public static readonly byte[] RPM_MAGIC_LEAD_NUMBER = { 0xed, 0xab, 0xee, 0xdb };
 
-        // магическое число начала заголовка сигнатуры
+        /// <summary>
+        /// the magic number то which start signature section
+        /// </summary>
         public static readonly byte[] RPM_MAGIC_SIGNATURE_NUMBER = { 0x8e, 0xad, 0xe8 };
 
-        // магическое число начала заголовка
+        /// <summary>
+        /// the magic number то which start head section
+        /// </summary>
         public static readonly byte[] RPM_MAGIC_HEADER_NUMBER = { 0x8e, 0xad, 0xe8 };
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]

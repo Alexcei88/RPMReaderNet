@@ -58,14 +58,11 @@
       <Link>esbautoupdater.rpm</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="LoadTest1.loadtest">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RpmReaderNet\RpmReaderNet.csproj">
+    <ProjectReference Include="..\RpmReaderNet\RpmReaderNetLib.csproj">
       <Project>{1272fe0c-8e63-484b-8f69-8a05c1e51feb}</Project>
-      <Name>RpmReaderNet</Name>
+      <Name>RpmReaderNetLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
