@@ -23,31 +23,49 @@ namespace RpmReaderNet.Section
             get { return _payloadSize.Value; }
         }
 
+        /// <summary>
+        /// MD5 signatures of files from package
+        /// </summary>
         public byte[][] MD5
         {
             get { return _md5.Value; }
         }
 
+        /// <summary>
+        /// a GPG signature of package
+        /// </summary>
         public byte[] GPG
         {
             get { return _gpg.Value; }
         }
 
+        /// <summary>
+        /// a PGP signature of package
+        /// </summary>
         public byte[] PGP
         {
             get { return _gpg.Value; }
         }
 
+        /// <summary>
+        /// a SHA hash of package
+        /// </summary>
         public string SHA1
         {
             get { return _sha1.Value; }
         }
 
+        /// <summary>
+        /// a DSA signature of package
+        /// </summary>
         public byte[] DSA
         {
             get { return _dsa.Value; }
         }
 
+        /// <summary>
+        /// a RSA signature of package
+        /// </summary>
         public byte[] RSA
         {
             get { return _rsa.Value; }

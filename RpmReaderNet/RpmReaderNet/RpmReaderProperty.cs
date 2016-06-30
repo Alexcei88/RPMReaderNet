@@ -233,7 +233,7 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// a MD5 signature of package
+        /// MD5 signatures of files from package
         /// </summary>
         public byte[][] MD5Signature
         {
