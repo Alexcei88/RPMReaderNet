@@ -6,7 +6,7 @@ using System.IO;
 namespace RpmReaderNet.Section
 {
     /// <summary>
-    /// Rpm section 
+    /// Reader of Rpm section 
     /// </summary>
     internal abstract class RpmSection
     {

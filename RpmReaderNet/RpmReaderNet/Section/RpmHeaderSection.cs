@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 namespace RpmReaderNet.Section
 {
     /// <summary>
-    /// a header section
+    /// Reader a header section
     /// </summary>
     internal class RpmHeaderSection
         : AbstractHeaderSection
@@ -19,13 +19,16 @@ namespace RpmReaderNet.Section
         }
 
         /// <summary>
-        /// Имя пакета
+        /// Package name
         /// </summary>
         public string Name
         {
             get { return _name.Value; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string Release
         {
             get { return _release.Value; }

@@ -7,6 +7,10 @@ using System.Text;
 
 namespace RpmReaderNet.Section
 {
+    /// <summary>
+    /// Base class of rpm section
+    /// 
+    /// </summary>
     internal abstract class AbstractHeaderSection
         : RpmSection
     {

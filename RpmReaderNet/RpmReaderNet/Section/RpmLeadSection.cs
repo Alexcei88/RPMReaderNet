@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 namespace RpmReaderNet.Section
 {
     /// <summary>
-    /// Lead секция
+    /// Reader of lead section 
     /// </summary>
     internal class RpmLeadSection
         : RpmSection
