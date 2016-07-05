@@ -3,7 +3,11 @@
 
 ## Usage
 
+##### *RpmReaderNet* library
+
 [Examples of the use of the library](https://github.com/Alexcei88/RPMReaderNet/wiki/Usage-RpmReaderNet)
+
+##### *RpmNet* program
 
 **A List all commands that support the RpmNet program**
 
@@ -11,6 +15,10 @@
 - *filelist* - print a list all files in package
 - *script* - print the contents of scripts
 - *extract* - extract all files from package
+
+## Nuget
+
+Available on Nuget: https://www.nuget.org/packages/RpmReaderNet/
 
 ## License
 
