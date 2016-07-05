@@ -169,7 +169,7 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// a total size, in bytes, of every file installed by a package
+        /// the total size occupied by the package(in bytes)
         /// </summary>
         public uint Size
         {

@@ -1,11 +1,13 @@
 E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Release\RpmReaderUnitTest.dll
 E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Release\RpmReaderUnitTest.pdb
 E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Release\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
-E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Release\RpmReaderNet.dll
 E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Release\ICSharpCode.SharpZipLib.dll
 E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Release\CPIOLibSharp.dll
-E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Release\RpmReaderNet.pdb
 E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Release\Microsoft.VisualStudio.QualityTools.UnitTestFramework.xml
 E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\obj\Release\RpmReaderUnitTest.csprojResolveAssemblyReference.cache
 E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\obj\Release\RpmReaderUnitTest.dll
 E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\obj\Release\RpmReaderUnitTest.pdb
+E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Release\vlc.rpm
+E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Release\RpmReaderNetLib.dll
+E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Release\RpmReaderNetLib.pdb
+E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Release\changelog_standart.txt
