@@ -54,16 +54,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\Dropbox\Axelot\Package\esbautoupdater.rpm">
-      <Link>esbautoupdater.rpm</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\RpmReaderNet\RpmReaderNetLib.csproj">
       <Project>{1272fe0c-8e63-484b-8f69-8a05c1e51feb}</Project>
       <Name>RpmReaderNetLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="vlc.rpm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

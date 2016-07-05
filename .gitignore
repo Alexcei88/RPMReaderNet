@@ -16,3 +16,9 @@
 /RpmReaderNet/RpmReaderTest/obj/Release
 /RpmReaderNet/Rpm/obj/Release
 /RpmReaderNet/RpmReaderNet/bin/Release
+/RpmReaderNet/TestResults/
+/RpmReaderNet/RpmReaderUnitTest/bin/
+/RpmReaderNet/RpmReaderUnitTest/obj/
+/RpmReaderNet/RpmNet/bin/
+/RpmReaderNet/RpmNet/obj/
+

@@ -13,7 +13,7 @@ namespace RpmReaderUnitTest
         [TestMethod]
         public void ValidateFile()
         {
-            using (RpmReader reader = new RpmReader("esbautoupdater.rpm"))
+            using (RpmReader reader = new RpmReader("vlc.rpm"))
             {
                 Assert.IsTrue(reader.IsValidate);
          
