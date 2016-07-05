@@ -4,6 +4,9 @@ using System.IO;
 
 namespace RpmReaderNet.Section
 {
+    /// <summary>
+    /// Reader a archive section
+    /// </summary>
     internal class RpmArchiveSection
         : RpmSection
     {

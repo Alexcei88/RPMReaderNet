@@ -6,7 +6,7 @@ using System.IO;
 namespace RpmReaderNet.Section
 {
     /// <summary>
-    /// Abstract base class 
+    /// Rpm section 
     /// </summary>
     internal abstract class RpmSection
     {
@@ -16,12 +16,12 @@ namespace RpmReaderNet.Section
         protected FileStream _fileStream;
 
         /// <summary>
-        /// Позиция начала секций относительно начала файла
+        /// the position where section starts in file
         /// </summary>
         public long StartPosition { get; set; }
 
         /// <summary>
-        /// Функции читатели данных в зависимости от типа тега
+        /// Readers entry depending on the type of tag
         /// </summary>
         protected Dictionary<RpmConstants.rpmTagType, Func<byte[]>> _dataEntryReaders = new Dictionary<RpmConstants.rpmTagType, Func<byte[]>>();
 

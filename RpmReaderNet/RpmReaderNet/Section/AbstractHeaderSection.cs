@@ -21,7 +21,7 @@ namespace RpmReaderNet.Section
         public readonly long SIZE_ONE_ENTRY = Marshal.SizeOf(typeof(RpmStruct.RPMEntry));
 
         /// <summary>
-        /// get position first entry on section
+        /// get position where first entry starts on section
         /// </summary>
         /// <returns></returns>
         public abstract long GetStartPositionFirstEntry();
