@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace RpmReaderNet
 {
@@ -108,7 +109,35 @@ namespace RpmReaderNet
         /// </summary>
         public string Changelog
         {
-            get { return IsValidate ? _headerSection.Changelog : null; }
+            get
+            {   if (IsValidate)
+                {
+                    string result = _headerSection.Changelog;
+                    if(result == null)
+                    {
+                        DateTime[] arrayTime = _headerSection.ChangelogTime;
+                        var arrayValue = _headerSection.ChangelogArray;
+                        var arrayName = _headerSection.ChanelogNameArray;
+
+                        // predicate for get record of changelog
+                        Func<int, string> GetRecordChangeLog = (index) =>
+                        {
+                            return "* " + arrayTime[index].ToString() + " "
+                            + arrayName[index].ToString() + "\n"
+                            + arrayValue[index].ToString() + "\n";
+                        };
+
+                        for(int i = 0; i < arrayName.Count(); ++i)
+                        {
+                            result += GetRecordChangeLog(i);
+                            result += "\n";
+                        }
+                    }
+                    return result;
+                }
+                else
+                    return null;
+            }
         }
 
 

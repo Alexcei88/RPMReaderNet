@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RpmReaderNetLib.Extension;
+using System;
 using System.IO;
 using System.Runtime.InteropServices;
 
@@ -82,6 +83,21 @@ namespace RpmReaderNet.Section
         public string Changelog
         {
             get { return _changeLog.Value; }
+        }
+
+        public DateTime[] ChangelogTime
+        {
+            get { return _changeLogTime.Value; }
+        }
+
+        public string[] ChangelogArray
+        {
+            get { return _changeLogArray.Value; }
+        }
+
+        public string[] ChanelogNameArray
+        {
+            get { return _changelogNameArray.Value; }
         }
 
         public string[] Source
@@ -180,6 +196,9 @@ namespace RpmReaderNet.Section
         private Lazy<string> _license;
         private Lazy<string> _packager;
         private Lazy<string> _changeLog;
+        private Lazy<DateTime[]> _changeLogTime;
+        private Lazy<string[]> _changeLogArray;
+        private Lazy<string[]> _changelogNameArray;
         private Lazy<string[]> _source;
         private Lazy<string> _sourceRpm;
         private Lazy<string> _arch;
@@ -218,6 +237,9 @@ namespace RpmReaderNet.Section
             _license = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_LICENSE));
             _packager = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_PACKAGER));
             _changeLog = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_CHANGELOG));
+            _changeLogTime = new Lazy<DateTime[]>(() => GetDateTimeArrayFromTag((int)RpmConstants.rpmTag.RPMTAG_CHANGELOGTIME));
+            _changeLogArray = new Lazy<string[]>(() => GetStringArrayFromTag((int)RpmConstants.rpmTag.RPMTAG_CHANGELOGTEXT));
+            _changelogNameArray = new Lazy<string[]>(() => GetStringArrayFromTag((int)RpmConstants.rpmTag.RPMTAG_CHANGELOGNAME));
             _source = new Lazy<string[]>(() => GetStringArrayFromTag((int)RpmConstants.rpmTag.RPMTAG_SOURCE));
             _sourceRpm = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_SOURCERPM));
             _arch = new Lazy<string>(() => GetStringFromStringTypeTag((int)RpmConstants.rpmTag.RPMTAG_ARCH));
@@ -303,18 +325,7 @@ namespace RpmReaderNet.Section
         private DateTime? GetBuildDateTime()
         {
             uint dateTimeStr = GetInt32FromTag((int)RpmConstants.rpmTag.RPMTAG_BUILDTIME);
-            return FromUnixTime(dateTimeStr);
-        }
-        /// <summary>
-        /// DateTime from Time Epoch
-        /// </summary>
-        /// <param name="unixTime"></param>
-        /// <returns></returns>
-        private static DateTime FromUnixTime(long unixTime)
-        {
-            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            return epoch.AddSeconds(unixTime);
-        }
-
+            return dateTimeStr.ToDateTime();
+        }        
     }
 }

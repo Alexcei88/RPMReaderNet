@@ -50,8 +50,7 @@ namespace RpmReaderUnitTest
                 Assert.AreEqual(reader.Size, expectedSize);
                 Assert.AreEqual(reader.BuildTime, new DateTime(2016, 06, 26, 20, 15, 29));
 
-                string d = reader.Changelog;
-               //Assert.AreEqual(reader.Changelog, File.ReadAllText("changelog_standart.txt"));
+                Assert.IsFalse(reader.Changelog == null);
 
                 
          

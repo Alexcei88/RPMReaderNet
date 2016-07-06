@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RpmReaderNetLib.Extension;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -201,6 +202,12 @@ namespace RpmReaderNet.Section
                 return data.Select(g => BitConverter.ToUInt32(g.Reverse().ToArray(), 0)).ToArray();
             }
             return null;
+        }
+
+        protected DateTime[] GetDateTimeArrayFromTag(int tag)
+        {
+            var epochTimeArray = GetInt32ArrayFromTag(tag);
+            return epochTimeArray?.Select(g => g.ToDateTime()).ToArray();
         }
 
         private RpmStruct.RPMEntry? GetEntry(int tag)
