@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RpmReaderNet
@@ -230,9 +231,32 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// a owner, in alphanumeric form, of each of the files that comprise the package
+        /// List all file paths in package
         /// </summary>
-        public string[] FileUserNames
+        public string[] ListFiles
+        {
+            get
+            {
+                
+                string[] baseNames = BaseFileNames;
+                string[] dirs = DirNames;
+                uint[] dirIndexes = DirIndexes;
+
+                List<string> result = new List<string>();
+                //StringBuilder builder = new StringBuilder();
+                int i = 0;
+                foreach (string baseName in baseNames)
+                {
+                    result.Add($"{dirs[dirIndexes[i++]]}{baseName}");
+                }
+                return result.ToArray();
+            }
+        }
+
+/// <summary>
+/// a owner, in alphanumeric form, of each of the files that comprise the package
+/// </summary>
+public string[] OwnerUserOfFiles
         {
             get { return IsValidate ? _headerSection.FileUserNames : null; }
         }
@@ -240,7 +264,7 @@ namespace RpmReaderNet
         /// <summary>
         /// a group, in alphanumeric form, of each of the files that comprise the package
         /// </summary>
-        public string[] FileGroupNames
+        public string[] OwnerGroupOfFiles
         {
             get { return IsValidate ? _headerSection.FileGroupNames : null; }
         }

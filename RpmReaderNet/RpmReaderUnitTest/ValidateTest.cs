@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RpmReaderNet;
 using System.IO;
 using System.Diagnostics;
+using System.Linq;
 
 namespace RpmReaderUnitTest
 {
@@ -52,8 +53,19 @@ namespace RpmReaderUnitTest
 
                 Assert.IsFalse(reader.Changelog == null);
 
-                
-         
+                string[] files = reader.ListFiles;
+                Assert.IsTrue(files.Count() == 3, "Не совпадает количество файлов, которое находиться в архиве");
+                Assert.IsTrue(files.FirstOrDefault(g => g == "vlc-3.0.0-20160608-bb83680.tar.xz") != null);
+                Assert.IsTrue(files.FirstOrDefault(g => g == "vlc-snapshot.sh") != null);
+                Assert.IsTrue(files.FirstOrDefault(g => g == "vlc.spec") != null);
+
+                // check scripts(in this package they are not)
+                Assert.IsTrue(reader.PreinScript == null);
+                Assert.IsTrue(reader.PostinScript == null);
+                Assert.IsTrue(reader.PostunScript == null);
+                Assert.IsTrue(reader.PreunScript == null);
+
+                Assert.IsTrue(reader.SourceRpm == null);                
             }
         }
     }
