@@ -99,7 +99,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild" Condition=" '$(Configuration)' == 'Release'">
-    <Exec Command="nuget pack RpmReaderNet.csproj -Prop Configuration=Release">
+    <Exec Command="nuget pack RpmReaderNetLib.csproj -Prop Configuration=Release">
     </Exec>
   </Target>
 </Project>
