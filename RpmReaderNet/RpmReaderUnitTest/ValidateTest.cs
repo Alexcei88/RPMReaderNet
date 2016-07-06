@@ -48,10 +48,10 @@ namespace RpmReaderUnitTest
                 Assert.AreEqual(reader.Description, "VLC media player is a highly portable multimedia player and multimedia framework\ncapable of reading most audio and video formats as well as DVDs, Audio CDs VCDs,\nand various streaming protocols.\nIt can also be used as a media converter or a server to stream in uni-cast or\nmulti-cast in IPv4 or IPv6 on networks.");
                 uint expectedSize = 34215049;
                 Assert.AreEqual(reader.Size, expectedSize);
-                //Assert.AreEqual(reader.BuildTime, new DateTime(2016, 06, 26, ))
+                Assert.AreEqual(reader.BuildTime, new DateTime(2016, 06, 26, 20, 15, 29));
 
-
-               // Assert.AreEqual(reader.Changelog, File.ReadAllText("changelog_standart.txt"));
+                string d = reader.Changelog;
+               //Assert.AreEqual(reader.Changelog, File.ReadAllText("changelog_standart.txt"));
 
                 
          

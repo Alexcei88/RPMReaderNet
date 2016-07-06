@@ -100,21 +100,24 @@ namespace RpmReaderNet.Section
             Marshal.Copy(data, 0, @in, len);
             Signature = (RpmStruct.RPMSignature)Marshal.PtrToStructure(@in, Signature.GetType());
             Marshal.FreeHGlobal(@in);
-            Signature.bytesDataCount = (int)ReverseBytes((uint)Signature.bytesDataCount);
-            Signature.entryCount = (int)ReverseBytes((uint)Signature.entryCount);
-            byte[] buffer = new byte[RpmStruct.RPM_MAGIC_SIGNATURE_NUMBER.Length];
-            unsafe
+            unchecked
             {
-                fixed (byte* ptr = Signature.magic)
+                Signature.bytesDataCount = (int)ReverseBytes((uint)Signature.bytesDataCount);
+                Signature.entryCount = (int)ReverseBytes((uint)Signature.entryCount);
+                byte[] buffer = new byte[RpmStruct.RPM_MAGIC_SIGNATURE_NUMBER.Length];
+                unsafe
                 {
-                    int i = 0;
-                    for (byte* d = ptr; i < RpmStruct.RPM_MAGIC_SIGNATURE_NUMBER.Length; ++i, ++d)
+                    fixed (byte* ptr = Signature.magic)
                     {
-                        buffer[i] = *d;
+                        int i = 0;
+                        for (byte* d = ptr; i < RpmStruct.RPM_MAGIC_SIGNATURE_NUMBER.Length; ++i, ++d)
+                        {
+                            buffer[i] = *d;
+                        }
                     }
                 }
+                return ByteArrayCompare(buffer, RpmStruct.RPM_MAGIC_SIGNATURE_NUMBER);
             }
-            return ByteArrayCompare(buffer, RpmStruct.RPM_MAGIC_SIGNATURE_NUMBER);
         }
 
         public bool FillHeaderEntry(byte[] data, int countEntry)
