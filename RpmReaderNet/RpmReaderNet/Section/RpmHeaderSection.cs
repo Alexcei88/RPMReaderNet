@@ -276,8 +276,8 @@ namespace RpmReaderNet.Section
             Marshal.FreeHGlobal(@in);
             unchecked
             { 
-                Header.bytesDataCount = (int)ReverseBytes((uint)Header.bytesDataCount);
-                Header.entryCount = (int)ReverseBytes((uint)Header.entryCount);
+                Header.bytesDataCount = (int)((uint)Header.bytesDataCount).ReverseBytes();
+                Header.entryCount = (int)((uint)Header.entryCount).ReverseBytes();
             }
             byte[] buffer = new byte[RpmStruct.RPM_MAGIC_HEADER_NUMBER.Length];
             unsafe
@@ -307,10 +307,10 @@ namespace RpmReaderNet.Section
                 Marshal.FreeHGlobal(@in);
                 unchecked
                 {
-                    entry.Count = ReverseBytes(entry.Count);
-                    entry.Offset = ReverseBytes(entry.Offset);
-                    entry.Tag = ReverseBytes(entry.Tag);
-                    entry.Type = ReverseBytes(entry.Type);
+                    entry.Count = entry.Count.ReverseBytes();
+                    entry.Offset = entry.Offset.ReverseBytes();
+                    entry.Tag = entry.Tag.ReverseBytes();
+                    entry.Type = entry.Type.ReverseBytes();
                 }
                 _entries[i] = entry;
             }

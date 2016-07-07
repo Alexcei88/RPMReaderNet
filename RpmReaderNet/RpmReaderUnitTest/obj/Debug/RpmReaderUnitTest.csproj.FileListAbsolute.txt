@@ -11,3 +11,16 @@ E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Debug\vlc.rpm
 E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Debug\changelog_standart.txt
 E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Debug\RpmReaderNetLib.dll
 E:\Axelot\RPMReader\RpmReaderNet\RpmReaderUnitTest\bin\Debug\RpmReaderNetLib.pdb
+F:\Projects\RpmReaderNet\RpmReaderNet\RpmReaderUnitTest\bin\Debug\changelog_standart.txt
+F:\Projects\RpmReaderNet\RpmReaderNet\RpmReaderUnitTest\bin\Debug\vlc.rpm
+F:\Projects\RpmReaderNet\RpmReaderNet\RpmReaderUnitTest\bin\Debug\RpmReaderUnitTest.dll
+F:\Projects\RpmReaderNet\RpmReaderNet\RpmReaderUnitTest\bin\Debug\RpmReaderUnitTest.pdb
+F:\Projects\RpmReaderNet\RpmReaderNet\RpmReaderUnitTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+F:\Projects\RpmReaderNet\RpmReaderNet\RpmReaderUnitTest\bin\Debug\RpmReaderNetLib.dll
+F:\Projects\RpmReaderNet\RpmReaderNet\RpmReaderUnitTest\bin\Debug\ICSharpCode.SharpZipLib.dll
+F:\Projects\RpmReaderNet\RpmReaderNet\RpmReaderUnitTest\bin\Debug\CPIOLibSharp.dll
+F:\Projects\RpmReaderNet\RpmReaderNet\RpmReaderUnitTest\bin\Debug\RpmReaderNetLib.pdb
+F:\Projects\RpmReaderNet\RpmReaderNet\RpmReaderUnitTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.xml
+F:\Projects\RpmReaderNet\RpmReaderNet\RpmReaderUnitTest\obj\Debug\RpmReaderUnitTest.csprojResolveAssemblyReference.cache
+F:\Projects\RpmReaderNet\RpmReaderNet\RpmReaderUnitTest\obj\Debug\RpmReaderUnitTest.dll
+F:\Projects\RpmReaderNet\RpmReaderNet\RpmReaderUnitTest\obj\Debug\RpmReaderUnitTest.pdb
