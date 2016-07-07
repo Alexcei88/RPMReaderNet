@@ -10,6 +10,11 @@ namespace RpmReaderUnitTest
     [TestClass]
     public class ValidateTest
     {
+        /// <summary>
+        /// destinition folder where will extract files from package
+        /// </summary>
+        private string _destFolder;
+
         private TestContext testContextInstance;
         /// <summary>
         ///Gets or sets the test context which provides
@@ -25,6 +30,18 @@ namespace RpmReaderUnitTest
             {
                 testContextInstance = value;
             }
+        }
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            _destFolder = GetTemporaryDir();
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            Directory.Delete(_destFolder, true);
         }
 
         /// <summary>
@@ -67,6 +84,13 @@ namespace RpmReaderUnitTest
 
                 Assert.IsTrue(reader.SourceRpm == null);                
             }
+        }
+
+        private string GetTemporaryDir()
+        {
+            string tempFolder = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+            return tempFolder;
+
         }
     }
 }
