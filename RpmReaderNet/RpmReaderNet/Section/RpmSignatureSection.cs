@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RpmReaderNetLib.Extension;
+using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -83,8 +84,8 @@ namespace RpmReaderNet.Section
         public RpmSignatureSection(FileStream file)
             : base(file)
         {
-            _size = new Lazy<uint>(() => ReverseBytes(GetInt32FromTag((int)(RpmConstants.rpmSigTag.RPMSIGTAG_SIZE))));
-            _payloadSize = new Lazy<uint>(() => ReverseBytes(GetInt32FromTag((int)(RpmConstants.rpmSigTag.RPMSIGTAG_PAYLOADSIZE))));
+            _size = new Lazy<uint>(() => (GetInt32FromTag((int)(RpmConstants.rpmSigTag.RPMSIGTAG_SIZE))).ReverseBytes());
+            _payloadSize = new Lazy<uint>(() => (GetInt32FromTag((int)(RpmConstants.rpmSigTag.RPMSIGTAG_PAYLOADSIZE))).ReverseBytes());
             _md5 = new Lazy<byte[][]>(() => GetArrayBinDataFromTag((int)RpmConstants.rpmSigTag.RPMSIGTAG_MD5));
             _gpg = new Lazy<byte[]>(() => GetBinDataFromTag((int)RpmConstants.rpmSigTag.RPMSIGTAG_GPG));
             _pgp = new Lazy<byte[]>(() => GetBinDataFromTag((int)RpmConstants.rpmSigTag.RPMSIGTAG_PGP));
@@ -102,8 +103,8 @@ namespace RpmReaderNet.Section
             Marshal.FreeHGlobal(@in);
             unchecked
             {
-                Signature.bytesDataCount = (int)ReverseBytes((uint)Signature.bytesDataCount);
-                Signature.entryCount = (int)ReverseBytes((uint)Signature.entryCount);
+                Signature.bytesDataCount = (int)(((uint)Signature.bytesDataCount).ReverseBytes());
+                Signature.entryCount = (int)(((uint)Signature.entryCount).ReverseBytes());
                 byte[] buffer = new byte[RpmStruct.RPM_MAGIC_SIGNATURE_NUMBER.Length];
                 unsafe
                 {
@@ -131,10 +132,10 @@ namespace RpmReaderNet.Section
                 Marshal.Copy(data, len * i, @in, len);
                 entry = (RpmStruct.RPMEntry)Marshal.PtrToStructure(@in, typeof(RpmStruct.RPMEntry));
                 Marshal.FreeHGlobal(@in);
-                entry.Count = ReverseBytes(entry.Count);
-                entry.Offset = ReverseBytes(entry.Offset);
-                entry.Tag = ReverseBytes(entry.Tag);
-                entry.Type = ReverseBytes(entry.Type);
+                entry.Count = entry.Count.ReverseBytes();
+                entry.Offset = entry.Offset.ReverseBytes();
+                entry.Tag = entry.Tag.ReverseBytes();
+                entry.Type = entry.Type.ReverseBytes();
                 _entries[i] = entry;
             }
             return true;
