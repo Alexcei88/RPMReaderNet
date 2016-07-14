@@ -65,7 +65,7 @@ namespace RpmReaderUnitTest
                 Assert.IsTrue(reader.PostunScript == null);
                 Assert.IsTrue(reader.PreunScript == null);
 
-                Assert.IsTrue(reader.SourceRpm == null);                
+                         
             }
         }
     }

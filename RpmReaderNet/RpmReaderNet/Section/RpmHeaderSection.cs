@@ -12,7 +12,7 @@ namespace RpmReaderNet.Section
         : AbstractHeaderSection
     {
         /// <summary>
-        /// version rpm package
+        ///  The version of the package
         /// </summary>
         public string Version
         {
@@ -20,7 +20,7 @@ namespace RpmReaderNet.Section
         }
 
         /// <summary>
-        /// Package name
+        /// The name of the package
         /// </summary>
         public string Name
         {
@@ -28,148 +28,232 @@ namespace RpmReaderNet.Section
         }
 
         /// <summary>
-        /// 
+        /// The release number of the package
         /// </summary>
         public string Release
         {
             get { return _release.Value; }
         }
 
+        /// <summary>
+        /// The Serial number of the package
+        /// </summary>
         public string Serial
         {
             get { return _serial.Value; }
         }
 
+        /// <summary>
+        /// The summary information about the package
+        /// </summary>
         public string Summary
         {
             get { return _summary.Value; }
         }
 
+        /// <summary>
+        /// The description of the package
+        /// </summary>
         public string Description
         {
             get { return _description.Value; }
         }
 
+        /// <summary>
+        /// A build time of the package
+        /// </summary>
         public DateTime? BuildDateTime
         {
             get { return _buildTime.Value; }
         }
 
+        /// <summary>
+        /// a host hame where was build package
+        /// </summary>
         public string BuildHost
         {
             get { return _buildHost.Value; }
         }
 
+        /// <summary>
+        /// A group name of packages, of which this package is a part
+        /// </summary>
         public string Distribution
         {
             get { return _distribution.Value; }
         }
 
+        /// <summary>
+        /// a name of the entity that is responsible for a package
+        /// </summary>
         public string Vendor
         {
             get { return _vendor.Value; }
         }
 
+        /// <summary>
+        /// A license of the package
+        /// </summary>
         public string License
         {
             get { return _license.Value; }
         }
 
+        /// <summary>
+        /// a name and contact information for the person or persons who built the package
+        /// </summary>
         public string Packager
         {
             get { return _packager.Value; }
         }
 
+        /// <summary>
+        /// a log or record of all or all notable changes made to a package
+        /// </summary>
         public string Changelog
         {
             get { return _changeLog.Value; }
         }
 
+        /// <summary>
+        /// the time of log or record of all or all notable changes made to a package
+        /// </summary>
         public DateTime[] ChangelogTime
         {
             get { return _changeLogTime.Value; }
         }
 
+        ///// <summary>
+        /// a log or record of all or all notable changes made to a package
+        /// </summary>
         public string[] ChangelogArray
         {
             get { return _changeLogArray.Value; }
         }
 
+        /// <summary>
+        /// A name of a log or record of all or all notable changes made to a package
+        /// </summary>
         public string[] ChanelogNameArray
         {
             get { return _changelogNameArray.Value; }
         }
 
+        /// <summary>
+        /// A original source files name
+        /// </summary>
         public string[] Source
         {
             get { return _source.Value; }
         }
 
+        /// <summary>
+        /// a name of the source package from which this binary package was built
+        /// </summary>
         public string SourceRpm
         {
             get { return _sourceRpm.Value; }
         }
 
+        /// <summary>
+        /// the architecture for which the package was built
+        /// </summary>
         public string Arch
         {
             get { return _arch.Value; }
         }
 
+        /// <summary>
+        /// get content of the package's pre-install script
+        /// </summary>
         public string PreinScript
         {
             get { return _preinScript.Value; }
         }
 
+        /// <summary>
+        /// get content of the package's post-install script
+        /// </summary>
         public string PostinScript
         {
             get { return _postinScript.Value; }
         }
 
+        /// <summary>
+        /// get content of the package's pre-uninstall script
+        /// </summary>
         public string PreunScript
         {
             get { return _preunScript.Value; }
         }
 
+        /// <summary>
+        /// get content of the package's post-uninstall script
+        /// </summary>
         public string PostunScript
         {
             get { return _postunScript.Value; }
         }
 
+        /// <summary>
+        /// a list of all base names files in package
+        /// </summary>
         public string[] BaseFilenames
         {
             get { return _baseFileNames.Value; }
         }
 
+        /// <summary>
+        /// a list of all dirs in package
+        /// </summary>
         public string[] DirNames
         {
             get { return _dirNames.Value; }
         }
 
+        /// <summary>
+        /// Indexes of dir for link between the file name and directory
+        /// </summary>
         public uint[] DirIndexes
         {
             get { return _dirIndexes.Value; }
         }
 
-        public string[] FileUserNames
+        /// <summary>
+        /// a owner, in alphanumeric form, of each of the files that comprise the package
+        /// </summary>
+        public string[] OwnerUserOfFiles
         {
             get { return _fileUserNames.Value; }
         }
 
-        public string[] FileGroupNames
+        /// <summary>
+        /// a group, in alphanumeric form, of each of the files that comprise the package
+        /// </summary>
+        public string[] OwnerGroupOfFiles
         {
             get { return _fileGroupNames.Value; }
         }
 
+        /// <summary>
+        ///  a MD5 checksum for each of the files that comprise the package
+        /// </summary>
         public string[] MD5Files
         {
             get { return _md5Files.Value; }
         }
 
+        /// <summary>
+        /// a size, in bytes, of each of the files that comprise the package
+        /// </summary>
         public uint FileSize
         {
             get { return _fileSizes.Value; }
         }
 
+        /// <summary>
+        /// a list of capabilities the package requires.
+        /// </summary>
         public string[] RequiresNames
         {
             get { return _requiresNames.Value; }

@@ -26,7 +26,7 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// Serial number of the package
+        /// The Serial number of the package
         /// </summary>
         public string Serial
         {
@@ -50,7 +50,7 @@ namespace RpmReaderNet
         }
 
         /// <summary>
-        /// Description of the package
+        /// The description of the package
         /// </summary>
         public string Description
         {
@@ -253,12 +253,12 @@ namespace RpmReaderNet
             }
         }
 
-/// <summary>
-/// a owner, in alphanumeric form, of each of the files that comprise the package
-/// </summary>
-public string[] OwnerUserOfFiles
+        /// <summary>
+        /// a owner, in alphanumeric form, of each of the files that comprise the package
+        /// </summary>
+        public string[] OwnerUserOfFiles
         {
-            get { return IsValidate ? _headerSection.FileUserNames : null; }
+            get { return IsValidate ? _headerSection.OwnerUserOfFiles : null; }
         }
 
         /// <summary>
@@ -266,7 +266,7 @@ public string[] OwnerUserOfFiles
         /// </summary>
         public string[] OwnerGroupOfFiles
         {
-            get { return IsValidate ? _headerSection.FileGroupNames : null; }
+            get { return IsValidate ? _headerSection.OwnerGroupOfFiles : null; }
         }
 
         /// <summary>
