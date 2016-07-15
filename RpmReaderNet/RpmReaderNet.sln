@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RpmReaderUnitTest", "RpmRea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RpmNet", "RpmNet\RpmNet.csproj", "{18091C5E-0E89-436A-9B13-BDF2266DF5EE}"
 EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "RpmNetSetup", "RpmNetSetup\RpmNetSetup.wixproj", "{35EE4497-3F7A-4BB2-9AFF-7D6E531F80C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,12 @@ Global
 		{18091C5E-0E89-436A-9B13-BDF2266DF5EE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{18091C5E-0E89-436A-9B13-BDF2266DF5EE}.Release|x86.ActiveCfg = Release|Any CPU
 		{18091C5E-0E89-436A-9B13-BDF2266DF5EE}.Release|x86.Build.0 = Release|Any CPU
+		{35EE4497-3F7A-4BB2-9AFF-7D6E531F80C3}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{35EE4497-3F7A-4BB2-9AFF-7D6E531F80C3}.Debug|x86.ActiveCfg = Debug|x86
+		{35EE4497-3F7A-4BB2-9AFF-7D6E531F80C3}.Debug|x86.Build.0 = Debug|x86
+		{35EE4497-3F7A-4BB2-9AFF-7D6E531F80C3}.Release|Any CPU.ActiveCfg = Release|x86
+		{35EE4497-3F7A-4BB2-9AFF-7D6E531F80C3}.Release|x86.ActiveCfg = Release|x86
+		{35EE4497-3F7A-4BB2-9AFF-7D6E531F80C3}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

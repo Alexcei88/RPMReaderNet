@@ -1,30 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="RpmNetSetup" Language="1033" Version="1.0.0.0" Manufacturer="" UpgradeCode="128ace94-eb6b-4da9-8f8c-d4720210a8fb">
-		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <?define ProductName="RpmNet"?>
+  <?define ServiceName="RpmNet"?>
+  <?define ProductVersion="!(bind.FileVersion.RpmReaderNetLib.dll)"?>
+  <?define Manufacturer="Shmakov Alexcei"?>
+  <?define UpgradeCode="{FF96AB24-0929-41C9-9122-C1815452EC34}"?>
+  <?define PackageCode="{FFC127EF-6C35-4851-921D-DFD76FE7688C}"?>
+  <?define InstallerRegKey="SOFTWARE\Rpm\RpmNet"?>
+  
+	<Product Id="*" 
+           Name="$(var.ProductName)" 
+           Language="1049" 
+           Version="$(var.ProductVersion)" 
+           Manufacturer="$(var.Manufacturer)" 
+           UpgradeCode="$(var.UpgradeCode)">
+	
+   <Package InstallerVersion="200" 
+            Compressed="yes" 
+            InstallScope="perMachine" 
+            InstallPrivileges="elevated"
+            Manufacturer="$(var.Manufacturer)"
+            Languages="1049"
+            Keywords="Installer,MSI,Database, Rpm" />
 
-		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-		<MediaTemplate />
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." 
+                  AllowDowngrades="no"                  
+                  />
+    
+    <Media Id="1" Cabinet="cab1.cab" EmbedCab="yes" />
+    
+    <PropertyRef Id="NETFRAMEWORK45"/>
+    <Condition Message="!(loc.msierrNetFrameworkNotInstalled)">
+      <![CDATA[Installed OR NETFRAMEWORK45]]>
+    </Condition>
 
-		<Feature Id="ProductFeature" Title="RpmNetSetup" Level="1">
+    <Feature Id="ProductFeature" Title="RpmNetSetup" Level="1">
 			<ComponentGroupRef Id="ProductComponents" />
 		</Feature>
 	</Product>
 
+  <!-- Определяем директории-->
 	<Fragment>
 		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="RpmNetSetup" />
+				<Directory Id="INSTALLFOLDER" Name="RpmNet" />
 			</Directory>
 		</Directory>
 	</Fragment>
 
+  <Fragment>
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Component>
+        <File
+         Source="$(var.RpmNet.TargetDir)\RpmReaderNetLib.dll"
+         KeyPath="yes" />        
+      </Component>
+      <Component>
+        <File Source="$(var.RpmNet.TargetDir)\RpmNet.exe" KeyPath="yes" />
+      </Component>
+      <Component>
+        <File Source="$(var.RpmNet.TargetDir)\ManyConsole.dll" KeyPath="yes" />
+      </Component>
+      <Component>
+        <File Source="$(var.RpmNet.TargetDir)\NDesk.Options.dll" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+  
+  
 	<Fragment>
 		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-			<!-- <Component Id="ProductComponent"> -->
-				<!-- TODO: Insert files, registry keys, and other resources here. -->
-			<!-- </Component> -->
-		</ComponentGroup>
+      <ComponentRef Id="RpmReaderNetLib.dll" />
+      <ComponentRef Id="RpmNet.exe" />
+      <ComponentRef Id="ManyConsole.dll" />
+      <ComponentRef Id="NDesk.Options.dll" />
+    </ComponentGroup>
 	</Fragment>
 </Wix>

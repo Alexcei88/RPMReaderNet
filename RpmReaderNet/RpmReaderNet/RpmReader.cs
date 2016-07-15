@@ -337,7 +337,7 @@ namespace RpmReaderNet
         {
             if (isDisposed) return;
 
-            _fileStream.Dispose();
+            _fileStream?.Dispose();
             isDisposed = true;
         }
 
