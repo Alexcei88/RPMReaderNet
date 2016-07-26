@@ -21,7 +21,7 @@ The program *RpmNet* will be install to your computer to `c:\Program Files (x86)
 - *script* - print the contents of scripts
 - *extract* - extract all files from package
 
-[More information can be found here](https://github.com/Alexcei88/RPMReaderNet/wiki/Usage-RpmNet)
+[More information about RpmNet can be found here](https://github.com/Alexcei88/RPMReaderNet/wiki/Usage-RpmNet)
 
 
 
