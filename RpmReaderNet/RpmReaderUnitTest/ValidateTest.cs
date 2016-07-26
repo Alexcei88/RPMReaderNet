@@ -15,7 +15,11 @@ namespace RpmReaderUnitTest
         /// </summary>
         private string _destFolder;
 
+        /// <summary>
+        /// test context
+        /// </summary>
         private TestContext testContextInstance;
+
         /// <summary>
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
@@ -36,6 +40,7 @@ namespace RpmReaderUnitTest
         public void Initialize()
         {
             _destFolder = GetTemporaryDir();
+            Directory.CreateDirectory(_destFolder);
         }
 
         [TestCleanup]
