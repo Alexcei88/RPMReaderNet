@@ -1,9 +1,9 @@
-## RPMReaderNet
-**RPMReaderNet** is a library for reading and extracting files from a rpm  file. It written entirely in C# for the .NET platform. The library written based on the [rpm format](https://refspecs.linuxbase.org/LSB_3.1.0/LSB-Core-generic/LSB-Core-generic/pkgformat.html) and [librpm API documentation](http://rpm.org/api/4.4.2.2/index.html). <br>Based on this library created a program **RpmNet** for executing queries to a rpm file.
+## RPMReaderNetLib
+**RPMReaderNetLib** is a library for reading and extracting files from a rpm  file. It written entirely in C# for the .NET platform. The library written based on the [rpm format](https://refspecs.linuxbase.org/LSB_3.1.0/LSB-Core-generic/LSB-Core-generic/pkgformat.html) and [librpm API documentation](http://rpm.org/api/4.4.2.2/index.html). <br>Based on this library created a program **RpmNet** for executing queries to a rpm file.
 
 ## Usage
 
-#### *RpmReaderNet* library
+#### *RpmReaderNetLib* library
 
 [Examples of the use of the library](https://github.com/Alexcei88/RPMReaderNet/wiki/Usage-RpmReaderNet)
 
