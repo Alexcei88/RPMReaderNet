@@ -14,7 +14,7 @@
 Build the project and after the run the output file `RpmNetSetup.msi`.
 The program *RpmNet* will be install to your computer to `c:\Program Files (x86)\RpmNet\` default.
 
-##### A list all commands that support the RpmNet program**
+##### A list all commands that are supported by the RpmNet program
 
 - *info* - print a common information about package
 - *filelist* - print a list all files in package
