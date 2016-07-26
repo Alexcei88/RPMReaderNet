@@ -27,7 +27,7 @@ The program *RpmNet* will be install to your computer to `c:\Program Files (x86)
 
 ## Nuget
 
-Available on Nuget: https://www.nuget.org/packages/RpmReaderNet/
+Available on Nuget: https://www.nuget.org/packages/RpmReaderNetLib/
 
 ## License
 
