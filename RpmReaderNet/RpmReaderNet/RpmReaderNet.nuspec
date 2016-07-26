@@ -9,12 +9,13 @@
     <licenseUrl>https://github.com/Alexcei88/RPMReaderNet</licenseUrl>
     <projectUrl>https://github.com/Alexcei88/RPMReaderNet</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Reader of a rpm file</description>
+    <description>A library for reading a rpm file</description>
     <dependencies>
       <dependency id="CPIOLibSharp" version="1.0.2" />
       <dependency id="SharpZibLib" version="0.86.0" />
     </dependencies>
     <releaseNotes>
+      1.0.2.0 - fix bug getting information about changelog from rpm file
     </releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>cpio, rpm</tags>
