@@ -9,12 +9,21 @@
 
 ##### *RpmNet* program
 
-**A List all commands that support the RpmNet program**
+**Install
+
+Build the project and run the output file RpmNetSetup.msi.
+The program *RpmNet* will be install to our computer to c:\Program Files (x86)\RpmNet\ default.
+
+**A list all commands that support the RpmNet program**
 
 - *info* - print a common information about package
 - *filelist* - print a list all files in package
 - *script* - print the contents of scripts
 - *extract* - extract all files from package
+
+** Usage
+
+
 
 ## Nuget
 
