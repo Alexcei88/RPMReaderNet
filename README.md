@@ -30,7 +30,7 @@ Available on Nuget: https://www.nuget.org/packages/RpmReaderNet/
 
 ## License
 
-RPMReaderNet are released under the GNU GPLv3 license. See LICENSE for details.
+RPMReaderNetLib are released under the GNU GPLv3 license. See LICENSE for details.
 
 ## Support
 
