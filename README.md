@@ -3,11 +3,11 @@
 
 ## Usage
 
-##### *RpmReaderNet* library
+#### *RpmReaderNet* library
 
 [Examples of the use of the library](https://github.com/Alexcei88/RPMReaderNet/wiki/Usage-RpmReaderNet)
 
-##### *RpmNet* program
+#### *RpmNet* program
 
 ##### Install
 
@@ -21,7 +21,6 @@ The program *RpmNet* will be install to our computer to c:\Program Files (x86)\R
 - *script* - print the contents of scripts
 - *extract* - extract all files from package
 
-###### Usage
 
 
 
