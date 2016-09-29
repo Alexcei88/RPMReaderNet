@@ -16,10 +16,10 @@ The program *RpmNet* will be install to your computer to `c:\Program Files (x86)
 
 ##### A list all commands that are supported by the RpmNet program
 
-- *info* - print a common information about package
-- *filelist* - print a list all files in package
-- *script* - print the contents of scripts
-- *extract* - extract all files from package
+- *info* - prints a common information about package
+- *filelist* - prints a list all files in package
+- *script* - prints the contents of scripts
+- *extract* - extracts all files from package
 
 [More information about RpmNet can be found here](https://github.com/Alexcei88/RPMReaderNet/wiki/Usage-RpmNet)
 
