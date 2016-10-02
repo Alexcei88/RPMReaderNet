@@ -10,7 +10,7 @@ namespace RpmReaderNet
     /// <summary>
     /// Main class. It readers rpm file. 
     /// </summary>
-    public partial class RpmReader21
+    public partial class RpmReader
         : IDisposable
     {
         public bool IsValidate
