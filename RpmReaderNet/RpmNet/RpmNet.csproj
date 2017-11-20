@@ -34,12 +34,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <!--<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <RunOctoPack>true</RunOctoPack>
     <OctoPackPublishPackageToFileShare>bin\Release\</OctoPackPublishPackageToFileShare>
-    <OctoPackPublishPackageToHttp>http://nugetserverapi.azurewebsites.net/nuget</OctoPackPublishPackageToHttp>
-    <OctoPackPublishApiKey>7D555A12-7449-49B8-B18C-71E11091EE42</OctoPackPublishApiKey>
-  </PropertyGroup>
+    <OctoPackPublishPackageToHttp>http://win10alexcei88.westeurope.cloudapp.azure.com/octobus/nuget/packages</OctoPackPublishPackageToHttp>
+    <OctoPackPublishApiKey>API-IMPJDNA4BJOBHY1W6IKEP3JFKJI</OctoPackPublishApiKey>
+  </PropertyGroup>-->
   <ItemGroup>
     <Reference Include="ManyConsole, Version=0.4.2.19, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ManyConsole.0.4.2.19\lib\ManyConsole.dll</HintPath>
