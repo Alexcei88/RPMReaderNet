@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>RpmNetSetup</id>
+    <title>$title$</title>
+    <version>$version$</version>
+    <authors>Alexcei Shmakov</authors>
+    <owners>Alexcei Shmakov</owners>
+    <licenseUrl>https://github.com/Alexcei88/RPMReaderNet</licenseUrl>
+    <projectUrl>https://github.com/Alexcei88/RPMReaderNet</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Installer</description>
+    <copyright>Copyright 2016</copyright>
+    <tags>cpio, rpm</tags>
+  </metadata>
+  <files>
+      <file src="bin\Release\ru-ru\*.msi" /> 
+  </files>
+</package>

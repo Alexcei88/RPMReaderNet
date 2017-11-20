@@ -29,6 +29,7 @@
     <RunOctoPack>true</RunOctoPack>
     <OctoPackPackageVersion>$(PackageVersion)</OctoPackPackageVersion>
     <OctoPackPublishPackageToFileShare>bin\Release\</OctoPackPublishPackageToFileShare>
+    <OctoPackNuSpecFileName>RpmNetSetup.nuspec</OctoPackNuSpecFileName>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Product.wxs" />
