@@ -22,6 +22,14 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PackageVersion>1.0.8.0</PackageVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <RunOctoPack>true</RunOctoPack>
+    <OctoPackPackageVersion>$(PackageVersion)</OctoPackPackageVersion>
+    <OctoPackPublishPackageToFileShare>bin\Release\</OctoPackPublishPackageToFileShare>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Product.wxs" />
   </ItemGroup>
