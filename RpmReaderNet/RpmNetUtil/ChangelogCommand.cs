@@ -1,22 +1,25 @@
 ﻿using ManyConsole;
 using RpmReaderNet;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Rpm
+namespace RpmNet
 {
     /// <summary>
-    /// Command to output list of files
+    /// the command for print log of changes
     /// </summary>
-    internal class FileListCommand
+    class ChangelogCommand
         : ConsoleCommand
     {
-        public FileListCommand()
+        public ChangelogCommand()
         {
-            IsCommand("filelist", "print a list all files in the package");
+            IsCommand("changelog", "print log of changes in package");
 
             HasAdditionalArguments(1, " <input rpm package>");
+
         }
 
         public override int Run(string[] remainingArguments)
@@ -25,10 +28,7 @@ namespace Rpm
             {
                 using (RpmReader reader = new RpmReader(remainingArguments.Last()))
                 {
-         
-                    StringBuilder builder = new StringBuilder("Filelist: \n");
-                    builder.Append(reader.ListFiles.Select(g => g + "\n"));
-                    Console.WriteLine(builder.ToString());
+                    Console.WriteLine(reader.Changelog);
                 }
                 return 0;
             }

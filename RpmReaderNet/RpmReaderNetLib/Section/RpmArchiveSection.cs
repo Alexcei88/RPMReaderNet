@@ -73,9 +73,9 @@ namespace RpmReaderNet.Section
         {
             using (CPIOLibSharp.CPIOFileStream fs = new CPIOLibSharp.CPIOFileStream(fileName))
             {
-                fs.Extract(destFolder, new CPIOLibSharp.CpioExtractFlags[]
+                fs.Extract(destFolder, new CPIOLibSharp.ExtractFlags[]
                 {
-                    CPIOLibSharp.CpioExtractFlags.ARCHIVE_EXTRACT_TIME
+                    CPIOLibSharp.ExtractFlags.ARCHIVE_EXTRACT_TIME
                 });
             }
         }

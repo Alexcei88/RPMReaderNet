@@ -7,7 +7,7 @@ using System.Text;
 namespace Rpm
 {
     /// <summary>
-    /// Command for output of scripts in the package
+    /// Command for output scripts
     /// </summary>
     internal class OutputScriptCommand
         : ConsoleCommand

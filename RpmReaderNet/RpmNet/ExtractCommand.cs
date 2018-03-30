@@ -1,5 +1,5 @@
 ﻿using ManyConsole;
-using NDesk.Options;
+using Mono.Options;
 using RpmReaderNet;
 using System;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Linq;
 namespace Rpm
 {
     /// <summary>
-    /// extract files from package command
+    /// command to extract files from the package 
     /// </summary>
     internal class ExtractCommand
         : ConsoleCommand
@@ -19,7 +19,7 @@ namespace Rpm
 
         public ExtractCommand()
         {
-            IsCommand("extract", "extract all files from package");
+            IsCommand("extract", "extract all files from the package");
             Options = new OptionSet()
             {
                 { "d|destinition", "Destinition folder", d => _destFolder = d }

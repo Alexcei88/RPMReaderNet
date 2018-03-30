@@ -14,7 +14,7 @@ namespace Rpm
     {
         public FileListCommand()
         {
-            IsCommand("filelist", "print a list all files in the package");
+            IsCommand("filelist", "print a list all files in package");
 
             HasAdditionalArguments(1, " <input rpm package>");
         }

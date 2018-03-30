@@ -6,7 +6,7 @@ using System.Text;
 namespace Rpm
 {
     /// <summary>
-    /// Command for getting info about package
+    /// Command for getting info package
     /// </summary>
     internal class InfoCommand
         : ConsoleCommand

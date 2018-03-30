@@ -11,12 +11,11 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A library for reading a rpm file</description>
     <dependencies>
-      <dependency id="CPIOLibSharp" version="1.0.3" />
+      <dependency id="CPIOLibSharp" version="1.0.2" />
       <dependency id="SharpZibLib" version="0.86.0" />
     </dependencies>
     <releaseNotes>
       1.0.2.0 - fix bug getting information about changelog from rpm file
-      1.0.3.0 - update CPIOLibSharp nuget package to new version
     </releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>cpio, rpm</tags>

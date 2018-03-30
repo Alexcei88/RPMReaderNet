@@ -85,9 +85,7 @@ namespace RpmReaderUnitTest
                 Assert.IsTrue(reader.PreinScript == null);
                 Assert.IsTrue(reader.PostinScript == null);
                 Assert.IsTrue(reader.PostunScript == null);
-                Assert.IsTrue(reader.PreunScript == null);
-
-                         
+                Assert.IsTrue(reader.PreunScript == null);                        
             }
         }
 
